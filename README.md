@@ -6,3 +6,6 @@ Here,they can post there issues and get their issues resolved with minimal to ne
 
 The to do for this projects:
 have forms with image saving capabilities;foul language detector and more sophistication to check whether illicit or empty entries are not made to the system
+
+
+## Need to add the private messaging table in the database
