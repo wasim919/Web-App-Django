@@ -25,7 +25,7 @@ SECRET_KEY = 'vtkr8i2mm9vk4&%+0d&t9%9#9p%$aok0*iiyv-ib_m7*m8$64u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'SWP.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'its_test',
+        'USER': 'project',
+        'PASSWORD': 'swp_181011_%',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
