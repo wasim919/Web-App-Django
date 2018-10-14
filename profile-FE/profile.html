@@ -11,10 +11,6 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
   <title>B-04 Frontend</title>
-
-  <!-- Date Picker -->
-
-
 </head>
 
 <body>
@@ -39,7 +35,7 @@
             <a href="medical.html" class="nav-link active">Medical</a>
           </li>
           <li class="nav-item px-2">
-            <a href="orders.html" class="nav-link">Order</a>
+            <a href="orders.html" class="nav-link active">Order</a>
           </li>
         </ul>
 
@@ -73,223 +69,74 @@
       <div class="row">
         <div class="col-md-6">
           <h1>
-            <i class="fas fa-cog"></i> Dashboard</h1>
+            <i class="fas fa-user"></i> Edit Profile</h1>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- POSTS -->
-  <section>
-  <p>
-
-  </p>
+  <!-- ACTIONS -->
+  <section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <a href="dashboard.html" class="btn btn-light btn-block">
+            <i class="fas fa-arrow-left"></i> Back To Dashboard
+          </a>
+        </div>
+        <!-- <div class="col-md-3">
+          <a href="#" class="btn btn-success btn-block">
+            <i class="fas fa-lock"></i> Change Password
+          </a>
+        </div> -->
+        <!-- <div class="col-md-3">
+          <a href="#" class="btn btn-danger btn-block">
+            <i class="fas fa-trash"></i> Delete Account
+          </a>
+        </div> -->
+      </div>
+    </div>
   </section>
-  <section id="posts">
-    <center><div class="container">
+
+  <!-- PROFILE -->
+  <section id="profile">
+    <div class="container">
       <div class="row">
         <div class="col-md-9">
           <div class="card">
             <div class="card-header">
-              <h4>Announcements</h4>
+              <h4>Edit Profile</h4>
             </div>
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Hostel</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>(Top - 5)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Water Shortage</td>
-                  <td>May 10 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Power Shutdown</td>
-                  <td>May 11 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Lift Repair</td>
-                  <td>May 13 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Room Cleaning</td>
-                  <td>May 15 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Table Replacement</td>
-                  <td>May 17 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!--Mess-->
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Mess</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>(Top - 5)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Change in Mess Timings</td>
-                  <td>May 10 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Change in Breakfast Menu</td>
-                  <td>May 11 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Change in Dinner</td>
-                  <td>May 13 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Special Dinner</td>
-                  <td>May 15 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Food Wastage</td>
-                  <td>May 17 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!--Medical-->
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Medical</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>(Top - 5)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Doctor Visit</td>
-                  <td>May 10 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Availability of Medicine</td>
-                  <td>May 11 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Dentist Visit</td>
-                  <td>May 13 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Good Diet Plan</td>
-                  <td>May 15 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Why to wake up early?</td>
-                  <td>May 17 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <label for="name">Username</label>
+                  <input type="text" class="form-control" value="Brad Traversy">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" value="test@test.com">
+                </div>
+                <div class="form-group">
+                  <label for="bio">Bio</label>
+                  <textarea class="form-control" name="editor1">Let people know you.</textarea>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-
+        <div class="col-md-3">
+          <h3>Your Avatar</h3>
+          <img src="img/avatar.png" alt="" class="d-block img-fluid mb-3">
+          <button class="btn btn-primary btn-block">Edit Image</button>
+          <button class="btn btn-danger btn-block">Delete Image</button>
+        </div>
       </div>
     </div>
-  </center>
   </section>
+  <div class="modal-footer">
+    <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
+  </div>
 
   <!-- FOOTER -->
   <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
@@ -299,7 +146,7 @@
           <p class="lead text-center">
             Copyright &copy;
             <span id="year"></span>
-            ProjectB04
+            ProjectA07
           </p>
         </div>
       </div>
@@ -347,16 +194,15 @@
               <textarea name="editor1" class="form-control"></textarea>
             </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+          <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" align="left">Save Changes</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
   <!-- ADD CATEGORY MODAL -->
-  <div class="modal fade" id="addCategoryModal">
+  <!-- <div class="modal fade" id="addCategoryModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-success text-white">
@@ -378,7 +224,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- ADD USER MODAL -->
   <div class="modal fade" id="addUserModal">
@@ -415,7 +261,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
