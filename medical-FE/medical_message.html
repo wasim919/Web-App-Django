@@ -74,10 +74,10 @@
             <a href="medical_leave.html" class="nav-link">Medical Leave</a>
           </li>
           <li class="nav-item px-2">
-            <a href="medical_dashboard.html" class="nav-link active">Appointment Booking</a>
+            <a href="medical_dashboard.html" class="nav-link">Appointment Booking</a>
           </li>
           <li class="nav-item px-2">
-            <a href="medical_message.html" class="nav-link">Leave Message</a>
+            <a href="medical_message.html" class="nav-link active">Leave Message</a>
           </li>
         </ul>
       </div>
@@ -107,75 +107,11 @@
       <div class="row">
         <div class="col-md-9">
           <div class="card">
-            <div class="card-header">
-              <h4>Announcements</h4>
-            </div>
+
             <table class="table table-striped">
               <thead class="thead-dark">
                 <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Announcement One</td>
-                  <td>May 10 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Announcement Two</td>
-                  <td>May 11 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Announcement Three</td>
-                  <td>May 13 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Announcement Four</td>
-                  <td>May 15 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Announcement Five</td>
-                  <td>May 17 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Appointment Booking</th>
+                  <th>Leave A Message</th>
                   <th>
 
                   </th>
@@ -184,103 +120,34 @@
               <tbody>
                 <form action="#" method='post'>
                   <tr>
-                    <td>
-                      Date &ensp;<input id="datepicker" class="form-control" />
-                    </td>
-                    <td>
-                    Time &ensp;<input type='text' class="form-control"/>
+                    <td colspan="2">
+                    To : &ensp;<input type="email" class="form-control" value="medicaladmin@gmail.com" readonly/>
                     </td>
                   </tr>
                   <tr>
-                    <td>
-                      Name &ensp;<input type='text' class="form-control" />
-                    </td>
-                    <td>
-                      Age &ensp;<input type='text' class="form-control" />
+                    <td colspan="2">
+                      Subject : &ensp;<input type='text' class="form-control" />
                     </td>
                   </tr>
                   <tr>
-                    <td>
-                        Gender &ensp;<input type='text' class="form-control" />
-                    </td>
-                    <td>
-                      Location &ensp;<input type='text' class="form-control"/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Info &ensp;<input type='text' class="form-control"/>
-                    </td>
-                    <td>
+                    <td colspan="2">
 
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
+                        Body : &ensp;<textarea class="form-control" rows="4" cols="50"></textarea>
 
-                    </td>
-                    <td>
-                      <button type="submit" class="btn btn-primary">Search Available Doctors</button>
                     </td>
 
                   </tr>
-                </form>
-              </tbody>
-            </table>
-            <div class="card-header">
-              <h4>Search Results</h4>
-            </div>
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>#</th>
-                  <th>Doctor</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <form>
-                  <fieldset class="form-group">
-                    <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" value="doctor1" checked> Doctor 1
-                      </label>
-                    </div>
-                  </td>
-                  <td>
-                    11 Oct 2018, 12:00
-                  </td>
-                </tr>
-                <tr>
-                <td>
-                  2
-                </td>
-                <td>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input type="radio" class="form-check-input" value="doctor2"> Doctor 2
-                    </label>
-                  </div>
-              </td>
-              <td>
-                11 Oct 2018, 13:00
-              </td>
-            </tr>
-                  </fieldset>
                   <tr>
-                    <td>
 
-                    </td>
-                    <td>
+                      <td colspan="1">
 
-                    </td>
-                    <td>
-                      <button type="submit" class="btn btn-primary">Book Appointment</button>
+                          <button type="reset" class="btn btn-primary btn-block">Reset</button>
+
+                      </td>
+
+                    <td colspan="1">
+
+                        <button type="submit" class="btn btn-primary btn-block">Send &ensp;&ensp;&ensp;&ensp;&ensp;</button>
                     </td>
                   </tr>
                 </form>
@@ -288,51 +155,6 @@
             </table>
           </div>
         </div>
-        <!-- <div class="col-md-3">
-          <div class="card text-center bg-success text-white mb-3">
-            <div class="card-body">
-              <h3>Bookings</h3>
-              <h4 class="display-4">
-                <i class="fas fa-folder"></i> 4
-              </h4>
-              <a href="categories.html" class="btn btn-outline-light btn-sm">View</a>
-            </div>
-          </div>
-
-        </div> -->
-
-        <div class="col-md-3">
-          <div class="card">
-            <div class="card-header">
-              <h4>Bookings</h4>
-            </div>
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>#</th>
-                  <th>Date</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Doctor 1</td>
-                  <td>11/10 11:00</td>
-                  <td><a href="#" class="btn btn-danger btn-block">
-                   Cancel
-                  </a></td>
-                </tr>
-                <tr>
-                  <td>Doctor 2</td>
-                  <td>11/10 14:00</td>
-                  <td><a href="#" class="btn btn-danger btn-block">
-                   Cancel
-                  </a></td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-      </div>
       </div>
     </div>
   </section>
