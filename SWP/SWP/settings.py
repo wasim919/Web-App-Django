@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'SWP',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +78,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'its_test',
-        'USER': 'project',
-        'PASSWORD': 'swp_181011_%',
-        'HOST': 'localhost',
-        'PORT': '',
+        'USER': 'reichenbach',
+        'PASSWORD': 'capemindpalace%',
+        'HOST': 'project-swp.ckugrkn9q4ax.ap-south-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+                    'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
