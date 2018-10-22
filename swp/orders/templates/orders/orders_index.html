@@ -207,18 +207,20 @@
               </tbody>
             </table>
           </div>
-          <div class="card-body">
-            <form action="{% url 'orders:place_order' %}" method="post" id="order">
-              {% csrf_token %}
-              <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
-            </form>
-          </div>
+          {% if items %}
+            <div class="card-body">
+              <form action="{% url 'orders:place_order' %}" method="post" id="order">
+                {% csrf_token %}
+                <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
+              </form>
+            </div>
           <div class="card-body">
             <p>Didn't find your order?</p>
             <a href="{% url 'orders:manual_order' %}">
               <input type="Submit" value="Manual Order" class="btn btn-primary btn-block">
           </a>
           </div>
+          {% endif %}
         </div>
 
       </div>

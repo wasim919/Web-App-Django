@@ -105,12 +105,25 @@
               <form action="{% url 'dashboard:profile' %}" method="post">
                 {% csrf_token %}
                   {{ form.as_p }}
+                  <!-- {{ stu_form.as_p }} -->
+                  <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea class="form-control" name="editor">Let people know you.</textarea>
+                  </div>
                 <input type="Submit" value="Update" class="btn btn-primary btn-block">
               </form>
             </div>
           </div>
         </div>
         <div class="col-md-3">
+            <img src="/../{{ student.avatar }}" alt="" class="d-block img-fluid mb-3">
+            <form action="{% url 'dashboard:upload_image' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="file" name="myfile" default="/media/images/default.png">
+              <!-- <button class="btn btn-primary btn-block" name="upload">Choose Image</button> -->
+              <button type="submit" name="button">Upload Image</button>
+            </form>
+
         </div>
       </div>
     </div>

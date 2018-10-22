@@ -107,17 +107,24 @@
                 </tr>
               </thead>
               <tbody>
-                {% for data in hostel_announcements %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{data.announcement_title}}</td>
-                  <td>{{data.created_at}}</td>
+                {% if hostel_announcements %}
+                  {% for data in hostel_announcements %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{data.announcement_title}}</td>
+                    <td>{{data.created_at}}</td>
 
-                  <td><a href="{% url 'dashboard:announcement_detail' 1 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a></td>
-                </tr>
-                {% endfor %}
+                    <td><a href="{% url 'dashboard:announcement_detail' 1 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+                      <i class="fas fa-angle-double-right"></i> Details
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                {% endif %}
               </tbody>
             </table>
 
@@ -132,17 +139,24 @@
                 </tr>
               </thead>
               <tbody>
-                {% for data in mess_announcements %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{data.announcement_title}}</td>
-                  <td>{{data.created_at}}</td>
+                {% if mess_announcements %}
+                  {% for data in mess_announcements %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{data.announcement_title}}</td>
+                    <td>{{data.created_at}}</td>
 
-                  <td><a href="{% url 'dashboard:announcement_detail' 2 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a></td>
-                </tr>
-                {% endfor %}
+                    <td><a href="{% url 'dashboard:announcement_detail' 2 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+                      <i class="fas fa-angle-double-right"></i> Details
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                {% endif %}
               </tbody>
             </table>
 
@@ -157,17 +171,24 @@
                 </tr>
               </thead>
               <tbody>
-                {% for data in medical_announcements %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{data.announcement_title}}</td>
-                  <td>{{data.created_at}}</td>
+                {% if medical_announcements %}
+                  {% for data in medical_announcements %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{data.announcement_title}}</td>
+                    <td>{{data.created_at}}</td>
 
-                  <td><a href="{% url 'dashboard:announcement_detail' 3 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a></td>
-                </tr>
-                {% endfor %}
+                    <td><a href="{% url 'dashboard:announcement_detail' 3 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+                      <i class="fas fa-angle-double-right"></i> Details
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                {% endif %}
               </tbody>
             </table>
 
