@@ -249,7 +249,7 @@
               <td>{{ orders.item.item_name }}</td>
               <td>{{ orders.created_at }}</td>
               <td>{{ orders.quantity }}</td>
-              <td><a href="#" class="btn btn-danger btn-block">
+              <td><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
                Cancel
               </a></td>
             </tr>
@@ -290,21 +290,40 @@
         <th>Name</th>
         <th>Date</th>
         <th>Quantity</th>
-        <th>Cancel</th>
+        <th></th>
       </tr>
     </thead>
-    <tbody>
+    {% if user_order_history %}
+      {% for orders in user_order_history %}
       <tr>
-        <td>Order 1</td>
-        <td>11/10 11:00</td>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ orders.item.item_name }}</td>
+        <td>{{ orders.created_at }}</td>
+        <td>{{ orders.quantity }}</td>
         <td></td>
       </tr>
-      <tr>
-        <td>Order 2</td>
-        <td>11/10 14:00</td>
-        <td></td>
-      </tr>
-    </tbody>
+      {% endfor %}
+      <!-- <td>Order 1</td>
+      <td>11/10 11:00</td>
+      <td><a href="#" class="btn btn-danger btn-block">
+       Cancel
+      </a></td>
+    </tr> -->
+    {% endif %}
+    <!-- <td>Order 1</td>
+    <td>11/10 11:00</td>
+    <td><a href="#" class="btn btn-danger btn-block">
+     Cancel
+    </a></td>
+  </tr>
+  <tr>
+    <td>Order 2</td>
+    <td>11/10 14:00</td>
+    <td><a href="#" class="btn btn-danger btn-block">
+     Cancel
+    </a></td>
+  </tr> -->
+</tbody>
   </table>
 </div>
 </div>

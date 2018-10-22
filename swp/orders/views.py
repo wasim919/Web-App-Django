@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_list_or_404, get_object_or_40
 from django.contrib.auth.decorators import login_required
 from .forms import ManualOrderForm
 from  accounts.models import Student
-from .models import Items, OrderList
+from .models import Items, OrderList, OrderHistory
 import datetime
 import time
 
@@ -10,6 +10,9 @@ import time
 def orders_index(request):
     items = list(Items.objects.all())
     if items:
+
+        order_history = OrderHistory.objects.all()
+        user_order_history = list(filter(lambda x: x.student.user == request.user, order_history))
 
         books = list(filter(lambda x: x.item_type == "Book", items))
         stationary = list(filter(lambda x: x.item_type == "Stationary", items))
@@ -22,7 +25,8 @@ def orders_index(request):
             'stationary': stationary,
             'others': others,
             'items': items,
-            'user_orders': user_orders
+            'user_orders': user_orders,
+            'user_order_history': user_order_history,
         })
     else:
         return render(request, 'orders/orders_index.html', {
@@ -78,6 +82,18 @@ def store_in_items_list(student, items_purchased, items_post, creator):
             obj.created_by=creator.username
             obj.save()
             j += 1
+
+def delete_order(request, pk):
+    obj = OrderList.objects.get(pk=pk)
+    obj2 = Items.objects.get(item_name=obj.item.item_name)
+    obj2.quantity += obj.quantity
+    obj2.save()
+    print(obj.item.item_name)
+    if obj:
+        obj1 = OrderHistory.objects.create(student=obj.student, item=obj.item, quantity=obj.quantity, timestamp=obj.timestamp)
+        obj1.save()
+        obj.delete()
+    return redirect('orders:orders_index')
 
 @login_required
 def place_order(request):
