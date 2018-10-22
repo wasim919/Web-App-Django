@@ -10,7 +10,7 @@ class HostelAnnouncements(models.Model):
     modified_by = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
-        return str(self.announcement_title3)
+        return str(self.announcement_title)
 
 class MessAnnouncements(models.Model):
     announcement_title = models.CharField(max_length=30, blank=True, null=True)

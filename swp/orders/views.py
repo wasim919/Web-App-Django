@@ -5,19 +5,24 @@ from .models import Items
 
 @login_required
 def orders_index(request):
-    items = get_list_or_404(Items, )
+    items = list(Items.objects.all())
+    if items:
+        books = list(filter(lambda x: x.item_type == "Book", items))
 
-    books = list(filter(lambda x: x.item_type == "Book", items))
+        stationary = list(filter(lambda x: x.item_type == "Stationary", items))
 
-    stationary = list(filter(lambda x: x.item_type == "Stationary", items))
+        others = list(filter(lambda x: x.item_type == "Others", items))
 
-    others = list(filter(lambda x: x.item_type == "Others", items))
-
-    return render(request, 'orders/orders_index.html', {
-        'books': books,
-        'stationary': stationary,
-        'others': others
-    })
+        return render(request, 'orders/orders_index.html', {
+            'books': books,
+            'stationary': stationary,
+            'others': others,
+            'items': items
+        })
+    else:
+        return render(request, 'orders/orders_index.html', {
+            'items': items,
+        })
 
 @login_required
 def manual_order(request):
@@ -42,15 +47,22 @@ def manual_order(request):
 @login_required
 def place_order(request):
     if request.method == 'POST':
-        items = get_list_or_404(Items, )
+        items = list(Items.objects.all())
+        if items:
+            books = list(filter(lambda x: x.item_type == "Book", items))
 
-        books = list(filter(lambda x: x.item_type == "Book", items))
+            stationary = list(filter(lambda x: x.item_type == "Stationary", items))
 
-        stationary = list(filter(lambda x: x.item_type == "Stationary", items))
-
-        others = list(filter(lambda x: x.item_type == "Others", items))
-        print(request.POST)
-        print(request.POST.get("others"))
-        ordered_books_length = request.POST.get('books')
-        print(ordered_books_length)
-        return render(request, 'orders/order_placed.html')
+            others = list(filter(lambda x: x.item_type == "Others", items))
+            print(request.POST)
+            print(request.POST.get("others"))
+            ordered_books_length = request.POST.get('books')
+            print(ordered_books_length)
+            return render(request, 'orders/order_placed.html', {
+            'items': items
+            })
+        else:
+            print(items)
+            return render(request, 'orders/order_placed.html', {
+            'items': items,
+            })

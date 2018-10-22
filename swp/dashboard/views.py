@@ -14,13 +14,14 @@ from accounts.models import Student
 
 @login_required
 def dashboard_index(request):
-    hostel_announcements = get_list_or_404(HostelAnnouncements, )
+    # hostel_announcements = get_list_or_404(HostelAnnouncements, )
+    hostel_announcements = list(HostelAnnouncements.objects.all())
     hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
-    mess_announcements = get_list_or_404(MessAnnouncements, )
+    mess_announcements = list(MessAnnouncements.objects.all())
     mess_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
-    medical_announcements = get_list_or_404(MedicalAnnouncements, )
+    medical_announcements = list(MedicalAnnouncements.objects.all())
     medical_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
     return render(request, 'dashboard/index.html', {
@@ -93,7 +94,7 @@ class BasicUploadView(View):
 
 @login_required
 def contacts(request):
-    imp_contacts = get_list_or_404(ImportantContacts, )
+    imp_contacts = list(ImportantContacts.objects.all())
     return render(request, 'dashboard/important_contacts.html', {
         'imp_contacts': imp_contacts
     })
