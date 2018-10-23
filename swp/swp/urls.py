@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^dashboard/', include('dashboard.urls'), name = 'dashboard'),
     url(r'^orders/', include('orders.urls'), name = 'orders'),
+    url(r'^medical/', include('medical.urls'), name = 'medical'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
