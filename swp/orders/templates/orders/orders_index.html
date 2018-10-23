@@ -92,14 +92,14 @@
   </p>
   </section>
   <section id="posts">
-    <center><div class="container">
+    <div class="container" align="center">
       <div class="row">
         <div class="col-md-9">
           <div class="card">
             <div class="card-header">
               <h4>Orders</h4>
             </div>
-            <table class="table table-striped">
+            <table align="left"class="table table-striped" align="left">
               <thead class="thead-dark">
                 <tr>
                   <th>Books</th>
@@ -121,7 +121,7 @@
                   <td>{{book.item_name}}</td>
                   <td></td>
                   <td><select name="books" form="order">
-                      {% with ''|center:book.quantity as range %}
+                      {% with ' '|center:book.quantity as range %}
                       {{range}}
                       {% for value in range %}
                         <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
@@ -207,19 +207,129 @@
               </tbody>
             </table>
           </div>
-          <div class="card-body">
-            <form action="{% url 'orders:place_order' %}" method="post" id="order">
-              {% csrf_token %}
-              <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
-            </form>
-          </div>
+          {% if items %}
+            <div class="card-body">
+              <form action="{% url 'orders:place_order' %}" method="post" id="order">
+                {% csrf_token %}
+                <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
+              </form>
+            </div>
           <div class="card-body">
             <p>Didn't find your order?</p>
             <a href="{% url 'orders:manual_order' %}">
               <input type="Submit" value="Manual Order" class="btn btn-primary btn-block">
           </a>
           </div>
+          {% endif %}
         </div>
+
+        <div class="col-md-3">
+  <!-- <div class="card"> -->
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>
+            Orders
+          </th>
+          <th>List</th><th></th><th></th><th></th>
+        </tr>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Quantity</th>
+          <th>Cancel</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% if user_orders %}
+            {% for orders in user_orders %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ orders.item.item_name }}</td>
+              <td>{{ orders.created_at }}</td>
+              <td>{{ orders.quantity }}</td>
+              <td><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
+               Cancel
+              </a></td>
+            </tr>
+            {% endfor %}
+            <!-- <td>Order 1</td>
+            <td>11/10 11:00</td>
+            <td><a href="#" class="btn btn-danger btn-block">
+             Cancel
+            </a></td>
+          </tr> -->
+          {% endif %}
+          <!-- <td>Order 1</td>
+          <td>11/10 11:00</td>
+          <td><a href="#" class="btn btn-danger btn-block">
+           Cancel
+          </a></td>
+        </tr>
+        <tr>
+          <td>Order 2</td>
+          <td>11/10 14:00</td>
+          <td><a href="#" class="btn btn-danger btn-block">
+           Cancel
+          </a></td>
+        </tr> -->
+      </tbody>
+
+<!-- <div class="col-md-3"> -->
+<div class="card">
+    <thead class="thead-dark">
+      <tr>
+        <th>
+          Order
+        </th>
+        <th>History</th><th></th><th></th><th></th>
+      </tr>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th></th>
+      </tr>
+    </thead>
+    {% if user_order_history %}
+      {% for orders in user_order_history %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ orders.item.item_name }}</td>
+        <td>{{ orders.created_at }}</td>
+        <td>{{ orders.quantity }}</td>
+        <td></td>
+      </tr>
+      {% endfor %}
+      <!-- <td>Order 1</td>
+      <td>11/10 11:00</td>
+      <td><a href="#" class="btn btn-danger btn-block">
+       Cancel
+      </a></td>
+    </tr> -->
+    {% endif %}
+    <!-- <td>Order 1</td>
+    <td>11/10 11:00</td>
+    <td><a href="#" class="btn btn-danger btn-block">
+     Cancel
+    </a></td>
+  </tr>
+  <tr>
+    <td>Order 2</td>
+    <td>11/10 14:00</td>
+    <td><a href="#" class="btn btn-danger btn-block">
+     Cancel
+    </a></td>
+  </tr> -->
+</tbody>
+  </table>
+</div>
+</div>
+
+      </div>
+    </div>
 
       </div>
     </div>

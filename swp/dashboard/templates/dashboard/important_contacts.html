@@ -106,18 +106,20 @@
                   <th>Email</th>
                 </tr>
               </thead>
-              <tbody>
-                {% for data in imp_contacts %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{data.name}}</td>
-                  <td>{{data.mobile}}</td>
+              {% if imp_contacts %}
+                <tbody>
+                  {% for data in imp_contacts %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.mobile}}</td>
 
-                  <td>{{data.email}}</i> Details
-                  </a></td>
-                </tr>
-                {% endfor %}
-              </tbody>
+                    <td>{{data.email}}</i> Details
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              {% endif %}
             </table>
 
 

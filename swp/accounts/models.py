@@ -3,10 +3,9 @@ from django.contrib.auth.models import User
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    #idstudent = models.IntegerField(primary_key=True)
-    #name = models.CharField(max_length=45, blank=True, null=True)
+    bio = models.CharField(max_length=100, blank=True, null=True)
     roll = models.CharField(max_length=45, blank=True, null=True)
-    # avatar = models.ImageField(upload_to="media/images/")
+    avatar = models.ImageField(upload_to="images/", default="images/default.png")
     timestamp = models.DateTimeField(blank=True, null=True)
     created_at = models.DateField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)

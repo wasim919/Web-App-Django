@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from .import views
 
 urlpatterns = [
@@ -23,4 +25,7 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^dashboard/', include('dashboard.urls'), name = 'dashboard'),
     url(r'^orders/', include('orders.urls'), name = 'orders'),
+    url(r'^medical/', include('medical.urls'), name = 'medical'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
