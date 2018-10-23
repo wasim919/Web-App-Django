@@ -92,14 +92,14 @@
   </p>
   </section>
   <section id="posts">
-    <div class="container" align="center">
+    <!-- <div class="container" align="center"> -->
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
           <div class="card">
             <div class="card-header">
               <h4>Orders</h4>
             </div>
-            <table align="left"class="table table-striped" align="left">
+            <table style="align:left" class="table table-striped" align="left">
               <thead class="thead-dark">
                 <tr>
                   <th>Books</th>
@@ -121,7 +121,7 @@
                   <td>{{book.item_name}}</td>
                   <td></td>
                   <td><select name="books" form="order">
-                      {% with ' '|center:book.quantity as range %}
+                      {% with ''|center:book.quantity as range %}
                       {{range}}
                       {% for value in range %}
                         <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
@@ -227,6 +227,7 @@
   <!-- <div class="card"> -->
     <table class="table table-striped">
       <thead class="thead-dark">
+        Total Cost: {{ total_cost }}
         <tr>
           <th>
             Orders
@@ -247,7 +248,7 @@
             <tr>
               <td>{{ forloop.counter }}</td>
               <td>{{ orders.item.item_name }}</td>
-              <td>{{ orders.created_at }}</td>
+              <td>{{ orders.timestamp }}</td>
               <td>{{ orders.quantity }}</td>
               <td><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
                Cancel
@@ -298,7 +299,7 @@
       <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{ orders.item.item_name }}</td>
-        <td>{{ orders.created_at }}</td>
+        <td>{{ orders.timestamp }}</td>
         <td>{{ orders.quantity }}</td>
         <td></td>
       </tr>

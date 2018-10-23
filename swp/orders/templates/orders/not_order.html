@@ -100,16 +100,36 @@
       <div class="row">
         <div class="col-md-9">
           <div class="card">
-            {% if items %}
-              <div class="card-header">
-                <h4>Order Placed</h4>
-              </div>
-            {% else %}
-            <div class="card-header">
-              <h4>Nothing in the database</h4>
+            {% if not_ordered %}
+            <div class="col-md-9">
+              <b>The below items are out of stock</b>
             </div>
-            {% endif %}
+              <div class="card-header">
+                  {% for orders in not_ordered %}
+                  <ul>
+                    <li>Item Name: {{ orders.item_name }}<br>
+                    Item Type: {{ orders.item_type }}</li>
+                    </ul>
+                  {% endfor %}
+              </div>
+              {% endif %}
+
+              {% if ordered_items %}
+              Total Cost: {{ total_cost }}
+              <div class="card-header">
+                <div class="col-md-9">
+                  <b>The below items have been ordered:</b>
+                </div>
+                {% for orders in ordered_items %}
+                <ul>
+                  <li>Item Name: {{ orders.item_name }}<br>
+                  <li>Item Type: {{ orders.item_type }}</li>
+                </ul>
+                {% endfor %}
+              </ul>
+            </div>
           </div>
+            {% endif %}
         </div>
         <div class="col-md-3">
         </div>
