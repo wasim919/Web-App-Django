@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'dashboard',
-    'orders'
+    'orders',
+    'medical'
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,15 @@ WSGI_APPLICATION = 'swp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE' : 'django.db.backends.mysql',
+        'NAME' : 'its_test',
+        'USER' : 'reichenbach',
+        'PASSWORD' : 'capemindpalace%',
+        'HOST' : 'project-swp.ckugrkn9q4ax.ap-south-1.rds.amazonaws.com',
+        'PORT' : '3306',
+        'OPTIONS' : {
+                    'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
@@ -118,7 +126,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'swpsystem@gmail.com'
+EMAIL_HOST_PASSWORD = 'Toor@123'
+EMAIL_PORT = 587
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
