@@ -27,19 +27,19 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav">
           <li class="nav-item px-2">
-            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="hostel.html" class="nav-link">Hostel</a>
+            <a href="posts.html" class="nav-link">Hostel</a>
           </li>
           <li class="nav-item px-2">
-            <a href="mess.html" class="nav-link">Mess</a>
+            <a href="categories.html" class="nav-link">Mess</a>
           </li>
           <li class="nav-item px-2">
-            <a href="medical.html" class="nav-link active">Medical</a>
+            <a href="index.html" class="nav-link active">Medical</a>
           </li>
           <li class="nav-item px-2">
-            <a href="orders.html" class="nav-link">Order</a>
+            <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
           </li>
         </ul>
 
@@ -52,8 +52,8 @@
               <a href="profile.html" class="dropdown-item">
                 <i class="fas fa-user-circle"></i> Profile
               </a>
-              <a href="contacts.html" class="dropdown-item">
-                <i class="fas fa-cog"></i> Important Contacts
+              <a href="settings.html" class="dropdown-item">
+                <i class="fas fa-cog"></i> Settings
               </a>
             </div>
           </li>
@@ -61,6 +61,26 @@
             <a href="login.html" class="nav-link">
               <i class="fas fa-user-times"></i> Logout
             </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+    <div class="container">
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav">
+          <li class="nav-item px-2">
+            <a href="{% url 'medical:medical_leave' %}" class="nav-link">Medical Leave</a>
+          </li>
+          <li class="nav-item px-2">
+            <a href="{% url 'medical:medical_dashboard' %}" class="nav-link active">Appointment Booking</a>
+          </li>
+          <li class="nav-item px-2">
+            <a href="{% url 'medical:medical_message' %}" class="nav-link">Leave Message</a>
           </li>
         </ul>
       </div>
@@ -86,7 +106,7 @@
   </p>
   </section>
   <section id="posts">
-    <center><div class="container">
+    <div class="container">
       <div class="row">
         <div class="col-md-9">
           <div class="card">
@@ -96,16 +116,16 @@
             <table class="table table-striped">
               <thead class="thead-dark">
                 <tr>
-                  <th>Hostel</th>
+                  <th>#</th>
                   <th>Title</th>
                   <th>Date</th>
-                  <th>(Top - 5)</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>Water Shortage</td>
+                  <td>Announcement One</td>
                   <td>May 10 2018</td>
                   <td>
                     <a href="details.html" class="btn btn-secondary">
@@ -115,7 +135,7 @@
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>Power Shutdown</td>
+                  <td>Announcement Two</td>
                   <td>May 11 2018</td>
                   <td>
                     <a href="details.html" class="btn btn-secondary">
@@ -125,7 +145,7 @@
                 </tr>
                 <tr>
                   <td>3</td>
-                  <td>Lift Repair</td>
+                  <td>Announcement Three</td>
                   <td>May 13 2018</td>
                   <td>
                     <a href="details.html" class="btn btn-secondary">
@@ -135,7 +155,7 @@
                 </tr>
                 <tr>
                   <td>4</td>
-                  <td>Room Cleaning</td>
+                  <td>Announcement Four</td>
                   <td>May 15 2018</td>
                   <td>
                     <a href="details.html" class="btn btn-secondary">
@@ -145,7 +165,7 @@
                 </tr>
                 <tr>
                   <td>5</td>
-                  <td>Table Replacement</td>
+                  <td>Announcement Five</td>
                   <td>May 17 2018</td>
                   <td>
                     <a href="details.html" class="btn btn-secondary">
@@ -155,140 +175,169 @@
                 </tr>
               </tbody>
             </table>
-
-            <!--Mess-->
             <table class="table table-striped">
               <thead class="thead-dark">
                 <tr>
-                  <th>Mess</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>(Top - 5)</th>
+                  <th>Appointment Booking</th>
+                  <th>
+
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Change in Mess Timings</td>
-                  <td>May 10 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Change in Breakfast Menu</td>
-                  <td>May 11 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Change in Dinner</td>
-                  <td>May 13 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Special Dinner</td>
-                  <td>May 15 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Food Wastage</td>
-                  <td>May 17 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
+                <form action="#" method='post'>
+                  <tr>
+                    <td>
+                      Date &ensp;<input id="datepicker" class="form-control" />
+                    </td>
+                    <td>
+                    Time &ensp;<input type='text' class="form-control"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Name &ensp;<input type='text' class="form-control" />
+                    </td>
+                    <td>
+                      Age &ensp;<input type='text' class="form-control" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        Gender &ensp;<input type='text' class="form-control" />
+                    </td>
+                    <td>
+                      Location &ensp;<input type='text' class="form-control"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Info &ensp;<input type='text' class="form-control"/>
+                    </td>
+                    <td>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+
+                    </td>
+                    <td>
+                      <button type="submit" class="btn btn-primary">Search Available Doctors</button>
+                    </td>
+
+                  </tr>
+                </form>
               </tbody>
             </table>
-            <!--Medical-->
+            <div class="card-header">
+              <h4>Search Results</h4>
+            </div>
             <table class="table table-striped">
               <thead class="thead-dark">
                 <tr>
-                  <th>Medical</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>(Top - 5)</th>
+                  <th>#</th>
+                  <th>Doctor</th>
+                  <th>Time</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Doctor Visit</td>
-                  <td>May 10 2018</td>
+                <form>
+                  <fieldset class="form-group">
+                    <tr>
+                    <td>
+                      1
+                    </td>
+                    <td>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" value="doctor1" checked> Doctor 1
+                      </label>
+                    </div>
+                  </td>
                   <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
+                    11 Oct 2018, 12:00
                   </td>
                 </tr>
                 <tr>
-                  <td>2</td>
-                  <td>Availability of Medicine</td>
-                  <td>May 11 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Dentist Visit</td>
-                  <td>May 13 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Good Diet Plan</td>
-                  <td>May 15 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Why to wake up early?</td>
-                  <td>May 17 2018</td>
-                  <td>
-                    <a href="details.html" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Details
-                    </a>
-                  </td>
-                </tr>
+                <td>
+                  2
+                </td>
+                <td>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" value="doctor2"> Doctor 2
+                    </label>
+                  </div>
+              </td>
+              <td>
+                11 Oct 2018, 13:00
+              </td>
+            </tr>
+                  </fieldset>
+                  <tr>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                      <button type="submit" class="btn btn-primary">Book Appointment</button>
+                    </td>
+                  </tr>
+                </form>
               </tbody>
             </table>
-
           </div>
         </div>
+        <!-- <div class="col-md-3">
+          <div class="card text-center bg-success text-white mb-3">
+            <div class="card-body">
+              <h3>Bookings</h3>
+              <h4 class="display-4">
+                <i class="fas fa-folder"></i> 4
+              </h4>
+              <a href="categories.html" class="btn btn-outline-light btn-sm">View</a>
+            </div>
+          </div>
 
+        </div> -->
+
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h4>Bookings</h4>
+            </div>
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Doctor 1</td>
+                  <td>11/10 11:00</td>
+                  <td><a href="#" class="btn btn-danger btn-block">
+                   Cancel
+                  </a></td>
+                </tr>
+                <tr>
+                  <td>Doctor 2</td>
+                  <td>11/10 14:00</td>
+                  <td><a href="#" class="btn btn-danger btn-block">
+                   Cancel
+                  </a></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
       </div>
     </div>
-  </center>
   </section>
 
   <!-- FOOTER -->
