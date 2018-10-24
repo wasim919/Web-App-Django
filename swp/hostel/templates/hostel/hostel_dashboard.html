@@ -92,7 +92,7 @@
   </p>
   </section>
   <section id="posts">
-    <center><div class="container">
+  <div class="container">
       <div class="row">
         <div class="col-md-9">
           <div class="card">
@@ -117,6 +117,16 @@
               </thead>
               <tbody>
                	   <!-- INSERT JINJA TEMPLATES HERE -->
+
+            {% if h_announce %}
+            <tr>
+              {% for announce_data in h_announce %}
+              <td align="center"> {{ announce_data.id }}</td>
+              <td align="center">{{ announce_data.announcement }}</td>
+              <td align="center">{{ announce_data.timestamp }} </td>
+              {% endfor %}
+            </tr>
+            {% endif %}
               </tbody>
             </table>
 
@@ -133,13 +143,23 @@
                   <th></th>
                 </tr>
                 <tr style="text-align: center">
-                  <th>No.</th>
+                  <th>Student Id</th>
                   <th>Issue</th>
                   <th>Date</th>
                 </tr>
               </thead>
               <tbody>
                <!-- INSERT JINJA TEMPLATES HERE -->
+
+               {% if self_help %}
+            <tr>
+              {% for help_data in self_help %}
+              <td align="center"> {{ help_data.student_id }}</td>
+              <td align="center">{{ help_data.issue }}</td>
+              <td align="center">{{ help_data.timestamp }} </td>
+              {% endfor %}
+            </tr>
+            {% endif %}
               </tbody>
             </table>
 
@@ -147,9 +167,49 @@
           </div>
         </div>
 
+<div class="col-md-3">
+  <div class="card" style=" border: 0px;">
+    <div class="card" style=" border: 0px;">
+      <h4>Courier History</h4>
+    </div>
+    <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
+      <tr style="width: 100%; padding: 0px;  border: 0px;">
+        <td style="width: 100%; padding: 0px;">
+          <table style="width: 156%; padding: 0px;  border: 0px;">
+            <thead class="thead-dark" style="width: 100%; padding: 0px;">
+              <tr style="width: 60%; padding: 0px;">
+                <th style="width: 15px; font-weight:normal;">#</th>
+                <th style="width: 60px; font-weight:normal;">Agent</th>
+                <th style="width: 60px; font-weight:normal;">Ref No.</th>
+                <th style="width: 60px; font-weight:normal;">Date</th>
+              </tr>
+            </thead>
+
+          </table>
+        </td>
+      </tr>
+      <tr style="width: 100%; padding: 0px;">
+        <td style="width: 100%; padding: 0px;">
+          <div style="overflow-y: scroll; width: 156%; height: 400px;">
+            {% if courier_data %}
+            <table style="width: 100%; padding: 0px;">
+                {% for data in courier_data %}
+                <tr>
+                  <td style="width: 55px; font-weight:normal;">{{ courier_data.idcourrier }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ courier_data.delivery_agent }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ courier_data.courrier_ref_no }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ courier_data.timestamp }}</td>
+                </tr>
+                {% endfor %}
+                </table>
+                {% endif %}
+          </div>
+        </td>
+      </tr>
+</table>
+
       </div>
     </div>
-  </center>
   </section>
 
   	<div class = "row">

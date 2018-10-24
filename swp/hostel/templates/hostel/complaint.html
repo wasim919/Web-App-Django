@@ -111,22 +111,57 @@
               <th></th> 
               </tr>
               </thead>
-           </table>
+           
            <!-- Apply appropriate post request here -->
-          <form action="{% url 'hostel:addComplaint' %}" method='post'>  
+          <form action="{% url 'hostel:addComplaint' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div style="margin-top: 60px">
-            Subject:<br>
-            </div>
-             {{ form.subject }}  <br>
-            <div style="margin-top: 60px">
-            Complaint:<br>
-            </div>
+            <tr>
+              <td>
+           
+            Subject: &ensp; &nbsp;&nbsp;&nbsp;&nbsp;&ensp; &nbsp;&nbsp;&nbsp;&nbsp;
+             {{ form.subject }}
+             
+           </td>
+           <td></td>
+           <td></td>
+         </tr>
+         <tr>
+           <td>
+             
+            Room Number: &ensp;
+            
+            {{ form.room_no }}
+            
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+            <td>
+            Complaint: &ensp; &nbsp;&nbsp;&nbsp;&nbsp;&ensp; &nbsp;&nbsp;&nbsp;&nbsp;
+            
             {{ form.complaint }} 
-            <br>
-            <br>
-            <input type="submit" class = "btn btn-primary" value="File Complaint" style="margin-bottom: 50px">
+          </td>
+            <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            Upload Image: &ensp;
+            <input id="id_image" type="file" class="" name="image">
+          </td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+          <input type="submit" class = "btn btn-primary" value="File Complaint">
+        </td>
+        <td></td>
+        <td></td>
+          </tr>
           </form>
+           </table>
            
           
           </div>
