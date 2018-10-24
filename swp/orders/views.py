@@ -13,6 +13,7 @@ def orders_index(request):
 
         order_history = OrderHistory.objects.all()
         user_order_history = list(filter(lambda x: x.student.user == request.user, order_history))
+        user_order_history.sort(key = lambda a: a.timestamp, reverse = True)
 
         books = list(filter(lambda x: x.item_type == "Book", items))
         stationary = list(filter(lambda x: x.item_type == "Stationary", items))
@@ -20,6 +21,7 @@ def orders_index(request):
 
         all_orders = list(OrderList.objects.all())
         user_orders = list(filter(lambda x: x.student.user == request.user, all_orders))
+        user_orders.sort(key = lambda a: a.timestamp, reverse = True)
         total_cost = 0
         if user_orders:
             for orders in user_orders:

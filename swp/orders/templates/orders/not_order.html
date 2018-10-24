@@ -101,37 +101,67 @@
         <div class="col-md-9">
           <div class="card">
             {% if not_ordered %}
-            <div class="col-md-9">
-              <b>The below items are out of stock</b>
+            <div class="card-header">
+              <h4>The following orders are out-of-stock:</h4>
             </div>
-              <div class="card-header">
-                  {% for orders in not_ordered %}
-                  <ul>
-                    <li>Item Name: {{ orders.item_name }}<br>
-                    Item Type: {{ orders.item_type }}</li>
-                    </ul>
-                  {% endfor %}
-              </div>
-              {% endif %}
-
-              {% if ordered_items %}
-              Total Cost: {{ total_cost }}
-              <div class="card-header">
-                <div class="col-md-9">
-                  <b>The below items have been ordered:</b>
-                </div>
-                {% for orders in ordered_items %}
-                <ul>
-                  <li>Item Name: {{ orders.item_name }}<br>
-                  <li>Item Type: {{ orders.item_type }}</li>
-                </ul>
+            <table style="align:left" class="table table-striped" align="left">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Out of stock Items:</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in not_ordered %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{order.item_name}}</td>
+                  <td>{{order.item_type}}</td>
+                  <td></td>
+                </tr>
                 {% endfor %}
-              </ul>
-            </div>
-          </div>
+              </tbody>
+            </table>
             {% endif %}
-        </div>
-        <div class="col-md-3">
+            {% if ordered_items %}
+            <div class="card-header">
+              <h4>The following orders have been ordered:</h4>
+            </div>
+            <table style="align:left" class="table table-striped" align="left">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Ordered Items:</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in ordered_items %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{order.item_name}}</td>
+                  <td>{{order.item_type}}</td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% endif %}
         </div>
       </div>
     </div>
