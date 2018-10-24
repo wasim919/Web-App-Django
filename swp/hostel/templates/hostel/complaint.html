@@ -31,13 +31,13 @@
             <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="hostel.html" class="nav-link">Hostel</a>
+            <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link active">Hostel</a>
           </li>
           <li class="nav-item px-2">
             <a href="mess.html" class="nav-link">Mess</a>
           </li>
           <li class="nav-item px-2">
-            <a href="medical.html" class="nav-link">Medical</a>
+            <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
@@ -47,7 +47,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fas fa-user"></i> Welcome {{request.user}}
+              <i class="fas fa-user"></i> Welcome {{ request.user }}
             </a>
             <div class="dropdown-menu">
               <a href="{% url 'dashboard:profile' %}" class="dropdown-item" target="2">
@@ -95,7 +95,7 @@
     <center><div class="container">
       <div class="row">
         <div class="col-md-9">
-          <a href="home.html" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
+          <a href="{% url 'hostel:hostel_dashboard' %}" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
             <i class="fas fa-arrow-left"></i> Back To Hostel Dashboard
           </a>
           <div class="card">
@@ -113,15 +113,16 @@
               </thead>
            </table>
            <!-- Apply appropriate post request here -->
-          <form action="complaint-ack.html">  
+          <form action="{% url 'hostel:addComplaint' %}" method='post'>  
+            {% csrf_token %}
             <div style="margin-top: 60px">
             Subject:<br>
             </div>
-            <input type="text" name="title" placeholder = "Enter subject" style="width: 400px;"><br>
+             {{ form.subject }}  <br>
             <div style="margin-top: 60px">
             Complaint:<br>
             </div>
-            <textarea name="complaint" placeholder = "Enter complaint" cols = "5" style="height: 100px; width: 400px"></textarea>
+            {{ form.complaint }} 
             <br>
             <br>
             <input type="submit" class = "btn btn-primary" value="File Complaint" style="margin-bottom: 50px">

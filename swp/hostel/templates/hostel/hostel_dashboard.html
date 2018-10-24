@@ -31,7 +31,7 @@
             <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="hostel.html" class="nav-link">Hostel</a>
+            <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link active">Hostel</a>
           </li>
           <li class="nav-item px-2">
             <a href="mess.html" class="nav-link">Mess</a>
@@ -47,7 +47,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fas fa-user"></i> Welcome {{request.user}}
+              <i class="fas fa-user"></i> Welcome {{ request.user }}
             </a>
             <div class="dropdown-menu">
               <a href="{% url 'dashboard:profile' %}" class="dropdown-item" target="2">
@@ -110,7 +110,7 @@
                   <th></th>
                 </tr>
                 <tr style="text-align: center">
-                  <th>#</th>
+                  <th>No.</th>
                   <th>Announcement</th>
                   <th>Date</th>
                 </tr>
@@ -133,7 +133,7 @@
                   <th></th>
                 </tr>
                 <tr style="text-align: center">
-                  <th>#</th>
+                  <th>No.</th>
                   <th>Issue</th>
                   <th>Date</th>
                 </tr>
@@ -155,7 +155,7 @@
   	<div class = "row">
   		<div class = "col-md-4">
   		<div class="card-body ">
-  			  <a href = "complaint.html">
+  			  <a href = "{% url 'hostel:form_complaint' %}">
               <button class= "btn btn-primary" style="margin-left: 200px">
               	File complaint
               </button>	
@@ -163,8 +163,8 @@
             </div>
         </div>
         <div class = "col-md-4">
-         <div class="card-body ">l
-         	  <a href = "leave.html">
+         <div class="card-body ">
+         	  <a href = "{% url 'hostel:leave_form' %}">
               <button class= "btn btn-primary" style="margin-left: 200px">
               	Apply for leave
               </button>

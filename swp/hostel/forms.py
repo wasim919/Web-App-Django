@@ -12,3 +12,11 @@ class HostelLeaveForm(forms.ModelForm):
 	class Meta:
 		model = HostelLeave
 		fields = ['leave_from','leave_to','hometown','reason']
+
+class HostelComplaintForm(forms.ModelForm):
+	subject = forms.CharField(label='subject',widget=forms.TextInput(attrs={"type":"text","name":"title","placeholder":"Enter subject","width": "600px"}))
+	complaint = forms.CharField(label='complaint',widget=forms.Textarea(attrs = {"name":"complaint","placeholder":"Please Enter your complaint here.","cols": "60","height": "60px", "width": "400px"}))
+
+	class Meta:
+		model = ComplaintRegister
+		fields = ['subject','complaint']
