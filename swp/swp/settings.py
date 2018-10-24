@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'dashboard',
     'orders',
-    'medical'
+    'medical',
+    'hostel',
 ]
 
 MIDDLEWARE = [
@@ -81,14 +82,15 @@ WSGI_APPLICATION = 'swp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.mysql',
-        'NAME' : 'its_test',
-        'USER' : 'reichenbach',
-        'PASSWORD' : 'capemindpalace%',
-        'HOST' : 'project-swp.ckugrkn9q4ax.ap-south-1.rds.amazonaws.com',
-        'PORT' : '3306',
-        'OPTIONS' : {
-                    'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'its_test',
+        'USER': 'reichenbach',
+        'PASSWORD': 'capemindpalace%',
+        'HOST': 'project-swp.ckugrkn9q4ax.ap-south-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+
         },
     }
 }
