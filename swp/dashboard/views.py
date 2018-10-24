@@ -63,12 +63,19 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditUserNameForm(data = request.POST, instance=request.user)
         student = get_object_or_404(Student, user = request.user)
+        print(request.POST)
+        request.POST.get("editor")
         if request.POST.get("editor") != '' and student.bio != request.POST.get("editor"):
             student.bio = request.POST.get("editor")
             student.save()
         if form.is_valid():
             form.save()
-        return redirect('/dashboard/profile')
+        # return redirect('/dashboard/profile')
+        print(request.POST.get("editor"))
+        return render(request, 'dashboard/edit_profile.html', {
+            'bio': request.POST.get("editor"),
+            'form': form,
+        })
     else:
         student = get_object_or_404(Student, user = request.user)
         form = EditUserNameForm(instance=request.user)

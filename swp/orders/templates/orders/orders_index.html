@@ -120,7 +120,7 @@
                   <td>{{ forloop.counter }}</td>
                   <td>{{book.item_name}}</td>
                   <td></td>
-                  <td><select name="books" form="order">
+                  <td><select name="books" class="btn btn-secondary" data-toggle="dropdown" form="order">
                       {% with ''|center:book.quantity as range %}
                       {{range}}
                       {% for value in range %}
@@ -157,7 +157,7 @@
                   <td>{{ forloop.counter }}</td>
                   <td>{{stationary.item_name}}</td>
                   <td></td>
-                  <td><select name="stationary" form="order">
+                  <td><select name="stationary" class="btn btn-secondary" data-toggle="dropdown" form="order">
                       {% with ''|center:stationary.quantity as range %}
                       {% for value in range %}
                         <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
@@ -191,7 +191,7 @@
                   <td>{{ forloop.counter }}</td>
                   <td>{{other.item_name}}</td>
                   <td></td>
-                  <td><select name="others" form="order">
+                  <td><select class="btn btn-secondary" data-toggle="dropdown" name="others" form="order">
                       {% with ''|center:other.quantity as range %}
                       {{range}}
                       {% for value in range %}
@@ -221,112 +221,91 @@
           {% endif %}
         </div>
 
-        <div class="col-md-3">
-  <!-- <div class="card"> -->
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <div class="card-header">
-          <h4>Total Cost: {{ total_cost }}</h4>
-        </div>
-        <tr>
-          <th>
-            Orders
-          </th>
-          <th>List</th><th></th><th></th><th></th>
-        </tr>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Quantity</th>
-          <th>Cancel</th>
-        </tr>
-      </thead>
-      <tbody>
-          {% if user_orders %}
-            {% for orders in user_orders %}
-            <tr>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ orders.item.item_name }}</td>
-              <td>{{ orders.timestamp }}</td>
-              <td>{{ orders.quantity }}</td>
-              <td><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
-               Cancel
-              </a></td>
-            </tr>
-            {% endfor %}
-            <!-- <td>Order 1</td>
-            <td>11/10 11:00</td>
-            <td><a href="#" class="btn btn-danger btn-block">
-             Cancel
-            </a></td>
-          </tr> -->
-          {% endif %}
-          <!-- <td>Order 1</td>
-          <td>11/10 11:00</td>
-          <td><a href="#" class="btn btn-danger btn-block">
-           Cancel
-          </a></td>
-        </tr>
-        <tr>
-          <td>Order 2</td>
-          <td>11/10 14:00</td>
-          <td><a href="#" class="btn btn-danger btn-block">
-           Cancel
-          </a></td>
-        </tr> -->
-      </tbody>
-<!-- <div class="col-md-3"> -->
-<div class="card">
-    <thead class="thead-dark">
-      <tr>
-        <th>
-          Order
-        </th>
-        <th>History</th><th></th><th></th><th></th>
+  <div class="col-md-3">
+  <div class="card" style=" border: 0px;">
+    <div class="card" style=" border: 0px;">
+      <h4>Total Cost: {{ total_cost }}</h4>
+    </div>
+    <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
+      <tr style="width: 100%; padding: 0px;  border: 0px;">
+        <td style="width: 100%; padding: 0px;">
+          <table style="width: 156%; padding: 0px;  border: 0px;">
+            <thead class="thead-dark" style="width: 100%; padding: 0px;">
+              <tr style="width: 100%; padding: 0px;">
+                <th style="width: 55px; font-weight:normal;">#</th>
+                <th style="width: 132px; font-weight:normal;">Name</th>
+                <th style="width: 132px; font-weight:normal;">Date</th>
+                <th style="width: 132px; font-weight:normal;">Quantity</th>
+                <th style="width: 132px; font-weight:normal;">Cancel</th>
+              </tr>
+            </thead>
+
+          </table>
+        </td>
       </tr>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Quantity</th>
-        <th></th>
+      <tr style="width: 100%; padding: 0px;">
+        <td style="width: 100%; padding: 0px;">
+          <div style="overflow-y: scroll; width: 156%; height: 400px;">
+            {% if user_orders %}
+            <table style="width: 100%; padding: 0px;">
+                {% for orders in user_orders %}
+                <tr>
+                  <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ orders.item.item_name }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ orders.timestamp }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ orders.quantity }}</td>
+                  <td style="width: 132px; font-weight:normal;"><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
+                   Cancel
+                  </a></td>
+                </tr>
+                {% endfor %}
+                </table>
+                {% endif %}
+          </div>
+        </td>
       </tr>
-    </thead>
-    {% if user_order_history %}
-      {% for orders in user_order_history %}
-      <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ orders.item.item_name }}</td>
-        <td>{{ orders.timestamp }}</td>
-        <td>{{ orders.quantity }}</td>
-        <td></td>
+    </table>
+    <table class="table table-striped" style="width: 100%; padding: 0px;">
+      <tr style="width: 100%; padding: 0px;">
+        <td style="width: 100%; padding: 0px;">
+          <table style="width: 165%; padding: 0px;">
+            <thead class="thead-dark" style="width: 100%; padding: 0px;">
+              <tr style="width: 100%; padding: 0px;">
+                <th style="width: 55px; font-weight:normal;">#</th>
+                <th style="width: 132px; font-weight:normal;">Name</th>
+                <th style="width: 132px; font-weight:normal;">Date</th>
+                <th style="width: 132px; font-weight:normal;">Quantity</th>
+              </tr>
+            </thead>
+          </table>
+        </td>
       </tr>
-      {% endfor %}
-      <!-- <td>Order 1</td>
-      <td>11/10 11:00</td>
-      <td><a href="#" class="btn btn-danger btn-block">
-       Cancel
-      </a></td>
-    </tr> -->
-    {% endif %}
-    <!-- <td>Order 1</td>
-    <td>11/10 11:00</td>
-    <td><a href="#" class="btn btn-danger btn-block">
-     Cancel
-    </a></td>
-  </tr>
-  <tr>
-    <td>Order 2</td>
-    <td>11/10 14:00</td>
-    <td><a href="#" class="btn btn-danger btn-block">
-     Cancel
-    </a></td>
-  </tr> -->
-</tbody>
-  </table>
+      <tr style="width: 100%; padding: 0px;">
+        <td style="width: 100%; padding: 0px;">
+          <div style="overflow-y: scroll; width: 165%; height: 400px;">
+            <table style="width: 100%; padding: 0px;">
+              {% if user_order_history %}
+                {% for orders in user_order_history %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ orders.item.item_name }}</td>
+                  <td>{{ orders.timestamp }}</td>
+                  <td>{{ orders.quantity }}</td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
+
 </div>
+
+
 
       </div>
     </div>

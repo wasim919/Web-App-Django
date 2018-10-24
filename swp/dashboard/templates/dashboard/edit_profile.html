@@ -108,7 +108,13 @@
                   <!-- {{ stu_form.as_p }} -->
                   <div class="form-group">
                     <label for="bio">Bio</label>
-                    <textarea class="form-control" name="editor">Let people know you.</textarea>
+                    {% if bio %}
+                      <textarea class="form-control" name="editor">
+                        {{bio}}
+                      </textarea>
+                      {% else %}
+                      <textarea class="form-control" name="editor">Let People know You.</textarea>
+                    {% endif %}
                   </div>
                 <input type="Submit" value="Update" class="btn btn-primary btn-block">
               </form>
