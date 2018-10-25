@@ -13,9 +13,28 @@ import datetime
 @login_required
 def hostel_dashboard(request):
 	h_announce = HostelAnnouncements.objects.all()
+	scrollL_announce = len(h_announce)
+	if scrollL_announce <= 3:
+		scrollL_announce = '140px'
+	else:
+		scrollL_announce = str(3 * 70)+ 'px'
+
 	self_help = SelfHelpGroup.objects.all()
-	courier_data = Courrier.objects.all()
-	context = {'h_announce':h_announce , 'self_help':self_help , 'courier_data':courier_data}
+	scrollL_self = len(self_help)
+
+	if scrollL_self <= 3:
+		scrollL_self = '70px'
+	else:
+		scrollL_self = str(3 * 70)+ 'px'
+
+	courier_data = Courrier.objects.all()#.filter(student=Student.objects.get(user = request.user))
+	scrollL_courier = len(courier_data)
+	if scrollL_courier <= 3:
+		scrollL_courier = '140px'
+	else:
+		scrollL_courier = str(3 * 70)+ 'px'
+	context = {'h_announce':h_announce , 'self_help':self_help , 'courier_data':courier_data,
+	'scrollL_announce':scrollL_announce,'scrollL_self':scrollL_self,'scrollL_courier':scrollL_courier}
 	return render(request,'hostel/hostel_dashboard.html',context)
 
 @login_required
