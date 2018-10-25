@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
  <html lang="en">
 
@@ -14,6 +12,13 @@
   <title>B-04 Frontend</title>
 
   <!-- Date Picker -->
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
 
 
 </head>
@@ -91,37 +96,77 @@
 
   </p>
   </section>
-  <section id="posts">
+   <section id="posts">
     <center><div class="container">
       <div class="row">
         <div class="col-md-9">
-          <a href="{% url 'mess:messs_dashboard' %}" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
+          <a href="{% url 'mess:mess_dashboard' %}" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
             <i class="fas fa-arrow-left"></i> Back To Mess Dashboard
           </a>
           <div class="card">
            <table class="table" >
-              <col width="400">
+              <col width="200">
               <col width="700">
               <col width="300">
 
               <thead class="thead-dark" style="border: 1px solid white;">
               <tr>
-              <th> Mess Feedback form </th>
+              <th> Feedback form </th>
               <th></th> 
               <th></th> 
               </tr>
               </thead>
-           </table>
-          <form action="messfeed-ack.html">  
            
-            <div style="margin-top: 60px">
-            Feedback:<br>
-            </div>
-            <textarea name="feedback" placeholder = "Enter Feedback" cols = "5" style="height: 100px; width: 400px"></textarea>
-            <br>
-            <br>
-            <input type="submit" class = "btn btn-primary" value="Submit Feedback" style="margin-bottom: 50px">
+           <!-- Apply appropriate post request here -->
+          <form action="{% url 'mess:submit_feedback' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <tr>
+              <td>
+           
+            Subject: &ensp; &nbsp;&nbsp;&nbsp;&nbsp;&ensp; &nbsp;&nbsp;&nbsp;&nbsp;
+             {{ form.subject }}
+             
+           </td>
+           <td></td>
+           <td></td>
+         </tr>
+         <tr>
+           <td>
+             
+            Room Number: &ensp;
+            
+            {{ form.room_no }}
+            
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+            <td>
+            Feedback: &ensp; &nbsp;&nbsp;&nbsp;&nbsp;&ensp; &nbsp;&nbsp;&nbsp;&nbsp;
+            
+            {{ form.feedback }} 
+          </td>
+            <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            Upload Image: &ensp;
+            <input id="id_image" type="file" class="" name="image">
+          </td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+          <input type="submit" class = "btn btn-primary" value="Send Feedback">
+        </td>
+        <td></td>
+        <td></td>
+          </tr>
           </form>
+           </table>
            
           
           </div>
@@ -147,7 +192,7 @@
     </div>
   </footer>
 
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+ <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
@@ -160,6 +205,35 @@
     $('#year').text(new Date().getFullYear());
 
     CKEDITOR.replace('editor1');
+  </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+  <script>
+    $(document).ready(function(){
+      var date = new Date();
+      //date.setDate(date.getDate()-1);
+
+      var date_input=$('#from_date'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      date_input.datepicker({
+        startDate: date,
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      });
+
+      var date_input2=$('#to_date'); //our date input has the name "date"
+      var container2=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var date2=new Date();date2.setDate(date2.getDate()+1);
+      date_input2.datepicker({
+        startDate: date2,
+        format: 'yyyy-mm-dd',
+        container: container,
+        autoclose: true,
+      });
+    });
   </script>
 </body>
 
