@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class MessLeave(models.Model):
 	leave_from=models.DateField(blank=True, null=True)
@@ -67,6 +68,8 @@ class OrderListMess(models.Model):
 class MessFeedback(models.Model):
 	student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
 	feedback = models.CharField(max_length=256, blank=True, null=True)
+	room_no = models.IntegerField(blank=True, null=True)
+	comp_img = models.ImageField(upload_to='images/'+str(datetime.now()),blank=True,null=True)
 	timestamp = models.DateTimeField(blank=True, null=True, auto_now_add  =True)
 	created_at = models.DateField(blank=True, null=True)
 	created_by = models.CharField(max_length=45, blank=True, null=True)

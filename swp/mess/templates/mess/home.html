@@ -98,7 +98,7 @@
           <div class="card">
 
           	<!-- Mess Announcements-->
-            <table class="table" style="margin-bottom: 100px" >
+            <table class="table" style="" >
             	<col width="250">
             	<col width="700">
             	<col width="300">
@@ -116,6 +116,27 @@
                 </tr>
               </thead>
               <tbody>
+
+                <tr>
+                  <td colspan="3">
+                    <div style="width: 800px; overflow-y: scroll;height:{{ scrollM_announce }};">
+                    {% if o_list %}
+                    <table style="width: 100%; padding: 0px;">
+                       {% for announce_data in o_list %}
+            <tr>
+              <td align="center">{{ announce_data.id }} </td>
+              <td align="center">{{ announce_data.announcement }}</td>
+              <td align="center">{{ announce_data.timestamp }} </td>
+            </tr>
+            {% endfor %}
+
+                    </table>
+
+                    {% endif %}
+                  </div>
+                  </td>
+                </tr>
+              
                	   <!-- INSERT JINJA TEMPLATES HERE -->
               </tbody>
             </table>
@@ -247,7 +268,7 @@
   		<div class = "col-md-3">
   		<div class="card-body ">
   			  <a href = "{% url 'mess:refund_form' %}">
-              <button class= "btn btn-danger" style="margin-left: 100px; width: 220px">
+              <button class= "btn btn-primary" style="margin-left: 100px; width: 220px">
               	Apply for refund
               </button>	
               </a>
@@ -256,7 +277,7 @@
         <div class = "col-md-3">
          <div class="card-body ">
          	  <a href = "{% url 'mess:leave_form' %}">
-              <button class= "btn btn-default" style="margin-left: 40px; width: 225px">
+              <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
               	Apply for leave
               </button>
               </a>	
@@ -265,7 +286,7 @@
         <div class = "col-md-3">
          <div class="card-body ">
             <a href = "{% url 'mess:feedback_form' %}">
-              <button class= "btn btn-success" style="margin-left:px; width: 225px">
+              <button class= "btn btn-primary" style="margin-left:px; width: 225px">
                 Give Feedback
               </button>
               </a>  
