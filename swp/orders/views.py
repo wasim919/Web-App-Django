@@ -14,11 +14,9 @@ def orders_index(request):
         order_history = OrderHistory.objects.all()
         user_order_history = list(filter(lambda x: x.student.user == request.user, order_history))
         user_order_history.sort(key = lambda a: a.timestamp, reverse = True)
-
         books = list(filter(lambda x: x.item_type == "Book", items))
         stationary = list(filter(lambda x: x.item_type == "Stationary", items))
         others = list(filter(lambda x: x.item_type == "Others", items))
-
         all_orders = list(OrderList.objects.all())
         user_orders = list(filter(lambda x: x.student.user == request.user, all_orders))
         user_orders.sort(key = lambda a: a.timestamp, reverse = True)
@@ -145,7 +143,6 @@ def place_order(request):
             store_in_items_list(student, books_purchased, books_post, request.user)
             changeQuantity(books_purchased, books_post, not_order, ordered_items)
 
-        print(stationary_purchased)
         if stationary_post:
             student = Student.objects.get(user=request.user)
             store_in_items_list(student, stationary_purchased, stationary_post, request.user)
