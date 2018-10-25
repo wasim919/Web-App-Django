@@ -13,7 +13,12 @@ from django.middleware.csrf import get_token
 @login_required
 def medical_dashboard(request):
     announcements=MedicalAnnouncements.objects.all()
-    return render(request,'medical/medical_dashboard.html',{"announcements":announcements,"doctors":[]})
+    scrollL_announce=len(announcements)
+    if scrollL_announce <= 3:
+        scrollL_announce = '140px'
+    else:
+        scrollL_announce = str(3 * 70)+ 'px'
+    return render(request,'medical/medical_dashboard.html',{"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
 @login_required
 def medical_message(request):
     return render(request,'medical/medical_message.html')
