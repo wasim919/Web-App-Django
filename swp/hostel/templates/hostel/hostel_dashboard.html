@@ -98,7 +98,8 @@
           <div class="card">
 
           	<!--Announcements-->
-            <table class="table" style="margin-bottom: 100px" >
+            <!--<div style=" overflow-y: scroll;">-->
+            <table class="table">
             	<col width="20">
             	<col width="700">
             	<col width="300">
@@ -115,24 +116,42 @@
                   <th>Date</th>
                 </tr>
               </thead>
+              
               <tbody>
-               	   <!-- INSERT JINJA TEMPLATES HERE -->
-
-            {% if h_announce %}
+                <tr>
+                  <td colspan="3">
+                    <div style="width: 800px; overflow-y: scroll;height:{{ scrollL_announce }};">
+                    {% if h_announce %}
+                    <table style="width: 100%; padding: 0px;">
+                       {% for announce_data in h_announce %}
             <tr>
-              {% for announce_data in h_announce %}
-              <td align="center"> {{ announce_data.id }}</td>
+              <td align="center">{{ announce_data.id }} </td>
               <td align="center">{{ announce_data.announcement }}</td>
               <td align="center">{{ announce_data.timestamp }} </td>
-              {% endfor %}
             </tr>
-            {% endif %}
+            {% endfor %}
+
+                    </table>
+
+                    {% endif %}
+                  </div>
+                  </td>
+                </tr>
+               	   <!-- INSERT JINJA TEMPLATES HERE -->
+      
+            
+             
+           
+         
+            
               </tbody>
+         
             </table>
+          <!--</div>-->
 
             <!--Self-Help Issues-->
-        
-            <table class="table" style="margin-bottom: 70px" >
+            <!--<div style=" overflow-y: scroll;">-->
+            <table class="table">
             	<col width="200">
             	<col width="700">
             	<col width="300">
@@ -148,20 +167,32 @@
                   <th>Date</th>
                 </tr>
               </thead>
+              
               <tbody>
                <!-- INSERT JINJA TEMPLATES HERE -->
-
+               <tr>
+                  <td colspan="3">
+                    <div style="width: 800px; overflow-y: scroll;height:{{ scrollL_self }};">
                {% if self_help %}
+               <table style="width: 100%; padding: 0px;">
+               {% for help_data in self_help %}
             <tr>
-              {% for help_data in self_help %}
-              <td align="center"> {{ help_data.student_id }}</td>
+              <td align="center">{{ help_data.student_id }}</td>
               <td align="center">{{ help_data.issue }}</td>
               <td align="center">{{ help_data.timestamp }} </td>
-              {% endfor %}
             </tr>
-            {% endif %}
+           {% endfor %}
+
+                    </table>
+
+                    {% endif %}
+                  </div>
+                  </td>
+                </tr>
               </tbody>
+           
             </table>
+          <!--</div>-->
 
           
           </div>
@@ -169,14 +200,21 @@
 
 <div class="col-md-3">
   <div class="card" style=" border: 0px;">
-    <div class="card" style=" border: 0px;">
+   <!-- <div class="card" style=" border: 0px;">
       <h4>Courier History</h4>
-    </div>
+    </div>-->
     <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
       <tr style="width: 100%; padding: 0px;  border: 0px;">
         <td style="width: 100%; padding: 0px;">
           <table style="width: 156%; padding: 0px;  border: 0px;">
             <thead class="thead-dark" style="width: 100%; padding: 0px;">
+              
+                  <tr style="width: 60%; padding: 0px;">
+                <th style="width: 15px; font-weight:normal;" colspan="3">Courier History</th>
+                
+                <th style="width: 60px; font-weight:normal;"></th>
+              </tr>
+                
               <tr style="width: 60%; padding: 0px;">
                 <th style="width: 15px; font-weight:normal;">#</th>
                 <th style="width: 60px; font-weight:normal;">Agent</th>
@@ -190,7 +228,7 @@
       </tr>
       <tr style="width: 100%; padding: 0px;">
         <td style="width: 100%; padding: 0px;">
-          <div style="overflow-y: scroll; width: 156%; height: 400px;">
+          <div style="overflow-y: scroll; width: 156%; height:{{ scrollL_courier }}">
             {% if courier_data %}
             <table style="width: 100%; padding: 0px;">
                 {% for data in courier_data %}
