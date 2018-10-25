@@ -27,7 +27,7 @@ def hostel_dashboard(request):
 	else:
 		scrollL_self = str(3 * 70)+ 'px'
 
-	courier_data = Courrier.objects.all().filter(student=Student.objects.get(user = request.user))
+	courier_data = Courrier.objects.all()#.filter(student=Student.objects.get(user = request.user))
 	scrollL_courier = len(courier_data)
 	if scrollL_courier <= 3:
 		scrollL_courier = '140px'
