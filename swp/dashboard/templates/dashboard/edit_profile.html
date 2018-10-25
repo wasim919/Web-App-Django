@@ -102,16 +102,14 @@
               <h4>Edit Profile</h4>
             </div>
             <div class="card-body">
-              <form action="{% url 'dashboard:profile' %}" method="post">
+              <form action="{% url 'dashboard:profile' %}" method="post" id="post-form">
                 {% csrf_token %}
                   {{ form.as_p }}
                   <!-- {{ stu_form.as_p }} -->
                   <div class="form-group">
                     <label for="bio">Bio</label>
                     {% if bio %}
-                      <textarea class="form-control" name="editor">
-                        {{bio}}
-                      </textarea>
+                      <textarea class="form-control" name="editor">{{bio}}</textarea>
                       {% else %}
                       <textarea class="form-control" name="editor">Let People know You.</textarea>
                     {% endif %}
@@ -165,6 +163,12 @@
 
     CKEDITOR.replace('editor1');
   </script>
+  <!-- <script>
+  $('#post-form').on('submit', function(event){
+    event.preventDefault();
+    console.log("form submitted!")  // sanity check
+  });
+  </script> -->
 </body>
 
 </html>
