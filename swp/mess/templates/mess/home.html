@@ -30,16 +30,16 @@
             <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="hostel.html" class="nav-link">Hostel</a>
+            <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link">Hostel</a>
           </li>
           <li class="nav-item px-2">
-            <a href="mess.html" class="nav-link">Mess</a>
+            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link active">Mess</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
           </li>
           <li class="nav-item px-2">
-            <a href="{% url 'orders:orders_index' %}" class="nav-link active">Order</a>
+            <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
           </li>
         </ul>
 
@@ -93,7 +93,7 @@
   <section id="posts">
     <!-- <div class="container" align="center"> -->
       <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-10">
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 104%;">
             <h4><center>Mess</center></h4>
@@ -139,7 +139,7 @@
   </div>
 
 
-        <div class="col-md-11">
+        <div class="col-md-10">
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Mess Orders</center></h4>
@@ -216,7 +216,7 @@
             </tr>
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 156%; height: 400px;">
+                <div style="overflow-y: scroll; width: 156%; height: 200px;">
                   {% if user_orders %}
                   <table style="width: 100%; padding: 0px;">
                       {% for orders in user_orders %}
@@ -256,7 +256,7 @@
             </tr>
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 165%; height: 400px;">
+                <div style="overflow-y: scroll; width: 165%; height: 200px;">
                   <table style="width: 100%; padding: 0px;">
                     {% if user_order_history %}
                       {% for orders in user_order_history %}
@@ -278,10 +278,10 @@
       </div>
       </div>
       <div style="align:left;" class = "row">
-        <div class = "col-md-10">
+        <div class = "col-md-4">
         <div class="card-body ">
             <a href = "{% url 'mess:refund_form' %}">
-                <button class= "btn btn-danger" style="margin-left: 40px; width: 220px">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 220px">
                   Apply for refund
                 </button>
                 </a>
@@ -290,7 +290,7 @@
           <div class = "col-md-4">
            <div class="card-body ">
               <a href = "{% url 'mess:leave_form' %}">
-                <button class= "btn btn-default" style="margin-left: 40px; width: 225px">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
                   Apply for leave
                 </button>
                 </a>
@@ -299,13 +299,14 @@
           <div class = "col-md-4">
            <div class="card-body ">
               <a href = "{% url 'mess:feedback_form' %}">
-                <button class= "btn btn-success" style="margin-left: 40px; width: 225px">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
                   Give Feedback
                 </button>
                 </a>
               </div>
           </div>
        </div>
+     </div>
   <!-- </center> -->
   </section>
 

@@ -2,12 +2,22 @@ from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from .models import *
+from .forms import *
 from dashboard.models import MessAnnouncements
 from django.contrib.auth.decorators import login_required
 from accounts.models import Student
 import datetime
+import time
 
 # Create your views here.
+
+def getDate(dat):
+	dat = dat.split('-')
+	year = int(dat[0])
+	month = int(dat[1])
+	day = int(dat[2])
+
+	return datetime.date(year,month,day)
 
 @login_required
 def mess_dashboard(request):
@@ -156,51 +166,9 @@ def place_order(request):
 			'not_ordered': not_order,
 			'total_cost': total_cost
 			})
-
-# @login_required
-# def place_order(request):
-#     if request.method=='POST':
-#         items=list(MessItems.objects.all())
-#
-#         items_post=request.POST.getlist('order')
-# 		# items_cost = 0
-# 		# print(items_post)
-#
-# 		if items_post:
-#             items_cost=dot([a.cost for a in items], list(map(int, items_post)))
-#
-#         if items:
-#             items_purchased=[items[i] for i in range(len(items)) if items_post[i]!='0']
-#
-#         not_order = []
-#         ordered_items = []
-#         if books_post:
-#             student = Student.objects.get(user=request.user)
-#             store_in_items_list(student, items_purchased, items_post, request.user)
-#             changeQuantity(items_purchased, items_post, not_order, ordered_items)
-#
-#         print('hi')
-#         print(ordered_items)
-#         print(not_order)
-#         print('bye')
-#         if len(not_order) == 0 :
-#             return redirect('mess:mess_dashboard')
-#         else:
-#             total_cost = 0
-#             for orders in ordered_items:
-#                 total_cost += orders.quantity*orders.cost
-#             print(total_cost)
-#             print('hi')
-#             print(not_order)
-#             print(ordered_items)
-#             return render(request, 'mess/not_order.html', {
-#             'ordered_items': ordered_items,
-#             'not_ordered': not_order,
-#             'total_cost': total_cost
-#             })
-
+			
 @login_required
-def applyMessLeave(request):
+def mess_leave(request):
 	if request.method == 'POST':
 		form = MessLeaveForm(request.POST)
 		if form.is_valid():
@@ -208,6 +176,8 @@ def applyMessLeave(request):
 			leave_form.student = Student.objects.get(user = request.user)
 			leave_form.leave_from = getDate(request.POST['leave_from'])
 			leave_form.leave_to = getDate(request.POST['leave_to'])
+			leave_form.hometown = request.POST['hometown']
+			leave_form.reason = request.POST['reason']
 			leave_form.timestamp = datetime.datetime.now()
 			leave_form.created_at = datetime.datetime.now().date()
 			leave_form.modified_at = datetime.datetime.now().date()
@@ -229,29 +199,53 @@ def applyMessLeave(request):
 
 @login_required
 def leave_form(request):
-	#Add appropriate data to be passed to page
-	return render(request,'mess/leave.html')
+	form = MessLeaveForm()
+	return render(request,'mess/leave.html',{'form':form})
 
 @login_required
-def leave_ack(request):
-	return render(request, 'mess/leave-ack.html')
+def mess_refund(request):
+	if request.method == 'POST':
+		form = MessRefundForm(request.POST)
+		print(form)
+		if form.is_valid():
+			refund_form = form.save(commit=False)
+			refund_form.student = Student.objects.get(user = request.user)
+			refund_form.refund_from = getDate(request.POST['refund_from'])
+			refund_form.refund_to = getDate(request.POST['refund_to'])
+			refund_form.account_number = request.POST['account_number']
+			refund_form.account_holder_name = request.POST['account_holder_name']
+			refund_form.ifsc_code = request.POST['ifsc_code']
+			refund_form.datetime = datetime.datetime.now()
+
+			refund_form.created_at = datetime.datetime.now().date()
+			refund_form.modified_at = datetime.datetime.now().date()
+
+			refund_form.created_by = Student.objects.get(user = request.user)
+			refund_form.modified_by = Student.objects.get(user = request.user)
+			delta = refund_form.refund_from -  refund_form.refund_to
+			if(delta.days >= 10):
+				error_message = "Please enter valid From and TO dates (date difference should not be greater than 10 days"
+				return render(request,'mess/refund.html',{'form':form,'error_message':error_message})
+			refund_form.save()
+			return render(request, 'mess/refund-ack.html')
+		else:
+			error_message = "Please enter data in YYYY-MM-DD format"
+			return render(request,'mess/refund.html',{'form':form,'error_message':error_message})
+
+	form =  MessRefundForm()
+	return render(request,'mess/refund.html',{'form':form,'error_message':''})
 
 @login_required
 def refund_form(request):
-	#Add appropriate data to be passed to page
-	return render(request,'mess/refund.html')
+	form = MessRefundForm()
+	return render(request,'mess/refund.html', {'form': form})
 
-@login_required
-def refund_ack(request):
-	return render(request, 'mess/refund-ack.html')
 
 @login_required
 def feedback_form(request):
-	return render(request, 'mess/feedback.html')
+	form = MessFeedbackForm()
+	return render(request, 'mess/feedback.html',{'form':form})
 
-@login_required
-def feedback_ack(request):
-	return render(request, 'mess/feedback-ack.html')
 
 @login_required
 def submit_feedback(request):

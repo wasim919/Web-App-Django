@@ -25,16 +25,16 @@
             <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="hostel.html" class="nav-link">Hostel</a>
+            <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link">Hostel</a>
           </li>
           <li class="nav-item px-2">
-            <a href="mess.html" class="nav-link">Mess</a>
+            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link active">Mess</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
           </li>
           <li class="nav-item px-2">
-            <a href="{% url 'orders:orders_index' %}" class="nav-link active">Order</a>
+            <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
           </li>
         </ul>
 
