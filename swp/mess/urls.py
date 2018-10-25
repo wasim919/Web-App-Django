@@ -19,7 +19,9 @@ urlpatterns = [
 	url(r'^feedback_form$',views.leave_form, name = 'feedback_form'),
     url(r'^submit_feedback$',views.submit_feedback, name = 'submit_feedback'),
     url(r'^feedback-ack$',views.feedback_ack,name='feedback_ack'),
+    url(r'^place_order/$', views.place_order, name = 'place_order_mess'),
+    url(r'^delete_order/(?P<pk>\d+)/$', views.delete_order, name = 'delete_order_mess'),
 ]
 
-if settings.DEBUG: 
-	urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) 
+if settings.DEBUG:
+	urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
