@@ -226,10 +226,10 @@
             <table style="width: 100%; padding: 0px;">
                 {% for data in courier_data %}
                 <tr>
-                  <td style="width: 55px; font-weight:normal;">{{ courier_data.idcourrier }}</td>
-                  <td style="width: 132px; font-weight:normal;">{{ courier_data.delivery_agent }}</td>
-                  <td style="width: 132px; font-weight:normal;">{{ courier_data.courrier_ref_no }}</td>
-                  <td style="width: 132px; font-weight:normal;">{{ courier_data.timestamp }}</td>
+                  <td style="width: 55px; font-weight:normal;">{{ data.idcourrier }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ data.delivery_agent }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ data.courrier_ref_no }}</td>
+                  <td style="width: 132px; font-weight:normal;">{{ data.timestamp }}</td>
                 </tr>
                 {% endfor %}
                 </table>
