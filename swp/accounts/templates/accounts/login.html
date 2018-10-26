@@ -64,9 +64,9 @@
               <form action="{% url 'accounts:student_login' %}" method="post">
                 {% csrf_token %}
                 {{student_login_form.as_p}}
-                {% if request.GET.next %}
+                <!-- {% if request.GET.next %}
                   <input type="hidden" name="next" value="{{request.GET.next}}">
-                {% endif %}
+                {% endif %} -->
                 <input type="Submit" value="Login" class="btn btn-primary btn-block">
               </form>
             </div>
