@@ -1,7 +1,6 @@
 
-
 <!DOCTYPE html>
- <html lang="en">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -47,13 +46,13 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fas fa-user"></i> Welcome {{ request.user }}
+              <i class="fas fa-user"></i> Welcome {{request.user}}
             </a>
             <div class="dropdown-menu">
-              <a href="{% url 'dashboard:profile' %}" class="dropdown-item" target="2">
+              <a href="{% url 'dashboard:profile' %}" class="dropdown-item">
                 <i class="fas fa-user-circle"></i> Profile
               </a>
-              <a href="{% url 'dashboard:contacts' %}" class="dropdown-item" target="3">
+              <a href="{% url 'dashboard:contacts' %}" class="dropdown-item">
                 <i class="fas fa-cog"></i> Important Contacts
               </a>
             </div>
@@ -79,7 +78,7 @@
       <div class="row">
         <div class="col-md-6">
           <h1>
-            <i class="fas fa-cog"></i> Mess dashboard</h1>
+            <i class="fas fa-cog"></i> Mess</h1>
         </div>
       </div>
     </div>
@@ -92,207 +91,225 @@
   </p>
   </section>
   <section id="posts">
-    <center><div class="container">
+    <!-- <div class="container" align="center"> -->
       <div class="row">
-        <div class="col-md-9">
-          <div class="card">
-
-          	<!-- Mess Announcements-->
-            <table class="table" style="" >
-            	<col width="250">
-            	<col width="700">
-            	<col width="300">
-
-              <thead class="thead-dark" style="border: 1px solid white;">
-                <tr>
-                  <th >Mess Announcements</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr style="text-align: center">
-                  <th>#</th>
-                  <th>Announcement</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <tr>
-                  <td colspan="3">
-                    <div style="width: 800px; overflow-y: scroll;height:{{ scrollM_announce }};">
-                    {% if o_list %}
-                    <table style="width: 100%; padding: 0px;">
-                       {% for announce_data in o_list %}
-            <tr>
-              <td align="center">{{ announce_data.id }} </td>
-              <td align="center">{{ announce_data.announcement }}</td>
-              <td align="center">{{ announce_data.timestamp }} </td>
-            </tr>
-            {% endfor %}
-
-                    </table>
-
-                    {% endif %}
-                  </div>
-                  </td>
-                </tr>
-              
-               	   <!-- INSERT JINJA TEMPLATES HERE -->
-              </tbody>
-            </table>
-
-            <!--Order Items-->
-            <form action="order-ack.html">
-            <table class="table" style="margin-bottom: 70px" >
-            	<col width="250">
-            	<col width="700">
-            	<col width="300">
-              <thead class="thead-dark" style="border: 1px solid white;">
-                <tr>
-                  <th >Order Items</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr style="text-align: center">
-                  <th>#</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                </tr>
-              </thead>
-              <tbody>
-               <!-- INSERT SIMILAR JINJA TEMPLATES HERE -->
-               <tr style="text-align: center">  
-                  <td>1</td>
-                  <td><input type="checkbox" name="FrenchFries" value="FrenchFries">  FrenchFries</td>
-                  <td><select>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                  </td>
-                </tr>
-                <tr style="text-align: center">  
-                  <td>2</td>
-                  <td><input type="checkbox" name="Veg Burger" value="Veg Burger">  Veg Burger</td>
-                  <td><select>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                  </td>
-                </tr>
-                <tr style="text-align: center">  
-                  <td>3</td>
-                  <td><input type="checkbox" name="Tada Fries" value=" Tada Fries">  Tada Fries</td>
-                  <td><select>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                  </td>
-                </tr>
-
-              </tbody>
-            </table>
-            <div class="card-body ">
-              <!--make a view and use approriate model for saving the data-->
-               <a href = "">
-              <button class= "btn btn-primary" style="width: 500px">
-                Order Selected items
-              </button> 
-              </a>
-            </div>
-            </form>
-
-          
+        <div class="col-md-10">
+        <div class="card" style=" border: 0px;align:left;">
+          <div class="card-header" style="width: 104%;">
+            <h4><center>Mess</center></h4>
           </div>
-        </div>
+          <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+            <tr style="width: 100%; padding: 0px;  border: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <table style="width: 130%; padding: 0px;  border: 0px;">
+                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                    <tr style="width: 100%; padding: 0px;">
+                      <th style="width: 55px; font-weight:normal;">#</th>
+                      <th style="width: 132px; font-weight:normal;">Title</th>
+                      <th style="width: 132px; font-weight:normal;">Date</th>
+                      <th style="width: 132px; font-weight:normal;">Details</th>
+                    </tr>
+                  </thead>
 
-        <div class="col-md-3">
-           <div class="card">
-          <table class="table" style="margin-bottom: 100px;" >
-              <col width="250">
-              <col width="700">
-              <col width="300">
-              <thead class="thead-dark" style="border: 1px solid white;">
-                <tr>
-                  <th >Cart</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr style="text-align: center">
-                  <th>#</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                </tr>
-              </thead>
-              <tbody>
-                   <!-- INSERT JINJA TEMPLATES HERE -->
-              </tbody>
-            </table>
-             <table class="table" style="margin-bottom: 70px;" >
-              <col width="250">
-              <col width="700">
-              <col width="300">
-              <thead class="thead-dark" style="border: 1px solid white;">
-                <tr>
-                  <th >History</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr style="text-align: center">
-                  <th>#</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <!-- INSERT SIMILAR JINJA TEMPLATES HERE -->
-                  
-          
-              </tbody>
-            </table>
-            </div>
+                </table>
+              </td>
+            </tr>
+            <tr style="width: 100%; padding: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 130%; height: 200px">
+                  {% if mess_announcements %}
+                  <table style="width: 100%; padding: 0px;">
+                      {% for data in mess_announcements %}
+                      <tr>
+                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                        <td style="width: 132px; font-weight:normal;">{{data.announcement_title}}</td>
+                        <td style="width: 132px; font-weight:normal;">{{data.timestamp}}</td>
+                        <td style="width: 132px; font-weight:normal;"><a href="{% url 'dashboard:announcement_detail' 2 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+                          <i class="fas fa-angle-double-right"></i> Details
+                        </a></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                    {% endif %}
+                </div>
+              </td>
+            </tr>
+          </table>
+    </div>
+  </div>
+
+
+        <div class="col-md-10">
+        <div class="card" style=" border: 0px;align:left;">
+          <div class="card-header" style="width: 103%;">
+            <h4><center>Mess Orders</center></h4>
+          </div>
+          <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+            <tr style="width: 100%; padding: 0px;  border: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <table style="width: 129%; padding: 0px;  border: 0px;">
+                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                    <tr style="width: 100%; padding: 0px;">
+                      <th style="width: 55px; font-weight:normal;">#</th>
+                      <th style="width: 150px; font-weight:normal;">Title</th>
+                      <th style="align:right; width: 100px; font-weight:normal;">Quantity</th>
+                    </tr>
+                  </thead>
+
+                </table>
+              </td>
+            </tr>
+            <tr style="width: 100%; padding: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 129%; height: 200px">
+                  <table style="width: 100%; padding: 0px;">
+                      {% for item in items %}
+                      <tr>
+                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                        <td style="width: 150px; font-weight:normal;">{{ item.item_name }}</td>
+                        <td style="align:right; width: 100px; font-weight:normal;"><select name="order" class="btn btn-secondary" data-toggle="dropdown" form="order">
+                            {% with ''|center:item.quantity as range %}
+                            {{range}}
+                            {% for value in range %}
+                              <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
+                            {% endfor %}
+                            {% endwith %}
+                          </select></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'mess:place_order_mess' %}" method="post" id="order">
+            {% csrf_token %}
+            <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
+          </form>
+        </div>
+        <div class="col-md-8" align="top">
+        <div class="card" style=" border: 0px;" >
+          <div class="card-header" style="width: 156%;">
+            <h4><center>Orders List</center></h4>
+            {% if user_orders %}
+              <h4>Total Cost: {{ total_cost }}</h4>
+            {% endif %}
+          </div>
+          <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
+            <tr style="width: 100%; padding: 0px;  border: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <table style="width: 156%; padding: 0px;  border: 0px;">
+                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                    <tr style="width: 100%; padding: 0px;">
+                      <th style="width: 55px; font-weight:normal;">#</th>
+                      <th style="width: 132px; font-weight:normal;">Name</th>
+                      <th style="width: 132px; font-weight:normal;">Date</th>
+                      <th style="width: 132px; font-weight:normal;">Quantity</th>
+                      <th style="width: 132px; font-weight:normal;">Cancel</th>
+                    </tr>
+                  </thead>
+
+                </table>
+              </td>
+            </tr>
+            <tr style="width: 100%; padding: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 156%; height: 200px;">
+                  {% if user_orders %}
+                  <table style="width: 100%; padding: 0px;">
+                      {% for orders in user_orders %}
+                      <tr>
+                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                        <td style="width: 132px; font-weight:normal;">{{ orders.item.item_name }}</td>
+                        <td style="width: 132px; font-weight:normal;">{{ orders.timestamp }}</td>
+                        <td style="width: 132px; font-weight:normal;">{{ orders.quantity }}</td>
+                        <td style="width: 132px; font-weight:normal;"><a href="{% url 'mess:delete_order_mess' orders.pk %}" class="btn btn-danger btn-block">
+                         Cancel
+                        </a></td>
+                      </tr>
+                      {% endfor %}
+                      </table>
+                      {% endif %}
+                </div>
+              </td>
+            </tr>
+          </table>
+          <div class="card-header" style="width: 156%;">
+            <h4><center>Orders History</center></h4>
+          </div>
+          <table class="table table-striped" style="width: 95%; padding: 0px;">
+            <tr style="width: 100%; padding: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <table style="width: 165%; padding: 0px;">
+                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                    <tr style="width: 100%; padding: 0px;">
+                      <th style="width: 55px; font-weight:normal;">#</th>
+                      <th style="width: 132px; font-weight:normal;">Name</th>
+                      <th style="width: 132px; font-weight:normal;">Date</th>
+                      <th style="width: 132px; font-weight:normal;">Quantity</th>
+                    </tr>
+                  </thead>
+                </table>
+              </td>
+            </tr>
+            <tr style="width: 100%; padding: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 165%; height: 200px;">
+                  <table style="width: 100%; padding: 0px;">
+                    {% if user_order_history %}
+                      {% for orders in user_order_history %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ orders.item.item_name }}</td>
+                        <td>{{ orders.timestamp }}</td>
+                        <td>{{ orders.quantity }}</td>
+                        <td></td>
+                      </tr>
+                      {% endfor %}
+                      {% endif %}
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
-    </div>
-  </center>
-  </section>
-  	<div class = "row">
-  		<div class = "col-md-3">
-  		<div class="card-body ">
-  			  <a href = "{% url 'mess:refund_form' %}">
-              <button class= "btn btn-primary" style="margin-left: 100px; width: 220px">
-              	Apply for refund
-              </button>	
-              </a>
-            </div>
-        </div>
-        <div class = "col-md-3">
-         <div class="card-body ">
-         	  <a href = "{% url 'mess:leave_form' %}">
-              <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
-              	Apply for leave
-              </button>
-              </a>	
-            </div>
-        </div>
-        <div class = "col-md-3">
-         <div class="card-body ">
-            <a href = "{% url 'mess:feedback_form' %}">
-              <button class= "btn btn-primary" style="margin-left:px; width: 225px">
-                Give Feedback
-              </button>
-              </a>  
-            </div>
-        </div>
+      </div>
+      <div style="align:left;" class = "row">
+        <div class = "col-md-4">
+        <div class="card-body ">
+            <a href = "{% url 'mess:refund_form' %}">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 220px">
+                  Apply for refund
+                </button>
+                </a>
+              </div>
+          </div>
+          <div class = "col-md-4">
+           <div class="card-body ">
+              <a href = "{% url 'mess:leave_form' %}">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
+                  Apply for leave
+                </button>
+                </a>
+              </div>
+          </div>
+          <div class = "col-md-4">
+           <div class="card-body ">
+              <a href = "{% url 'mess:feedback_form' %}">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
+                  Give Feedback
+                </button>
+                </a>
+              </div>
+          </div>
+       </div>
      </div>
+  <!-- </center> -->
+  </section>
+
   <!-- FOOTER -->
   <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
     <div class="container">
