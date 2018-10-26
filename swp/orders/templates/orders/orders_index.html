@@ -94,7 +94,7 @@
   <section id="posts">
     <!-- <div class="container" align="center"> -->
       <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7" style="width:800px; margin:0 auto;">
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Books</center></h4>
@@ -140,7 +140,11 @@
         </div>
         <!-- </div> -->
 
+
+        <div class="col-md-7" style="width:800px; margin:0 auto;">
+
         <!-- <div class="col-md-7"> -->
+
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Stationary</center></h4>
@@ -186,7 +190,9 @@
         </div>
         <!-- </div> -->
 
+        <div class="col-md-7" style="width:800px; margin:0 auto;">
         <!-- <div class="col-md-7"> -->
+
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Others</center></h4>
@@ -248,45 +254,51 @@
           </div>
           {% endif %}
         </div>
+
+        <div class="col-md-7" style="width:800px; margin:0 auto;">
+        <div class="card" style=" border: 0px;align:left">
+          <div class="card-header" style="width: 103%;">
+
       <!-- </div> -->
       <!-- </div> -->
         <div class="col-md-3">
         <div class="card" style=" border: 0px;">
           <div class="card-header" style="width: 164%;">
+
             <h4><center>Orders List</center></h4>
             {% if user_orders %}
               <h4>Total Cost: {{ total_cost }}</h4>
             {% endif %}
           </div>
           <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
-            <tr style="width: 100%; padding: 0px;  border: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <table style="width: 156%; padding: 0px;  border: 0px;">
-                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
-                    <tr style="width: 100%; padding: 0px;">
-                      <th style="width: 55px; font-weight:normal;">#</th>
-                      <th style="width: 132px; font-weight:normal;">Name</th>
-                      <th style="width: 132px; font-weight:normal;">Date</th>
-                      <th style="width: 132px; font-weight:normal;">Quantity</th>
-                      <th style="width: 132px; font-weight:normal;">Cancel</th>
+            <tr style="width: 103%;padding: 0px;  border: 0px;">
+              <td style="width: 103%;padding: 0px;">
+                <table style="width: 103%;padding: 0px;  border: 0px;">
+                  <thead class="thead-dark" style="width: 103%; padding: 0px;">
+                    <tr style="padding: 0px;">
+                      <th style="font-weight:normal;">#</th>
+                      <th style="font-weight:normal;">Name</th>
+                      <th style="font-weight:normal;">Date</th>
+                      <th style="font-weight:normal;">Quantity</th>
+                      <th style="font-weight:normal;">Cancel</th>
                     </tr>
                   </thead>
 
                 </table>
               </td>
             </tr>
-            <tr style="width: 100%; padding: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 156%; height: 400px;">
+            <tr style="width: 103%; padding: 0px;">
+              <td style="width: 103%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 103%; height: 400px;">
                   {% if user_orders %}
-                  <table style="width: 100%; padding: 0px;">
+                  <table style="width: 103%;padding: 0px;">
                       {% for orders in user_orders %}
                       <tr>
-                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
-                        <td style="width: 132px; font-weight:normal;">{{ orders.item.item_name }}</td>
-                        <td style="width: 132px; font-weight:normal;">{{ orders.timestamp }}</td>
-                        <td style="width: 132px; font-weight:normal;">{{ orders.quantity }}</td>
-                        <td style="width: 132px; font-weight:normal;"><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
+                        <td style="font-weight:normal;">{{ forloop.counter }}</td>
+                        <td style="font-weight:normal;">{{ orders.item.item_name }}</td>
+                        <td style="font-weight:normal;">{{ orders.timestamp }}</td>
+                        <td style="font-weight:normal;">{{ orders.quantity }}</td>
+                        <td style="font-weight:normal;"><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
                          Cancel
                         </a></td>
                       </tr>
@@ -297,28 +309,28 @@
               </td>
             </tr>
           </table>
-          <div class="card-header" style="width: 164%;">
+          <div class="card-header" style="width: 103%;">
             <h4><center>Orders History</center></h4>
           </div>
-          <table class="table table-striped" style="width: 100%; padding: 0px;">
-            <tr style="width: 100%; padding: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <table style="width: 165%; padding: 0px;">
-                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
-                    <tr style="width: 100%; padding: 0px;">
-                      <th style="width: 55px; font-weight:normal;">#</th>
-                      <th style="width: 132px; font-weight:normal;">Name</th>
-                      <th style="width: 132px; font-weight:normal;">Date</th>
-                      <th style="width: 132px; font-weight:normal;">Quantity</th>
+          <table class="table table-striped" style="width: 103%; padding: 0px;">
+            <tr style="width: 103%; padding: 0px;">
+              <td style="width: 103%; padding: 0px;">
+                <table style="width: 103%;; padding: 0px;">
+                  <thead class="thead-dark" style="width: 103%; padding: 0px;">
+                    <tr style="width: 103%; padding: 0px;">
+                      <th style="font-weight:normal;">#</th>
+                      <th style="font-weight:normal;">Name</th>
+                      <th style="font-weight:normal;">Date</th>
+                      <th style="font-weight:normal;">Quantity</th>
                     </tr>
                   </thead>
                 </table>
               </td>
             </tr>
-            <tr style="width: 100%; padding: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 165%; height: 400px;">
-                  <table style="width: 100%; padding: 0px;">
+            <tr style="width: 103%; padding: 0px;">
+              <td style="width: 103%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 103%; height: 400px;">
+                  <table style="width: 103%; padding: 0px;">
                     {% if user_order_history %}
                       {% for orders in user_order_history %}
                       <tr>
