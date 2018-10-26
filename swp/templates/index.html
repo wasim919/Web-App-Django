@@ -15,16 +15,47 @@
 
 <head>
   <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
+   
   <title>B-04 Frontend</title>
 
   <!-- Date Picker -->
-
+  <style>
+  #logo{
+  	font-family: 'Charmonman', cursive;
+  	font-size: 100px;
+  	background-color: black;
+  	border-radius: 50%;
+  	color: white;
+  	text-align: center;
+  	width: 300px;
+  }
+  #titl{
+  	position: absolute;
+  	text-align: center;
+  	margin-left: 400px;
+  	display: none;
+  }
+  #logmes{
+  	display: none;
+  	font-size: 40px;
+  	margin-left: 300px;
+  }
+  </style>	
+  <script> 
+$(document).ready(function(){//
+	$("#titl").fadeIn(500);
+	$("#titl").animate({top: "+=20"},2000);
+	$("#logmes").fadeIn(5000);
+});
+</script> 
 
 </head>
 
@@ -83,7 +114,7 @@
   <!-- HEADER -->
   <header id="main-header" class="py-2 bg-primary text-white">
     <div class="container">
-      <div class="row">
+      <div class="row" >
         <div class="col-md-6">
           <h1>
             <i class="fas fa-cog"></i> Welcome</h1>
@@ -100,39 +131,15 @@
   </section>
   <section id="posts">
     <center><div class="container">
+
       <div class="row">
         <div class="col-md-9">
-          <div class="card">
-            <div class="card-header">
-              <h4>SWP</h4>
-            </div>
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Welcome to the student welfare portal.</th>
-                  <!-- <th>Name</th>
-                  <th>Mobile No.</th>
-                  <th>Email</th> -->
-                </tr>
-              </thead>
-              <!-- {% if imp_contacts %}
-                <tbody>
-                  {% for data in imp_contacts %}
-                  <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{data.name}}</td>
-                    <td>{{data.mobile}}</td>
-
-                    <td>{{data.email}}</i> Details
-                    </a></td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              {% endif %} -->
-            </table>
-
-
+    	  <div id="titl" >
+          <div id="logo">SWP</div>
+          <div style="font-size: 40px; margin-left: -40px">Student Welfare Portal </div>
           </div>
+          <br><br><br><br><br><br><br><br><br><br>
+          <div id="logmes"> Please login to continue</div>
         </div>
 
       </div>
@@ -141,10 +148,10 @@
   </section>
 
   <!-- FOOTER -->
-  <br><br><br><br><br><br><br><br><br>
-  <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
-    <div class="container">
-      <div class="row">
+  <br><br><br>
+  <footer id="main-footer" class="bg-dark text-white mt-5 p-5" 	style="margin-top: 400px">
+    <div class="container" >
+      <div class="row" >
         <div class="col">
           <p class="lead text-center">
             Copyright &copy;
