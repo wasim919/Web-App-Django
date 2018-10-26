@@ -94,7 +94,7 @@
   <section id="posts">
     <!-- <div class="container" align="center"> -->
       <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7" style="width:800px; margin:0 auto;">
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Books</center></h4>
@@ -250,9 +250,9 @@
         </div>
       <!-- </div> -->
       <!-- </div> -->
-        <div class="col-md-3">
+        <div class="col-md-7" style="width:800px; margin:0 auto;">
         <div class="card" style=" border: 0px;">
-          <div class="card-header" style="width: 164%;">
+          <div class="card-header" style="width: 100%;">
             <h4><center>Orders List</center></h4>
             {% if user_orders %}
               <h4>Total Cost: {{ total_cost }}</h4>
@@ -261,7 +261,7 @@
           <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
             <tr style="width: 100%; padding: 0px;  border: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <table style="width: 156%; padding: 0px;  border: 0px;">
+                <table style="width: 100%; padding: 0px;  border: 0px;">
                   <thead class="thead-dark" style="width: 100%; padding: 0px;">
                     <tr style="width: 100%; padding: 0px;">
                       <th style="width: 55px; font-weight:normal;">#</th>
@@ -277,7 +277,7 @@
             </tr>
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 156%; height: 400px;">
+                <div style="overflow-y: scroll; width: 100%; height: 300px;">
                   {% if user_orders %}
                   <table style="width: 100%; padding: 0px;">
                       {% for orders in user_orders %}
@@ -297,13 +297,13 @@
               </td>
             </tr>
           </table>
-          <div class="card-header" style="width: 164%;">
+          <div class="card-header" style="width: 100%;">
             <h4><center>Orders History</center></h4>
           </div>
           <table class="table table-striped" style="width: 100%; padding: 0px;">
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <table style="width: 165%; padding: 0px;">
+                <table style="width: 100%; padding: 0px;">
                   <thead class="thead-dark" style="width: 100%; padding: 0px;">
                     <tr style="width: 100%; padding: 0px;">
                       <th style="width: 55px; font-weight:normal;">#</th>
@@ -317,7 +317,7 @@
             </tr>
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 165%; height: 400px;">
+                <div style="overflow-y: scroll; width: 100%; height: 300px;">
                   <table style="width: 100%; padding: 0px;">
                     {% if user_order_history %}
                       {% for orders in user_order_history %}
