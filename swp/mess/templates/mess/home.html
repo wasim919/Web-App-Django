@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,13 +33,13 @@
             <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link">Hostel</a>
           </li>
           <li class="nav-item px-2">
-            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link">Mess</a>
+            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link active">Mess</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
           </li>
           <li class="nav-item px-2">
-            <a href="{% url 'orders:orders_index' %}" class="nav-link active">Order</a>
+            <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
           </li>
         </ul>
 
@@ -79,7 +78,7 @@
       <div class="row">
         <div class="col-md-6">
           <h1>
-            <i class="fas fa-cog"></i> Orders</h1>
+            <i class="fas fa-cog"></i> Mess</h1>
         </div>
       </div>
     </div>
@@ -94,10 +93,56 @@
   <section id="posts">
     <!-- <div class="container" align="center"> -->
       <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-10">
+        <div class="card" style=" border: 0px;align:left;">
+          <div class="card-header" style="width: 104%;">
+            <h4><center>Mess</center></h4>
+          </div>
+          <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+            <tr style="width: 100%; padding: 0px;  border: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <table style="width: 130%; padding: 0px;  border: 0px;">
+                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                    <tr style="width: 100%; padding: 0px;">
+                      <th style="width: 55px; font-weight:normal;">#</th>
+                      <th style="width: 132px; font-weight:normal;">Title</th>
+                      <th style="width: 132px; font-weight:normal;">Date</th>
+                      <th style="width: 132px; font-weight:normal;">Details</th>
+                    </tr>
+                  </thead>
+
+                </table>
+              </td>
+            </tr>
+            <tr style="width: 100%; padding: 0px;">
+              <td style="width: 100%; padding: 0px;">
+                <div style="overflow-y: scroll; width: 130%; height: 200px">
+                  {% if mess_announcements %}
+                  <table style="width: 100%; padding: 0px;">
+                      {% for data in mess_announcements %}
+                      <tr>
+                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                        <td style="width: 132px; font-weight:normal;">{{data.announcement_title}}</td>
+                        <td style="width: 132px; font-weight:normal;">{{data.timestamp}}</td>
+                        <td style="width: 132px; font-weight:normal;"><a href="{% url 'dashboard:announcement_detail' 2 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+                          <i class="fas fa-angle-double-right"></i> Details
+                        </a></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                    {% endif %}
+                </div>
+              </td>
+            </tr>
+          </table>
+    </div>
+  </div>
+
+
+        <div class="col-md-10">
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
-            <h4><center>Books</center></h4>
+            <h4><center>Mess Orders</center></h4>
           </div>
           <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
             <tr style="width: 100%; padding: 0px;  border: 0px;">
@@ -118,12 +163,12 @@
               <td style="width: 100%; padding: 0px;">
                 <div style="overflow-y: scroll; width: 129%; height: 200px">
                   <table style="width: 100%; padding: 0px;">
-                      {% for book in books %}
+                      {% for item in items %}
                       <tr>
                         <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
-                        <td style="width: 150px; font-weight:normal;">{{ book.item_name }}</td>
-                        <td style="align:right; width: 100px; font-weight:normal;"><select name="books" class="btn btn-secondary" data-toggle="dropdown" form="order">
-                            {% with ''|center:book.quantity as range %}
+                        <td style="width: 150px; font-weight:normal;">{{ item.item_name }}</td>
+                        <td style="align:right; width: 100px; font-weight:normal;"><select name="order" class="btn btn-secondary" data-toggle="dropdown" form="order">
+                            {% with ''|center:item.quantity as range %}
                             {{range}}
                             {% for value in range %}
                               <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
@@ -138,121 +183,15 @@
             </tr>
           </table>
         </div>
-        <!-- </div> -->
-
-        <!-- <div class="col-md-7"> -->
-        <div class="card" style=" border: 0px;align:left;">
-          <div class="card-header" style="width: 103%;">
-            <h4><center>Stationary</center></h4>
-          </div>
-          <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
-            <tr style="width: 100%; padding: 0px;  border: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <table style="width: 129%; padding: 0px;  border: 0px;">
-                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
-                    <tr style="width: 100%; padding: 0px;">
-                      <th style="width: 55px; font-weight:normal;">#</th>
-                      <th style="width: 150px; font-weight:normal;">Title</th>
-                      <th style="align:right; width: 100px; font-weight:normal;">Quantity</th>
-                    </tr>
-                  </thead>
-
-                </table>
-              </td>
-            </tr>
-            <tr style="width: 100%; padding: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 129%; height: 200px">
-                  <table style="width: 100%; padding: 0px;">
-                      {% for stationary in stationary %}
-                      <tr>
-                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
-                        <td style="width: 150px; font-weight:normal;">{{ stationary.item_name }}</td>
-                        <td style="align:right; width: 100px; font-weight:normal;"><select name="books" class="btn btn-secondary" data-toggle="dropdown" form="order">
-                            {% with ''|center:stationary.quantity as range %}
-                            {{range}}
-                            {% for value in range %}
-                              <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
-                            {% endfor %}
-                            {% endwith %}
-                          </select></td>
-                      </tr>
-                      {% endfor %}
-                    </table>
-                </div>
-              </td>
-            </tr>
-          </table>
+        <div class="card-body">
+          <form action="{% url 'mess:place_order_mess' %}" method="post" id="order">
+            {% csrf_token %}
+            <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
+          </form>
         </div>
-        <!-- </div> -->
-
-        <!-- <div class="col-md-7"> -->
-        <div class="card" style=" border: 0px;align:left;">
-          <div class="card-header" style="width: 103%;">
-            <h4><center>Others</center></h4>
-          </div>
-          <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
-            <tr style="width: 100%; padding: 0px;  border: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <table style="width: 129%; padding: 0px;  border: 0px;">
-                  <thead class="thead-dark" style="width: 100%; padding: 0px;">
-                    <tr style="width: 100%; padding: 0px;">
-                      <th style="width: 55px; font-weight:normal;">#</th>
-                      <th style="width: 150px; font-weight:normal;">Title</th>
-                      <th style="align:right; width: 100px; font-weight:normal;">Quantity</th>
-                    </tr>
-                  </thead>
-
-                </table>
-              </td>
-            </tr>
-            <tr style="width: 100%; padding: 0px;">
-              <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 129%; height: 200px">
-                  <table style="width: 100%; padding: 0px;">
-                      {% for other in others %}
-                      <tr>
-                        <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
-                        <td style="width: 150px; font-weight:normal;">{{ other.item_name }}</td>
-                        <td style="align:right; width: 100px; font-weight:normal;"><select name="books" class="btn btn-secondary" data-toggle="dropdown" form="order">
-                            {% with ''|center:other.quantity as range %}
-                            {{range}}
-                            {% for value in range %}
-                              <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
-                            {% endfor %}
-                            {% endwith %}
-                          </select></td>
-                      </tr>
-                      {% endfor %}
-                    </table>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <!-- </div> -->
-      <!-- </div> -->
-
-          {% if items %}
-            <div class="card-body">
-              <form action="{% url 'orders:place_order' %}" method="post" id="order">
-                {% csrf_token %}
-                <input type="Submit" value="Place Order" class="btn btn-primary btn-block">
-              </form>
-            </div>
-          <div class="card-body">
-            <p>Didn't find your order?</p>
-            <a href="{% url 'orders:manual_order' %}">
-              <input type="Submit" value="Manual Order" class="btn btn-primary btn-block">
-          </a>
-          </div>
-          {% endif %}
-        </div>
-      <!-- </div> -->
-      <!-- </div> -->
-        <div class="col-md-3">
-        <div class="card" style=" border: 0px;">
-          <div class="card-header" style="width: 164%;">
+        <div class="col-md-8" align="top">
+        <div class="card" style=" border: 0px;" >
+          <div class="card-header" style="width: 156%;">
             <h4><center>Orders List</center></h4>
             {% if user_orders %}
               <h4>Total Cost: {{ total_cost }}</h4>
@@ -277,7 +216,7 @@
             </tr>
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 156%; height: 400px;">
+                <div style="overflow-y: scroll; width: 156%; height: 200px;">
                   {% if user_orders %}
                   <table style="width: 100%; padding: 0px;">
                       {% for orders in user_orders %}
@@ -286,7 +225,7 @@
                         <td style="width: 132px; font-weight:normal;">{{ orders.item.item_name }}</td>
                         <td style="width: 132px; font-weight:normal;">{{ orders.timestamp }}</td>
                         <td style="width: 132px; font-weight:normal;">{{ orders.quantity }}</td>
-                        <td style="width: 132px; font-weight:normal;"><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
+                        <td style="width: 132px; font-weight:normal;"><a href="{% url 'mess:delete_order_mess' orders.pk %}" class="btn btn-danger btn-block">
                          Cancel
                         </a></td>
                       </tr>
@@ -297,10 +236,10 @@
               </td>
             </tr>
           </table>
-          <div class="card-header" style="width: 164%;">
+          <div class="card-header" style="width: 156%;">
             <h4><center>Orders History</center></h4>
           </div>
-          <table class="table table-striped" style="width: 100%; padding: 0px;">
+          <table class="table table-striped" style="width: 95%; padding: 0px;">
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
                 <table style="width: 165%; padding: 0px;">
@@ -317,7 +256,7 @@
             </tr>
             <tr style="width: 100%; padding: 0px;">
               <td style="width: 100%; padding: 0px;">
-                <div style="overflow-y: scroll; width: 165%; height: 400px;">
+                <div style="overflow-y: scroll; width: 165%; height: 200px;">
                   <table style="width: 100%; padding: 0px;">
                     {% if user_order_history %}
                       {% for orders in user_order_history %}
@@ -338,8 +277,36 @@
         </div>
       </div>
       </div>
-    </div>
-
+      <div style="align:left;" class = "row">
+        <div class = "col-md-4">
+        <div class="card-body ">
+            <a href = "{% url 'mess:refund_form' %}">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 220px">
+                  Apply for refund
+                </button>
+                </a>
+              </div>
+          </div>
+          <div class = "col-md-4">
+           <div class="card-body ">
+              <a href = "{% url 'mess:leave_form' %}">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
+                  Apply for leave
+                </button>
+                </a>
+              </div>
+          </div>
+          <div class = "col-md-4">
+           <div class="card-body ">
+              <a href = "{% url 'mess:feedback_form' %}">
+                <button class= "btn btn-primary" style="margin-left: 40px; width: 225px">
+                  Give Feedback
+                </button>
+                </a>
+              </div>
+          </div>
+       </div>
+     </div>
   <!-- </center> -->
   </section>
 

@@ -34,7 +34,7 @@
             <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link active">Hostel</a>
           </li>
           <li class="nav-item px-2">
-            <a href="mess.html" class="nav-link">Mess</a>
+            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link">Mess</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
@@ -50,10 +50,10 @@
               <i class="fas fa-user"></i> Welcome {{ request.user }}
             </a>
             <div class="dropdown-menu">
-              <a href="{% url 'dashboard:profile' %}" class="dropdown-item" target="2">
+              <a href="{% url 'dashboard:profile' %}" class="dropdown-item">
                 <i class="fas fa-user-circle"></i> Profile
               </a>
-              <a href="{% url 'dashboard:contacts' %}" class="dropdown-item" target="3">
+              <a href="{% url 'dashboard:contacts' %}" class="dropdown-item">
                 <i class="fas fa-cog"></i> Important Contacts
               </a>
             </div>
@@ -116,7 +116,7 @@
                   <th>Date</th>
                 </tr>
               </thead>
-              
+
               <tbody>
                 <tr>
                   <td colspan="3">
@@ -138,7 +138,7 @@
                   </td>
                 </tr>
               </tbody>
-         
+
             </table>
           <!--</div>-->
 
@@ -160,7 +160,7 @@
                   <th>Date</th>
                 </tr>
               </thead>
-              
+
               <tbody>
                <!-- INSERT JINJA TEMPLATES HERE -->
                <tr>
@@ -183,11 +183,11 @@
                   </td>
                 </tr>
               </tbody>
-           
+
             </table>
           <!--</div>-->
 
-          
+
           </div>
         </div>
 
@@ -199,15 +199,15 @@
     <table class="table table-striped" style="width: 100%; padding: 0px;  border: 0px;">
       <tr style="width: 100%; padding: 0px;  border: 0px;">
         <td style="width: 100%; padding: 0px;">
-          <table style="width: 156%; padding: 0px;  border: 0px;">
+          <table style="width: 132%; padding: 0px;  border: 0px;">
             <thead class="thead-dark" style="width: 100%; padding: 0px;">
-              
+
                   <tr style="width: 60%; padding: 0px;">
                 <th style="width: 15px; font-weight:normal;" colspan="3">Courier History</th>
-                
+
                 <th style="width: 60px; font-weight:normal;"></th>
               </tr>
-                
+
               <tr style="width: 60%; padding: 0px;">
                 <th style="width: 15px; font-weight:normal;">#</th>
                 <th style="width: 60px; font-weight:normal;">Agent</th>
@@ -221,7 +221,7 @@
       </tr>
       <tr style="width: 100%; padding: 0px;">
         <td style="width: 100%; padding: 0px;">
-          <div style="overflow-y: scroll; width: 156%; height:{{ scrollL_courier }}">
+          <div style="overflow-y: scroll; width: 132%; height:{{ scrollL_courier }}">
             {% if courier_data %}
             <table style="width: 100%; padding: 0px;">
                 {% for data in courier_data %}
@@ -249,7 +249,7 @@
   			  <a href = "{% url 'hostel:form_complaint' %}">
               <button class= "btn btn-primary" style="margin-left: 200px">
               	File complaint
-              </button>	
+              </button>
               </a>
             </div>
         </div>
@@ -259,7 +259,7 @@
               <button class= "btn btn-primary" style="margin-left: 200px">
               	Apply for leave
               </button>
-              </a>	
+              </a>
             </div>
         </div>
      </div>
