@@ -31,10 +31,10 @@
             <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="hostel.html" class="nav-link">Hostel</a>
+            <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link">Hostel</a>
           </li>
           <li class="nav-item px-2">
-            <a href="mess.html" class="nav-link">Mess</a>
+            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link">Mess</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
@@ -138,9 +138,9 @@
             </tr>
           </table>
         </div>
-        </div>
+        <!-- </div> -->
 
-        <div class="col-md-7">
+        <!-- <div class="col-md-7"> -->
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Stationary</center></h4>
@@ -184,9 +184,9 @@
             </tr>
           </table>
         </div>
-        </div>
+        <!-- </div> -->
 
-        <div class="col-md-7">
+        <!-- <div class="col-md-7"> -->
         <div class="card" style=" border: 0px;align:left;">
           <div class="card-header" style="width: 103%;">
             <h4><center>Others</center></h4>
@@ -248,6 +248,8 @@
           </div>
           {% endif %}
         </div>
+      <!-- </div> -->
+      <!-- </div> -->
         <div class="col-md-3">
         <div class="card" style=" border: 0px;">
           <div class="card-header" style="width: 164%;">
@@ -336,6 +338,7 @@
         </div>
       </div>
       </div>
+    </div>
 
   <!-- </center> -->
   </section>
