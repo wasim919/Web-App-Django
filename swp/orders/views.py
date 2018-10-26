@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ManualOrderForm
+from django.http import HttpResponse
 from  accounts.models import Student
 from .models import Items, OrderList, OrderHistory
 import datetime
 import time
+from django.template.loader import render_to_string
 
 @login_required
 def orders_index(request):
@@ -102,6 +104,31 @@ def delete_order(request, pk):
         obj1.save()
         obj.delete()
     return redirect('orders:orders_index')
+
+@login_required
+def getOrdersHistory(request):
+    # if request.method=='POST':
+    #     datepicker=request.POST['date']
+    #     timepicker=request.POST['time']
+    #     specialisation=request.POST['specialisation']
+    #     csrf_token=get_token(request)
+    #     mydatetime=getDateTime(datepicker,timepicker)
+    #     docs=[]
+    #     doctors=Doctors.objects.filter(specialisation=specialisation,date=getDate(datepicker))
+    #     #doctors=Doctors.objects.all()
+    #     for doc in doctors:
+    #         if(mydatetime>=getDateTime(str(doc.date),str(doc.available_from)) and mydatetime<=getDateTime(str(doc.date),str(doc.available_till))):
+    #             docs.append(doc)
+    #     return HttpResponse(render_to_string('medical/searchResults.html',context={'csrf_token':csrf_token,'doctors':docs,'len':len(docs),'date':datepicker,'time':timepicker}))
+    # return HttpResponse(status=500)
+    if request.method == 'GET':
+        orders_history = OrderHistory.objects.all()
+        user_orders_history = list(filter(lambda x: x.student.user == request.user, orders_history))
+        user_orders_history.sort(key = lambda a: a.timestamp, reverse = True)
+        return HttpResponse(render_to_string('orders/userOrdersHistory.html',context={
+        'user_orders_history': user_orders_history,
+        'len':len(user_orders_history)
+        }))
 
 @login_required
 def place_order(request):
