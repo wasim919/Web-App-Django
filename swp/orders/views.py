@@ -111,7 +111,7 @@ def place_order(request):
         books = list(filter(lambda x: x.item_type == "Book", items))
         stationary = list(filter(lambda x: x.item_type == "Stationary", items))
         others = list(filter(lambda x: x.item_type == "Others", items))
-
+        print(request.POST)
         books_post = request.POST.getlist('books')
         stationary_post = request.POST.getlist('stationary')
         others_post = request.POST.getlist('others')
@@ -128,7 +128,7 @@ def place_order(request):
             others_cost = dot([a.cost for a in others], list(map(int, others_post)))
 
         total_cost = books_cost + stationary_cost + others_cost
-
+        print(stationary_post)
         if books:
             books_purchased = [books[i] for i in range(len(books)) if books_post[i]!='0']
         if stationary:
