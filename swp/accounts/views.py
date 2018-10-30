@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import StudentLoginForm
 from django.http import HttpResponse
+from .models import Student
 from django.contrib.auth.decorators import login_required
 
 def student_login(request):
@@ -11,6 +12,9 @@ def student_login(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
+            student = Student.objects.get(user = request.user)
+            if student.is_hostel_admin:
+                return redirect('hostel_admin:hostel_admin_index')
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             return redirect('/dashboard/')
