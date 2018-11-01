@@ -20,7 +20,8 @@ def medical_dashboard(request):
         scrollL_announce = '140px'
     else:
         scrollL_announce = str(3 * 70)+ 'px'
-    appointments=MedicalAppointment.objects.all()
+    student=Student.objects.get(user=request.user)
+    appointments=MedicalAppointment.objects.filter(student=student)
     return render(request,'medical/medical_dashboard.html',{"appointments":appointments,"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
 @login_required
 def medical_message(request):
@@ -154,3 +155,15 @@ def makeAppointment(request):
             error_message="Please enter valid values"
             return render(request,'medical/appointment.html',context={'docid':doc_id,'adate':date,'atime':time,'form':form,'error_message':error_message})
     return redirect('medical_dashboard')
+
+@login_required
+def deleteAppointment(request):
+    if request.method == 'POST':
+        #appointment id
+        try:
+            app_id=request.POST['id']
+            MedicalAppointment.objects.get(id=app_id).delete()
+            return HttpResponse(status=200)
+        except:
+            return HttpResponse(status=500)
+    return HttpResponse(status=500)

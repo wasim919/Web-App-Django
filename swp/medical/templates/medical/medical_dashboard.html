@@ -248,9 +248,11 @@
                 <tr>
                   <td>{{ appointment.doctor.doctor_name }}</td>
                   <td>{{ appointment.appointment_time }}</td>
-                  <td><a href="#" class="btn btn-danger btn-block">
+                  <td>
+                    <input type="hidden" value="{{ appointment.id }}" />
+                    <button class="deletebtn btn btn-danger btn-block">
                    Cancel
-                  </a></td>
+                  </button></td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -448,6 +450,24 @@
    }
  });
 });
+
+$(".deletebtn").click(
+  function(){
+    var mid=$(this).parent().find('input').val();
+    var parent=$(this).parent().parent();
+    $.ajax({
+      type:'POST',
+      url:'{% url "medical:deleteAppointment" %}',
+      data:{
+        id:mid,
+        csrfmiddlewaretoken:'{{ csrf_token }}'
+      },
+      success:function(){
+        parent.css('display','none');
+      }
+    });
+  }
+);
     </script>
 </body>
 
