@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
-from accounts.models import Student
+from api_integration.models import Student
 
 class EditUserNameForm(forms.ModelForm):
     class Meta:
