@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^searchDoctors$',views.searchDoctors, name = 'searchDoctors'),
     url(r'^bookAppointment$',views.bookAppointment, name = 'bookAppointment'),
     url(r'^makeAppointment$',views.makeAppointment, name = 'makeAppointment'),
+    url(r'^deleteAppointment$',views.deleteAppointment, name = 'deleteAppointment'),
 ]
