@@ -11,6 +11,9 @@ import datetime
 from django.middleware.csrf import get_token
 from mess.models import MessLeave
 from hostel.models import HostelLeave
+
+#required for datetime comparisons
+import pytz
 # Create your views here.
 @login_required
 def medical_dashboard(request):
@@ -22,7 +25,11 @@ def medical_dashboard(request):
         scrollL_announce = str(3 * 70)+ 'px'
     student=Student.objects.get(user=request.user)
     appointments=MedicalAppointment.objects.filter(student=student)
-    return render(request,'medical/medical_dashboard.html',{"appointments":appointments,"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
+    filtered_appointments=[]
+    for appointment in appointments:
+        if(appointment.appointment_time>datetime.datetime.now().replace(tzinfo=pytz.UTC)):
+            filtered_appointments.append(appointment)
+    return render(request,'medical/medical_dashboard.html',{"appointments":filtered_appointments,"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
 @login_required
 def medical_message(request):
     return render(request,'medical/medical_message.html')
