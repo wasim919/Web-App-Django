@@ -43,7 +43,7 @@ class Student(models.Model):
     is_mess_admin = models.BooleanField(default=False)
     is_medical_admin = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
-    timestamp = models.DateTimeField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     created_at = models.DateField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateField(blank=True, null=True)

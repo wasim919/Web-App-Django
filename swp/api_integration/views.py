@@ -5,13 +5,13 @@ from django.contrib.auth import login, logout, authenticate
 from django.template import loader, Context
 from django.contrib.auth.models import User
 from .models import Student
+import datetime
 
 def authenticate_api(token):
     url = "https://serene-wildwood-35121.herokuapp.com/oauth/getDetails"
     Payload = {'token' : token,'secret' : "8190d9225074e3a366ad244769c1aed43a72746f61ed0912c89d8311d15f0f4e495635b7f3dc1a6c0e48747297d76e1c82b930b79704e0b3d365577aaf033208"}
     k = requests.post(url,Payload)
     details = json.loads(k.content)
-    # print(details)
     return details
 
 def callback(request,token):
@@ -45,7 +45,7 @@ def callback(request,token):
         user = User.objects.create(username = student_first_name, password = rand_password)
         user.set_password(rand_password)
         user.save()
-        Student_test.objects.create(user = user, s_id = s_id, student_id = student_id,
+        Student.objects.create(user = user, s_id = s_id, roll = student_id,
         student_first_name = student_first_name, student_middle_name = student_middle_name,
         student_last_name = student_last_name, student_dob = student_dob, student_gender = student_gender,
         student_mobile = student_mobile, student_email = student_email, student_blood_group = student_blood_group,
@@ -54,18 +54,13 @@ def callback(request,token):
         student_registered_degree_duration = student_registered_degree_duration,
         student_cur_yearofstudy = student_cur_yearofstudy, student_cur_sem = student_cur_sem,
         student_academic_status = student_academic_status, created_at=datetime.datetime.now().date(),
-        created_by = request.user.username, modified_at = datetime.datetime.now().date(),
-        modified_by = request.user.username)
-        obj = Student_test.objects.get(student_id = student_id)
-        # print(obj)
+        created_by = student_first_name, modified_at = datetime.datetime.now().date(),
+        modified_by = student_first_name)
     else:
         user = authenticate(request, username = student_first_name, password = rand_password)
-        # print('hi')
-        # print(user)
-        # print('bye')
         if user is not None:
             login(request, user)
-            student = Student_test.objects.get(user = request.user)
+            student = Student.objects.get(user = request.user)
             if student.is_hostel_admin:
                 return redirect('hostel_admin:hostel_admin_index')
             if 'next' in request.POST:
@@ -73,6 +68,7 @@ def callback(request,token):
             return redirect('/dashboard/')
         else:
             return render(request, 'api_integration/invalid.html')
+
     # else:
     #     return redirect('/home/')
     # is_blacklisted = student_data[0]['is_blacklisted']

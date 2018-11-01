@@ -6,9 +6,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 def student_login(request):
-    return render(request, 'accounts/login.html', {
-    'student_login_form': student_login_form
-    })
+    return render(request, 'accounts/login.html')
 
 @login_required
 def user_logout(request):

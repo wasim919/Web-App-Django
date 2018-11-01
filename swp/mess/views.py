@@ -45,7 +45,7 @@ def mess_dashboard(request):
 		})
 	else:
 		return render(request, 'mess/home.html', {
-		'items': items,
+		'items': mess_items,
 		'mess_announcements': mess_announcements,
 		})
 # @login_required
