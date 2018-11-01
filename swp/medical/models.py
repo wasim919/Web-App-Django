@@ -4,7 +4,7 @@ from django.db import models
 class MedicalLeave(models.Model):
     leave_from=models.DateField(blank=True, null=True)
     leave_to=models.DateField(blank=True, null=True)
-    student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+    student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
     hometown=models.CharField(max_length=200)
     reason=models.TextField()
     timestamp = models.DateTimeField(blank=True, null=True)
@@ -33,7 +33,7 @@ class Doctors(models.Model):
 
 class MedicalAppointment(models.Model):
     doctor=models.ForeignKey('medical.Doctors', models.DO_NOTHING, blank=True, null=True)
-    student=models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+    student=models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
     appointment_time=models.DateTimeField(blank=True, null=True)
     problem=models.TextField()
     age=models.IntegerField(blank=True, null=True)

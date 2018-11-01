@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Invalid</title>
 
     <!-- <head> -->
   <meta charset="UTF-8">
@@ -45,12 +45,17 @@
         </div>
       </section>
 
-
-    {% if user.is_authenticated %}
-    <div class="btn btn-primary btn-block">
-    <a href = "{% url 'accounts:student_logout' %}">Logout</a>
-  </div>
-  {% endif %}
+      <section id="actions" class="py-4 mb-4 bg-light">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <a href="{% url 'accounts:student_login' %}" class="btn btn-light btn-block">
+                <i class="fas fa-arrow-left"></i> Back To Login
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
     <section id="login">
     <div class="container">
@@ -58,25 +63,14 @@
         <div class="col-md-6 mx-auto">
           <div class="card">
             <div class="card-header">
-              <h4>Account Login</h4>
-            </div>
-            <div class="card-body">
-              <!-- <form action="{% url 'accounts:student_login' %}" method="post"> -->
-                <!-- {% csrf_token %} -->
-                <!-- {{student_login_form.as_p}} -->
-                <!-- {% if request.GET.next %}
-                  <input type="hidden" name="next" value="{{request.GET.next}}">
-                {% endif %} -->
-                <!-- <input type="Submit" value="Login" class="btn btn-primary btn-block"> -->
-              <!-- </form> -->
-                <a href="https://serene-wildwood-35121.herokuapp.com/login/5bd945de9fab8b00153868c3/">Login</a>
+              <h4>Invalid Creadentials</h4>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <br><br><br><br><br><br><br>
+    <br><br><br><br><br>
     <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
     <div class="container">
       <div class="row">

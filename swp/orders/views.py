@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_list_or_404, get_object_or_40
 from django.contrib.auth.decorators import login_required
 from .forms import ManualOrderForm
 from django.http import HttpResponse
-from  accounts.models import Student
+from api_integration.models import Student
 from .models import Items, OrderList, OrderHistory
 import datetime
 import time

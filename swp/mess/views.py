@@ -5,7 +5,7 @@ from .models import *
 from .forms import *
 from dashboard.models import MessAnnouncements
 from django.contrib.auth.decorators import login_required
-from accounts.models import Student
+from api_integration.models import Student
 import datetime
 import time
 
@@ -166,7 +166,7 @@ def place_order(request):
 			'not_ordered': not_order,
 			'total_cost': total_cost
 			})
-			
+
 @login_required
 def mess_leave(request):
 	if request.method == 'POST':

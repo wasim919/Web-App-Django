@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from .forms import MedicalLeaveForm,AppointmentForm
 from .models import *
 from django.contrib.auth.decorators import login_required
-from accounts.models import Student
+from api_integration.models import Student
 from dashboard.models import MedicalAnnouncements
 import datetime
 from django.middleware.csrf import get_token

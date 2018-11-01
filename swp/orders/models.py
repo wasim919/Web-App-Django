@@ -19,7 +19,7 @@ class ManualOrder(models.Model):
         return "{} {}".format(self.order_type, self.order_name)
 
 class OrderList(models.Model):
-    student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+    student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
     item = models.ForeignKey('Items', models.DO_NOTHING, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True, auto_now_add  =True)
@@ -33,7 +33,7 @@ class OrderList(models.Model):
 
 
 class OrderHistory(models.Model):
-    student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+    student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
     item = models.ForeignKey(Items, models.DO_NOTHING, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True, auto_now_add=True)
