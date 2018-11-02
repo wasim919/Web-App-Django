@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'medical',
     'hostel',
     'mess',
+    'hostel_admin',
+    'api_integration',
 ]
 
 MIDDLEWARE = [

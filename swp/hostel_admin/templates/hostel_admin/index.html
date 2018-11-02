@@ -1,15 +1,62 @@
-0<!DOCTYPE html>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+<div class="container">
+</div>
+  </body>
+</html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
+
   <title>B-04 Frontend</title>
+
+  <!-- Date Picker -->
+  <style>
+  #logo{
+  	font-family: 'Charmonman', cursive;
+  	font-size: 100px;
+  	background-color: black;
+  	border-radius: 50%;
+  	color: white;
+  	text-align: center;
+  	width: 300px;
+  }
+  #titl{
+  	position: absolute;
+  	text-align: center;
+  	margin-left: 400px;
+  	display: none;
+  }
+  #logmes{
+  	display: none;
+  	font-size: 40px;
+  	margin-left: 300px;
+  }
+  </style>
+  <script>
+$(document).ready(function(){//
+	$("#titl").fadeIn(500);
+	$("#titl").animate({top: "+=20"},2000);
+	$("#logmes").fadeIn(5000);
+});
+</script>
+
 </head>
 
 <body>
@@ -25,23 +72,15 @@
             <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link active">Dashboard</a>
           </li>
           <li class="nav-item px-2">
-            <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link">Hostel</a>
-          </li>
-          <li class="nav-item px-2">
-            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link">Mess</a>
-          </li>
-          <li class="nav-item px-2">
-            <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
-          </li>
-          <li class="nav-item px-2">
-            <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
+            <a href="{% url 'hostel_admin:hostel_admin_dashboard' %}" class="nav-link active">Admin Dashboard</a>
           </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
           <li class="nav-item dropdown mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fas fa-user"></i> Welcome {{ request.user }}
+              <i class="fas fa-user"></i> Welcome {{request.user}}
             </a>
             <div class="dropdown-menu">
               <a href="{% url 'dashboard:profile' %}" class="dropdown-item">
@@ -52,15 +91,17 @@
               </a>
             </div>
           </li>
+          {% endif %}
           <li class="nav-item">
-            <a href="{% url 'accounts:student_logout' %}" class="nav-link">
-              <i class="fas fa-user-times"></i> Logout
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'admin:index' %}" class="nav-link">
-              <i></i> Admin
-            </a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'accounts:student_logout' %}" class="nav-link">
+            <i class="fas fa-user-times"></i> Logout
+          </a>
+          {% else %}
+          <a href="{% url 'accounts:student_logout' %}" class="nav-link">
+            <i class="fas fa-user-times"></i> Login
+          </a>
+          {% endif %}
           </li>
         </ul>
       </div>
@@ -70,73 +111,44 @@
   <!-- HEADER -->
   <header id="main-header" class="py-2 bg-primary text-white">
     <div class="container">
-      <div class="row">
+      <div class="row" >
         <div class="col-md-6">
           <h1>
-            <i class="fas fa-user"></i> Edit Profile</h1>
+            <i class="fas fa-cog"></i> Welcome</h1>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ACTIONS -->
-  <section id="actions" class="py-4 mb-4 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <a href="{% url 'dashboard:dashboard_index' %}" class="btn btn-light btn-block">
-            <i class="fas fa-arrow-left"></i> Back To Dashboard
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- POSTS -->
+  <section>
+  <p>
 
-  <!-- PROFILE -->
-  <section id="profile">
-    <div class="container">
+  </p>
+  </section>
+  <section id="posts">
+    <center><div class="container">
+
       <div class="row">
         <div class="col-md-9">
-          <div class="card">
-            <div class="card-header">
-              <h4>Edit Profile</h4>
-            </div>
-            <div class="card-body">
-              <form action="{% url 'dashboard:profile' %}" method="post" id="post-form">
-                {% csrf_token %}
-                  {{ form.as_p }}
-                  <!-- {{ stu_form.as_p }} -->
-                  <div class="form-group">
-                    <label for="bio">Bio</label>
-                    {% if bio %}
-                      <textarea class="form-control" name="editor">{{bio}}</textarea>
-                      {% else %}
-                      <textarea class="form-control" name="editor">Let People know You.</textarea>
-                    {% endif %}
-                  </div>
-                <input type="Submit" value="Update" class="btn btn-primary btn-block">
-              </form>
-            </div>
+    	  <div id="titl" >
+          <div id="logo">SWP</div>
+          <div style="font-size: 40px; margin-left: -40px">Student Welfare Portal </div>
           </div>
+          <br><br><br><br><br><br><br><br><br><br>
+          <div id="logmes"> Welcome Hostel Admin</div>
         </div>
-        <div class="col-md-3">
-            <img src="/../{{ student.avatar }}" alt="" class="d-block img-fluid mb-3">
-            <form action="{% url 'dashboard:upload_image' %}" method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              <input type="file" name="myfile" default="/media/images/default.png">
-              <!-- <button class="btn btn-primary btn-block" name="upload">Choose Image</button> -->
-              <button type="submit" name="button">Upload Image</button>
-            </form>
 
-        </div>
       </div>
     </div>
+  </center>
   </section>
 
   <!-- FOOTER -->
-  <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
-    <div class="container">
-      <div class="row">
+  <br><br><br>
+  <footer id="main-footer" class="bg-dark text-white mt-5 p-5" 	style="margin-top: 400px">
+    <div class="container" >
+      <div class="row" >
         <div class="col">
           <p class="lead text-center">
             Copyright &copy;
@@ -163,12 +175,6 @@
 
     CKEDITOR.replace('editor1');
   </script>
-  <!-- <script>
-  $('#post-form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
-  });
-  </script> -->
 </body>
 
 </html>

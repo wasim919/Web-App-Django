@@ -5,7 +5,7 @@ from .models import *
 from .forms import *
 from dashboard.models import HostelAnnouncements
 from django.contrib.auth.decorators import login_required
-from accounts.models import Student
+from api_integration.models import Student
 import datetime
 
 # Create your views here.
@@ -77,7 +77,7 @@ def addComplaint(request):
 			complaint_form.room_no = request.POST['room_no']
 			complaint_form.completed = False
 			complaint_form.timestamp = datetime.datetime.now()
-			complaint_form.created_at = datetime.datetime.now().date() 
+			complaint_form.created_at = datetime.datetime.now().date()
 			complaint_form.created_by = Student.objects.get(user = request.user)
 			complaint_form.modified_at = datetime.datetime.now().date()
 			complaint_form.modified_by = Student.objects.get(user = request.user)
@@ -88,7 +88,7 @@ def addComplaint(request):
 		return render(request,'hostel/complaint.html',{'form':form,'error_message':''})
 
 
-	
+
 
 @login_required
 def applyHostelLeave(request):
@@ -102,7 +102,7 @@ def applyHostelLeave(request):
 			leave_form.timestamp = datetime.datetime.now()
 			leave_form.created_at = datetime.datetime.now().date()
 			leave_form.modified_at = datetime.datetime.now().date()
-			
+
 			leave_form.created_by = Student.objects.get(user = request.user)
 			leave_form.modified_by = Student.objects.get(user = request.user)
 

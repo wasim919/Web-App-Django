@@ -297,7 +297,7 @@
               </td>
             </tr>
           </table>
-          <div class="card-header" style="width: 100%;">
+          <!-- <div class="card-header" style="width: 100%;">
             <h4><center>Orders History</center></h4>
           </div>
           <table class="table table-striped" style="width: 100%; padding: 0px;">
@@ -334,7 +334,14 @@
                 </div>
               </td>
             </tr>
+          </table> -->
+            <input type="Submit" value="Orders History" class="btn btn-primary btn-block" id="mybutton">
+            <div class="card-header" style="width: 100%;">
+              <h4><center>Orders History</center></h4>
+            </div>
+          <table id="searchTable" class="table table-striped" style="visibility:hidden">
           </table>
+
         </div>
       </div>
       </div>
@@ -371,6 +378,28 @@
     $('#year').text(new Date().getFullYear());
 
     CKEDITOR.replace('editor1');
+  </script>
+  <script type="text/javascript">
+  $('#mybutton').click(function(){
+    // e.preventDefault();
+    // var date=$('#datepicker').val();
+    // var time=$('#timepicker').val();
+    // var specialisation=$('#specialisation :selected').text();
+    // console.log(specialisation);
+    $.ajax({
+      type:'GET',
+      url:'{% url "orders:orders_history" %}',
+      dataType: 'html',
+    success:function(data){
+      $(document).ready(function(){
+        console.log("it worked");
+        $("#searchTable").css('visibility','visible');
+        $("#mybutton").css('visibility','hidden');
+        $("#searchTable").html(data);
+     });
+    }
+  });
+ });
   </script>
 </body>
 

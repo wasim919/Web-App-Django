@@ -4,7 +4,7 @@ from datetime import datetime
 class MessLeave(models.Model):
 	leave_from=models.DateField(blank=True, null=True)
 	leave_to=models.DateField(blank=True, null=True)
-	student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+	student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
 	hometown=models.CharField(max_length=200)
 	reason=models.TextField()
 	timestamp = models.DateTimeField(blank=True, null=True)
@@ -17,7 +17,7 @@ class MessLeave(models.Model):
 		return '%s %s %s %s' % (self.student.user.username, self.leave_from, self.leave_to, self.reason)
 
 class MessRefund(models.Model):
-	student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+	student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
 	refund_from=models.DateField(blank=True, null=True)
 	refund_to=models.DateField(blank=True, null=True)
 	account_number = models.CharField(max_length=18, blank = True, null = True)
@@ -43,7 +43,7 @@ class MessItems(models.Model):
 		return "{}".format(self.item_name)
 
 class OrderHistoryMess(models.Model):
-	student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+	student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
 	item = models.ForeignKey(MessItems, models.DO_NOTHING, blank=True, null=True)
 	quantity = models.IntegerField(blank=True, null=True)
 	timestamp = models.DateTimeField(blank=True, null=True, auto_now_add=True)
@@ -57,7 +57,7 @@ class OrderHistoryMess(models.Model):
 
 
 class OrderListMess(models.Model):
-	student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+	student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
 	item = models.ForeignKey(MessItems, models.DO_NOTHING, blank=True, null=True)
 	quantity = models.IntegerField(blank=True, null=True)
 	timestamp = models.DateTimeField(blank=True, null=True, auto_now_add  =True)
@@ -71,7 +71,7 @@ class OrderListMess(models.Model):
 
 
 class MessFeedback(models.Model):
-	student = models.ForeignKey('accounts.Student', models.DO_NOTHING, blank=True, null=True)
+	student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
 	feedback = models.CharField(max_length=256, blank=True, null=True)
 	room_no = models.IntegerField(blank=True, null=True)
 	comp_img = models.ImageField(upload_to='images/'+str(datetime.now()),blank=True,null=True)
