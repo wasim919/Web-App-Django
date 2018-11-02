@@ -98,9 +98,20 @@
           <a href="{% url 'mess:mess_dashboard' %}" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
             <i class="fas fa-arrow-left"></i> Back To Mess Dashboard
           </a>
+          {% if already_refunded %}
           <div class="card" style = "margin-bottom:200px">
-            <h2> Your refund request has been submitted successfully.<br> The mess administration will contact you in case of any issues</h2>
+            <h2>{{ already_refunded }} {{ refund_amount }}.</h2>
           </div>
+          {% else %}
+            <div class="card" style = "margin-bottom:200px">
+              {% if message %}
+              <h2> {{ message }}</h2>
+              {% else %}
+                <h2> Your refund request has been submitted successfully.<br> The mess administration will contact you in case of any issues</h2>
+              {% endif %}
+              <h3>You will be receiving {{ refund_amount }}.</h3>
+            </div>
+          {% endif %}
         </div>
 
       </div>
