@@ -11,6 +11,7 @@ from django.template.loader import render_to_string
 @login_required
 def orders_index(request):
     items = list(Items.objects.all())
+    print(request.user)
     if items:
 
         order_history = OrderHistory.objects.all()

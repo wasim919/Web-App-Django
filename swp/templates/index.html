@@ -73,7 +73,7 @@ $(document).ready(function(){//
           </li>
           <li class="nav-item">
             <a href="{% url 'admin:index' %}" class="nav-link">
-              <i></i> Admin 
+              <i></i> Admin
             </a>
           </li>
         </ul>
@@ -139,14 +139,16 @@ $(document).ready(function(){//
           <div style="font-size: 40px; margin-left: -40px">Student Welfare Portal </div>
           </div>
           <br><br><br><br><br><br><br><br><br><br>
-          <div id="logmes"> Please login to continue</div>
+          {% if request.user.is_authenticated is False%}
+            <div id="logmes"> Please login to continue</div>
+            {% else %}
+            <br><br>
+          {% endif %}
         </div>
-
       </div>
     </div>
   </center>
   </section>
-
   <!-- FOOTER -->
   <br><br><br>
   <footer id="main-footer" class="bg-dark text-white mt-5 p-5" 	style="margin-top: 400px">

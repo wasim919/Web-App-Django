@@ -25,9 +25,6 @@ def callback(request,token):
     student_middle_name = student_data[0]['Student_Middle_Name']
     student_last_name = student_data[0]['Student_Last_name']
     student_dob = student_data[0]['Student_DOB']
-    print('hi')
-    print(student_dob)
-    print('bye')
     student_gender = student_data[0]['Student_Gender']
     student_email = student_data[0]['Student_Email']
     student_mobile = student_data[0]['Student_Mobile']
@@ -72,13 +69,12 @@ def callback(request,token):
         user = authenticate(request, username = student_first_name, password = rand_password)
         if user is not None:
             login(request, user)
-            print(request.user)
             student = Student.objects.get(user = request.user)
             if student.is_hostel_admin:
                 return redirect('hostel_admin:hostel_admin_index')
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
-            return redirect('/dashboard/')
+            return redirect('/')
         else:
             return render(request, 'api_integration/invalid.html')
 
