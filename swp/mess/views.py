@@ -221,48 +221,59 @@ def mess_refund(request):
 				# 	mess_leave = MessLeave.objects.get(student = student)
 				# except MessLeave.DoesNotExist:
 				# 	mess_leave = None
+				days = 0
+				ref_amount = 0
+				delta1 = 0
+				days = 0
 				if user_mess_leaves:
-					refund_form.student = student
-					user_leave_obj = user_mess_leaves[0]
-					refund_form.mess_leave = user_leave_obj
 					# refund_form.refund_from = getDate(request.POST['refund_from'])
 					# refund_form.refund_to = getDate(request.POST['refund_to'])
-					print(user_leave_obj.ref_given)
-					if user_leave_obj.ref_given == False:
+					# print(user_leave_obj.ref_given)
+					for leave in user_mess_leaves:
+						if leave.ref_given is False:
+							if leave.leave_from.month == datetime.datetime.now().date().month:
+								delta1 = leave.leave_to - leave.leave_from
+								if delta1.days - days >= 0 and delta1.days <= 5:
+									days += delta1.days
+									leave.ref_given = True
+									leave.save()
+									if days >=5 :
+										# print('hi')
+										# print(leave)
+										# print('bye')
+										days = 5
+										break
+								else:
+									days = 5
+									leave.ref_given = True
+									# print('hello')
+									# print(leave)
+									# print('hello')
+									leave.save()
+									break
+								# print(leave)
+								# print('bug')
+					if days > 0:
+						refund_form.student = student
 						refund_form.account_number = request.POST['account_number']
 						refund_form.account_holder_name = request.POST['account_holder_name']
 						refund_form.ifsc_code = request.POST['ifsc_code']
-						refund_form.datetime = datetime.datetime.now()
-
+						refund_form.timestamp = datetime.datetime.now()
+						refund_form.refund_amount = int(days) * 98
 						refund_form.created_at = datetime.datetime.now().date()
 						refund_form.modified_at = datetime.datetime.now().date()
 
 						refund_form.created_by = Student.objects.get(user = request.user)
 						refund_form.modified_by = Student.objects.get(user = request.user)
-						delta = user_leave_obj.leave_to - user_leave_obj.leave_from
-						user_leave_obj.ref_given = True
-						user_leave_obj.save()
-						if(delta.days >= 10):
-							message = "U have applied mess leave for more than 5 days. U will only be getting the refund for 5 days."
-							ref_amount = 5 * 98
-							return render(request,'mess/refund-ack.html',{
-							'form':form,
-							'message':message,
-							'refund_amount': ref_amount
-							})
 						refund_form.save()
-						ref_amount = int(delta.days) * 98
-						# print(ref_amount)
-						# print(delta.days)
+						print(days)
+						ref_amount = int(days) * 98
 						return render(request, 'mess/refund-ack.html', {
 						'refund_amount': ref_amount
 						})
-					else:
-						delta = user_leave_obj.leave_to - user_leave_obj.leave_from
-						if(delta.days >= 10):
-							ref_amount = 5 * 98
-						else:
-							ref_amount = int(delta.days) * 98
+					elif days == 0:
+						mess_obj = MessRefund.objects.get(student = student)
+						ref_amount = mess_obj.refund_amount
 						return render(request, 'mess/refund-ack.html', {
 						'refund_amount': ref_amount,
 						'already_refunded': 'We have already refunded'
