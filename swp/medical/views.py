@@ -9,6 +9,11 @@ from api_integration.models import Student
 from dashboard.models import MedicalAnnouncements
 import datetime
 from django.middleware.csrf import get_token
+from mess.models import MessLeave
+from hostel.models import HostelLeave
+
+#required for datetime comparisons
+import pytz
 # Create your views here.
 @login_required
 def medical_dashboard(request):
@@ -18,7 +23,13 @@ def medical_dashboard(request):
         scrollL_announce = '140px'
     else:
         scrollL_announce = str(3 * 70)+ 'px'
-    return render(request,'medical/medical_dashboard.html',{"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
+    student=Student.objects.get(user=request.user)
+    appointments=MedicalAppointment.objects.filter(student=student)
+    filtered_appointments=[]
+    for appointment in appointments:
+        if(appointment.appointment_time>datetime.datetime.now().replace(tzinfo=pytz.UTC)):
+            filtered_appointments.append(appointment)
+    return render(request,'medical/medical_dashboard.html',{"appointments":filtered_appointments,"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
 @login_required
 def medical_message(request):
     return render(request,'medical/medical_message.html')
@@ -63,7 +74,21 @@ def applyLeave(request):
             leave_form.leave_to=getDate(request.POST['leave_to'])
             leave_form.timestamp=datetime.datetime.now()
             leave_form.created_at=datetime.datetime.now().date()
+            leave_form.modified_at = datetime.datetime.now().date()
             leave_form.created_by=request.user.username
+            leave_form.modified_by=request.user.username
+            if request.POST.get('mess_box'):
+                print("mess")
+                mess_leave=MessLeave(leave_from=request.POST['leave_from'],leave_to=request.POST['leave_to'],student=Student.objects.get(user=request.user),
+                hometown=leave_form.hometown,reason=leave_form.reason,timestamp=datetime.datetime.now(),created_at=datetime.datetime.now().date(),
+                created_by=request.user.username,modified_by=request.user.username)
+                mess_leave.save()
+            if request.POST.get('hostel_box'):
+                print("hostel")
+                hostel_leave=HostelLeave(leave_from=request.POST['leave_from'],leave_to=request.POST['leave_to'],student=Student.objects.get(user=request.user),
+                hometown=leave_form.hometown,reason=leave_form.reason,timestamp=datetime.datetime.now(),created_at=datetime.datetime.now().date(),
+                created_by=request.user.username,modified_by=request.user.username)
+                hostel_leave.save()
             if(leave_form.leave_from>=leave_form.leave_to):
                 error_message="Please enter valid From and To dates"
                 return render(request, 'medical/medical_leave.html', {
@@ -137,3 +162,15 @@ def makeAppointment(request):
             error_message="Please enter valid values"
             return render(request,'medical/appointment.html',context={'docid':doc_id,'adate':date,'atime':time,'form':form,'error_message':error_message})
     return redirect('medical_dashboard')
+
+@login_required
+def deleteAppointment(request):
+    if request.method == 'POST':
+        #appointment id
+        try:
+            app_id=request.POST['id']
+            MedicalAppointment.objects.get(id=app_id).delete()
+            return HttpResponse(status=200)
+        except:
+            return HttpResponse(status=500)
+    return HttpResponse(status=500)
