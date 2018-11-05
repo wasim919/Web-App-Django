@@ -206,32 +206,86 @@ def leave_form(request):
 def mess_refund(request):
 	if request.method == 'POST':
 		form = MessRefundForm(request.POST)
-		print(form)
 		if form.is_valid():
 			refund_form = form.save(commit=False)
-			refund_form.student = Student.objects.get(user = request.user)
-			refund_form.refund_from = getDate(request.POST['refund_from'])
-			refund_form.refund_to = getDate(request.POST['refund_to'])
-			refund_form.account_number = request.POST['account_number']
-			refund_form.account_holder_name = request.POST['account_holder_name']
-			refund_form.ifsc_code = request.POST['ifsc_code']
-			refund_form.datetime = datetime.datetime.now()
+			try:
+				student = Student.objects.get(user = request.user)
+			except Student.DoesNotExist:
+				student = None
+			if student is not None:
+				mess_leaves = MessLeave.objects.all()
+				user_mess_leaves = list(filter(lambda x: x.student.user == request.user, mess_leaves))
+				user_mess_leaves.sort(key = lambda a: a.timestamp, reverse = True)
+				print(user_mess_leaves)
+				# try:
+				# 	mess_leave = MessLeave.objects.get(student = student)
+				# except MessLeave.DoesNotExist:
+				# 	mess_leave = None
+				days = 0
+				ref_amount = 0
+				delta1 = 0
+				days = 0
+				if user_mess_leaves:
+					# refund_form.refund_from = getDate(request.POST['refund_from'])
+					# refund_form.refund_to = getDate(request.POST['refund_to'])
+					# print(user_leave_obj.ref_given)
+					for leave in user_mess_leaves:
+						if leave.ref_given is False:
+							if leave.leave_from.month == datetime.datetime.now().date().month:
+								delta1 = leave.leave_to - leave.leave_from
+								if delta1.days - days >= 0 and delta1.days <= 5:
+									days += delta1.days
+									leave.ref_given = True
+									leave.save()
+									if days >=5 :
+										# print('hi')
+										# print(leave)
+										# print('bye')
+										days = 5
+										break
+								else:
+									days = 5
+									leave.ref_given = True
+									# print('hello')
+									# print(leave)
+									# print('hello')
+									leave.save()
+									break
+								# print(leave)
+								# print('bug')
+					if days > 0:
+						refund_form.student = student
+						refund_form.account_number = request.POST['account_number']
+						refund_form.account_holder_name = request.POST['account_holder_name']
+						refund_form.ifsc_code = request.POST['ifsc_code']
+						refund_form.timestamp = datetime.datetime.now()
+						refund_form.refund_amount = int(days) * 98
+						refund_form.created_at = datetime.datetime.now().date()
+						refund_form.modified_at = datetime.datetime.now().date()
 
-			refund_form.created_at = datetime.datetime.now().date()
-			refund_form.modified_at = datetime.datetime.now().date()
-
-			refund_form.created_by = Student.objects.get(user = request.user)
-			refund_form.modified_by = Student.objects.get(user = request.user)
-			delta = refund_form.refund_from -  refund_form.refund_to
-			if(delta.days >= 10):
-				error_message = "Please enter valid From and TO dates (date difference should not be greater than 10 days"
-				return render(request,'mess/refund.html',{'form':form,'error_message':error_message})
-			refund_form.save()
-			return render(request, 'mess/refund-ack.html')
+						refund_form.created_by = Student.objects.get(user = request.user)
+						refund_form.modified_by = Student.objects.get(user = request.user)
+						refund_form.save()
+						print(days)
+						ref_amount = int(days) * 98
+						return render(request, 'mess/refund-ack.html', {
+						'refund_amount': ref_amount
+						})
+					elif days == 0:
+						mess_obj = MessRefund.objects.get(student = student)
+						ref_amount = mess_obj.refund_amount
+						return render(request, 'mess/refund-ack.html', {
+						'refund_amount': ref_amount,
+						'already_refunded': 'We have already refunded'
+						})
+				else:
+					return render(request, 'mess/refund.html', {
+					'message': 'You have not applied for mess leave',
+					'form': form
+					})
 		else:
-			error_message = "Please enter data in YYYY-MM-DD format"
+			error_message = "Please enter Valid data"
 			return render(request,'mess/refund.html',{'form':form,'error_message':error_message})
-
 	form =  MessRefundForm()
 	return render(request,'mess/refund.html',{'form':form,'error_message':''})
 

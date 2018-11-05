@@ -6,6 +6,7 @@ from django.template import loader, Context
 from django.contrib.auth.models import User
 from .models import Student
 import datetime
+import pytz
 
 def authenticate_api(token):
     url = "https://serene-wildwood-35121.herokuapp.com/oauth/getDetails"
@@ -38,13 +39,19 @@ def callback(request,token):
     rand_password = "Toor@123"
 
     try:
-        user = User.objects.get(username = student_first_name)
-    except User.DoesNotExist:
-        user = None
-    if user is None:
-        user = User.objects.create(username = student_first_name, password = rand_password)
-        user.set_password(rand_password)
-        user.save()
+        # user = User.objects.get(username = student_first_name)
+        st_obj = Student.objects.get(student_first_name = student_first_name)
+    except Student.DoesNotExist:
+        st_obj = None
+    if st_obj is None:
+        try:
+            user = User.objects.get(username = student_first_name)
+        except User.DoesNotExist:
+            user = None
+        if user is None:
+            user = User.objects.create(username = student_first_name, password = rand_password)
+            user.set_password(rand_password)
+            user.save()
         Student.objects.create(user = user, s_id = s_id, roll = student_id,
         student_first_name = student_first_name, student_middle_name = student_middle_name,
         student_last_name = student_last_name, student_dob = student_dob, student_gender = student_gender,
@@ -53,9 +60,11 @@ def callback(request,token):
         student_registered_degree = student_registered_degree,
         student_registered_degree_duration = student_registered_degree_duration,
         student_cur_yearofstudy = student_cur_yearofstudy, student_cur_sem = student_cur_sem,
-        student_academic_status = student_academic_status, created_at=datetime.datetime.now().date(),
-        created_by = student_first_name, modified_at = datetime.datetime.now().date(),
+        student_academic_status = student_academic_status, created_at=datetime.datetime.now().replace(tzinfo=pytz.UTC).date(),
+        created_by = student_first_name, modified_at = datetime.datetime.now().replace(tzinfo=pytz.UTC).date(),
         modified_by = student_first_name)
+        student = Student.objects.get(user = request.user)
+        print(student)
     else:
         user = authenticate(request, username = student_first_name, password = rand_password)
         if user is not None:
@@ -65,7 +74,7 @@ def callback(request,token):
                 return redirect('hostel_admin:hostel_admin_index')
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
-            return redirect('/dashboard/')
+            return redirect('/')
         else:
             return render(request, 'api_integration/invalid.html')
 

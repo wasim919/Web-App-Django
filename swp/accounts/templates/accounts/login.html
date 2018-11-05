@@ -46,7 +46,7 @@
       </section>
 
 
-    {% if user.is_authenticated %}
+    {% if request.user.is_authenticated %}
     <div class="btn btn-primary btn-block">
     <a href = "{% url 'accounts:student_logout' %}">Logout</a>
   </div>
