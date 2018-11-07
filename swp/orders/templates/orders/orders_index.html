@@ -282,7 +282,7 @@
                       <tr>
                         <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
                         <td style="width: 132px; font-weight:normal;">{{ orders.item.item_name }}</td>
-                        <td style="width: 132px; font-weight:normal;">{{ orders.timestamp }}</td>
+                        <td style="width: 132px; font-weight:normal;">{{ orders.created_at }}</td>
                         <td style="width: 132px; font-weight:normal;">{{ orders.quantity }}</td>
                         <td style="width: 132px; font-weight:normal;"><a href="{% url 'orders:delete_order' orders.pk %}" class="btn btn-danger btn-block">
                          Cancel
