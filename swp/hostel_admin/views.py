@@ -5,7 +5,8 @@ from django.http import HttpResponse
 import datetime
 import time
 from django.template.loader import render_to_string
-
+from orders.models import ManualOrder
+from .forms import AddItemForm
 
 def hostel_admin_index(request):
     return render(request, 'hostel_admin/index.html')
@@ -92,3 +93,34 @@ def save_edit_changes(request, id):
                     announcement.modified_by=request.user.username
             announcement.save()
         return redirect('hostel_admin:hostel_admin_dashboard')
+
+def manual_orders(request):
+    manual_orders = ManualOrder.objects.all()
+    length = len(manual_orders)
+    return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
+    'manual_orders': manual_orders,
+    'len': length,
+    }))
+
+def add_item(request):
+    if request.method == 'POST':
+        add_item_form = AddItemForm(data = request.POST)
+        if add_item_form.is_valid():
+            form = add_item_form.save(commit = False)
+            form.item_type = 'Others'
+            form.timestamp=datetime.datetime.now()
+            form.created_at = datetime.datetime.now().date()
+            # print(form.created_at)
+            # print('hi')
+            form.modified_at = datetime.datetime.now().date()
+            form.modified_by = request.user.username
+            form.created_by = request.user.username
+            print('hi')
+            form.save()
+            print('done')
+        return redirect('hostel_admin:hostel_admin_dashboard')
+    else:
+        item_form = AddItemForm()
+        return HttpResponse(render_to_string('hostel_admin/item_form.html',context={
+        'form': item_form,
+        }))

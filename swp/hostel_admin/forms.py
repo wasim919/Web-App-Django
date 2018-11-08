@@ -1,7 +1,7 @@
 from django import forms
 from dashboard.models import HostelAnnouncements
 from django.contrib.admin.widgets import AdminDateWidget
-
+from orders.models import Items
 
 class HostelAnnouncementForm(forms.ModelForm):
     class Meta:
@@ -22,3 +22,12 @@ class AddAnnouncementForm(forms.ModelForm):
     class Meta:
         model = HostelAnnouncements
         fields = ['announcement_title', 'announcement']
+
+class AddItemForm(forms.ModelForm):
+    item_name=forms.CharField(label='Item Name',widget=forms.TextInput(attrs={"class":"form-control"}))
+    # item_type = forms.CharField(label='Item Type',widget=forms.TextInput(attrs={"class":"form-control"}))
+    cost=forms.FloatField(label='Cost',widget=forms.TextInput(attrs={"class":"form-control"}))
+    quantity=forms.IntegerField(label='Quantity',widget=forms.TextInput(attrs={"class":"form-control"}))
+    class Meta:
+        model = Items
+        fields = ['item_name', 'cost', 'quantity']
