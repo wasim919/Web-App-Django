@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^add_announcement/$', views.add_announcement, name = 'add_announcement'),
     url(r'^add_announcement_url/$', views.add_announcement_url, name = 'add_announcement_url'),
     url(r'^save_edit_changes/(?P<id>\d+)/$', views.save_edit_changes, name = 'save_edit_changes'),
+    url(r'^manual_orders/$', views.manual_orders, name = 'manual_orders'),
+    url(r'^add_item/$', views.add_item, name = 'add_item'),
 ]

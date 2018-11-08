@@ -46,7 +46,13 @@ def manual_order(request):
     if request.method == 'POST':
         manual_order = ManualOrderForm(request.POST)
         if manual_order.is_valid():
-            manual_order.save()
+            order = manual_order.save(commit = False)
+            order.timestamp=datetime.datetime.now()
+            order.created_at = datetime.datetime.now().date()
+            order.created_by = request.user.username
+            order.modified_at = datetime.datetime.now().date()
+            order.modified_by = request.user.username
+            order.save()
             return render(request, 'orders/manual_placed.html', {
                 'order_name': request.POST.get('order_name'),
                 'order_type': request.POST.get('order_type')
@@ -105,11 +111,15 @@ def delete_order(request, pk):
     if current_date.year == ordered_date.year and current_date.month == ordered_date.month and abs(delta_days) <= 10:
         print(delta_days)
         obj2 = Items.objects.get(item_name=obj.item.item_name)
-        obj2.quantity += obj.quantity
+        obj2.quantity += obj.Quantity
+        obj2.modified_at = datetime.datetime.now().date()
+        obj2.modified_by=request.user.username
         obj2.save()
         # print(obj.item.item_name)
         if obj:
             obj1 = OrderHistory.objects.create(student=obj.student, item=obj.item, quantity=obj.quantity, timestamp=obj.timestamp)
+            obj1.modified_at = datetime.datetime.now().date()
+            obj1.modified_by = request.user.username
             obj1.save()
             obj.delete()
         return redirect('orders:orders_index')

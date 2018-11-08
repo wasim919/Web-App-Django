@@ -6,6 +6,10 @@ class Items(models.Model):
     cost = models.FloatField(blank=False, null=False)
     quantity = models.IntegerField()
     timestamp = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateField(blank=True, null=True)
+    created_by = models.CharField(max_length=45, blank=True, null=True)
+    modified_at = models.DateField(blank=True, null=True)
+    modified_by = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
         return "{} {}".format(self.item_type, self.item_name)
@@ -14,6 +18,10 @@ class ManualOrder(models.Model):
     order_name = models.CharField(max_length=45, blank=False, null=False)
     order_type = models.CharField(max_length=45, blank=False, null=False)
     timestamp = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateField(blank=True, null=True)
+    created_by = models.CharField(max_length=45, blank=True, null=True)
+    modified_at = models.DateField(blank=True, null=True)
+    modified_by = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
         return "{} {}".format(self.order_type, self.order_name)
