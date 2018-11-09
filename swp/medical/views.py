@@ -150,6 +150,9 @@ def makeAppointment(request):
             appointment_form.appointment_time=getDateTime(adate,atime)
             appointment_form.student=Student.objects.get(user=request.user)
             appointment_form.doctor=Doctors.objects.get(id=doc_id)
+            stud=Student.objects.get(user=request.user)
+            appointment_form.gender=stud.student_gender
+            appointment_form.age=datetime.datetime.now().year-stud.student_dob.year
             appointment_form.timestamp=datetime.datetime.now()
             appointment_form.created_at=datetime.datetime.now().date()
             appointment_form.created_by=request.user.username

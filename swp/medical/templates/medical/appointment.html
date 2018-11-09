@@ -143,14 +143,6 @@
                 <form action="{% url 'medical:makeAppointment' %}" method='post'>
                   {% csrf_token %}
                   <tr>
-                    <td>
-                      Age : {{ form.age }}
-                    </td>
-                    <td>
-                    Gender : {{ form.gender }}
-                    </td>
-                  </tr>
-                  <tr>
                     <td colspan="2">
 
                         Problem &ensp;{{ form.problem }}

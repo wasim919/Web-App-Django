@@ -37,11 +37,7 @@ class MedicalAppointment(models.Model):
     appointment_time=models.DateTimeField(blank=True, null=True)
     problem=models.TextField()
     age=models.IntegerField(blank=True, null=True)
-    status_choice=(
-		(1,'Male'),
-		(2,'Female'),
-		(3,'Other'))
-    gender=models.IntegerField(choices=status_choice,default=1,blank=True, null=True)
+    gender=models.CharField(max_length = 5,default="M")
     created_at = models.DateField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateField(blank=True, null=True)
