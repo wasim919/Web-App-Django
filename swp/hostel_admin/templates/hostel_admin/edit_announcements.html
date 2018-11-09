@@ -90,11 +90,24 @@
 
   </p>
   </section>
+
+  <section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <a href="{% url 'hostel_admin:hostel_admin_dashboard' %}" class="btn btn-light btn-block">
+            <i class="fas fa-arrow-left"></i> Back To Hostel Admin Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="posts">
       <div class="row">
     <div class="col-md-9" style="width:800px; margin:0 auto;">
       <div class="card-header" style="width: 104%;">
-        <h4><center>Announcements</center></h4>
+        <h4><center>Edit Announcement</center></h4>
       </div>
     <div class="card" style=" border: 0px;align:left;">
       <!-- <div class="card-header" style="width: 104%;">
@@ -141,7 +154,11 @@
           </td>
         </tr>
       </table> -->
-      {{form}}
+      <form class="add_announcement" action="{% url 'hostel_admin:save_edit_changes' id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="Submit" value="Save Changes" class="btn btn-primary btn-block" id="mybutton">
+      </form>
     </div>
   </div>
       <!-- <div class="col-md-9" style="width:800px; margin:0 auto;">
@@ -236,6 +253,7 @@
   </section>
 
   <!-- FOOTER -->
+  <br><br><br><br><br><br>
   <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
     <div class="container">
       <div class="row">

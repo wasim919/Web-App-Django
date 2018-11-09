@@ -140,6 +140,33 @@
           </td>
         </tr>
       </table>
+      <input type="Submit" value="Add Announcement" class="btn btn-primary btn-block" id="mybutton">
+      <div class="card-header" style="width: 104%;">
+        <h4><center>Add Announcement</center></h4>
+      </div>
+    <form class="add_announcement" action="{% url 'hostel_admin:add_announcement_url' %}" method="post">
+      {% csrf_token %}
+      <table id="searchTable" class="table table-striped" style="visibility:hidden">
+      </table>
+    </form>
+    <input type="Submit" value="Manual Orders" class="btn btn-primary btn-block" id="mybutton1">
+    <div class="card-header" style="width: 104%;">
+      <h4><center>Manual Order Requests</center></h4>
+    </div>
+  <!-- <form class="add_announcement" action="{% url 'hostel_admin:add_announcement_url' %}" method="post"> -->
+    <!-- {% csrf_token %} -->
+    <table id="searchTable1" class="table table-striped" style="visibility:hidden">
+    </table>
+  <!-- </form> -->
+  <input type="Submit" value="Add Item" class="btn btn-primary btn-block" id="mybutton2">
+    <div class="card-header" style="width: 104%;">
+      <h4><center>Add Item</center></h4>
+    </div>
+  <form class="add_announcement" action="{% url 'hostel_admin:add_item' %}" method="post">
+    {% csrf_token %}
+    <table id="searchTable2" class="table table-striped" style="visibility:hidden">
+    </table>
+  </form>
     </div>
   </div>
       <!-- <div class="col-md-9" style="width:800px; margin:0 auto;">
@@ -261,6 +288,71 @@
     $('#year').text(new Date().getFullYear());
 
     CKEDITOR.replace('editor1');
+  </script>
+  <script type="text/javascript">
+  $('#mybutton').click(function(){
+    // e.preventDefault();
+    // var date=$('#datepicker').val();
+    // var time=$('#timepicker').val();
+    // var specialisation=$('#specialisation :selected').text();
+    // console.log(specialisation);
+    $.ajax({
+      type:'GET',
+      url:'{% url "hostel_admin:add_announcement" %}',
+      dataType: 'html',
+    success:function(data){
+      $(document).ready(function(){
+        console.log("it worked");
+        $("#searchTable").css('visibility','visible');
+        $("#mybutton").css('visibility','hidden');
+        $("#searchTable").html(data);
+     });
+    }
+  });
+ });
+
+ $('#mybutton1').click(function(){
+   // e.preventDefault();
+   // var date=$('#datepicker').val();
+   // var time=$('#timepicker').val();
+   // var specialisation=$('#specialisation :selected').text();
+   // console.log(specialisation);
+   $.ajax({
+     type:'GET',
+     url:'{% url "hostel_admin:manual_orders" %}',
+     dataType: 'html',
+   success:function(data){
+     $(document).ready(function(){
+       console.log("it worked");
+       $("#searchTable1").css('visibility','visible');
+       $("#mybutton1").css('visibility','hidden');
+       $("#searchTable1").html(data);
+     });
+    }
+    });
+  });
+
+  $('#mybutton2').click(function(){
+    // e.preventDefault();
+    // var date=$('#datepicker').val();
+    // var time=$('#timepicker').val();
+    // var specialisation=$('#specialisation :selected').text();
+    // console.log(specialisation);
+    $.ajax({
+      type:'GET',
+      url:'{% url "hostel_admin:add_item" %}',
+      dataType: 'html',
+    success:function(data){
+      $(document).ready(function(){
+        console.log("it worked");
+        $("#searchTable2").css('visibility','visible');
+        $("#mybutton2").css('visibility','hidden');
+        $("#searchTable2").html(data);
+     });
+    }
+  });
+  });
+
   </script>
 </body>
 
