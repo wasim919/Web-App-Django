@@ -9,8 +9,8 @@ import datetime
 import pytz
 
 def authenticate_api(token):
-    #url = "https://serene-wildwood-35121.herokuapp.com/oauth/getDetails"
-    url = "http://10.0.80.133:3000/oauth/getDetails"
+    url = "https://serene-wildwood-35121.herokuapp.com/oauth/getDetails"
+    #url = "http://10.0.80.133:3000/oauth/getDetails"
     Payload = {'token' : token,'secret' : "8190d9225074e3a366ad244769c1aed43a72746f61ed0912c89d8311d15f0f4e495635b7f3dc1a6c0e48747297d76e1c82b930b79704e0b3d365577aaf033208"}
     k = requests.post(url,Payload)
     details = json.loads(k.content.decode('utf-8'))
