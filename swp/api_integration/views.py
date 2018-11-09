@@ -53,6 +53,8 @@ def callback(request,token):
             user = User.objects.create(username = student_first_name, password = rand_password)
             user.set_password(rand_password)
             user.save()
+        if(student_dob=="0000-00-00"):
+            student_dob="1998-01-01"
         Student.objects.create(user = user, s_id = s_id, roll = student_id,
         student_first_name = student_first_name, student_middle_name = student_middle_name,
         student_last_name = student_last_name, student_dob = student_dob, student_gender = student_gender,
@@ -64,7 +66,7 @@ def callback(request,token):
         student_academic_status = student_academic_status, created_at=datetime.datetime.now().replace(tzinfo=pytz.UTC).date(),
         created_by = student_first_name, modified_at = datetime.datetime.now().replace(tzinfo=pytz.UTC).date(),
         modified_by = student_first_name)
-        student = Student.objects.get(user = request.user)
+        student = Student.objects.get(user = user)
         print(student)
     else:
         user = authenticate(request, username = student_first_name, password = rand_password)
