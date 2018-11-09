@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^hostel/',include('hostel.urls'),name='hostel'),
     url(r'^mess/',include('mess.urls'),name='mess'),
     url(r'^hostel_admin/', include('hostel_admin.urls'), name = 'hostel_admin'),
+    url(r'^medical_admin/', include('medical_admin.urls'), name = 'medical_admin'),
     url(r'^auth/callback/', include('api_integration.urls'), name = 'api_integration')
 ]
 

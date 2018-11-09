@@ -75,6 +75,8 @@ def callback(request,token):
             student = Student.objects.get(user = request.user)
             if student.is_hostel_admin:
                 return redirect('hostel_admin:hostel_admin_index')
+            if student.is_medical_admin:
+                return redirect('medical_admin:medical_admin_index')
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             return redirect('/')
