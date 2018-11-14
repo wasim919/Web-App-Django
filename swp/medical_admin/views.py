@@ -5,16 +5,19 @@ from django.http import HttpResponse
 import datetime
 import time
 from django.template.loader import render_to_string
+from medical.models import MedicalLeave,MedicalAppointment
 
 def medical_admin_index(request):
     return render(request, 'medical_admin/index.html')
 
 def medical_admin_dashboard(request):
     medical_announcements = list(MedicalAnnouncements.objects.all())
+    medical_leave = MedicalLeave.objects.all()
     medical_announcements.sort(key = lambda a: a.timestamp, reverse = True)
-
+    medical_appointments = MedicalAppointment.objects.all()
     return render(request, 'medical_admin/medical_admin_dashboard.html', {
-    'medical_announcements': medical_announcements,
+    'medical_announcements': medical_announcements,'medical_leave':medical_leave,
+    'medical_appointments':medical_appointments,
     })
 
 def medical_announcement_delete(request, id):
@@ -86,3 +89,11 @@ def medical_save_edit_changes(request, id):
                     announcement.modified_by=request.user.username
             announcement.save()
         return redirect('medical_admin:medical_admin_dashboard')
+
+def medical_leave_details(request,id):
+    try:
+        medical_leave=MedicalLeave.objects.get(pk=id)
+        return render(request,'medical_admin/leave_details.html',context={'medical_leave':medical_leave})
+    except:
+        pass
+    return redirect('medical_admin:medical_admin_dashboard')
