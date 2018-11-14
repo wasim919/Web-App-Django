@@ -72,12 +72,12 @@
   </nav>
 
   <!-- HEADER -->
-  <header id="main-header" class="py-2 bg-primary text-white">
+  <header id="main-header" class="py-2 bg-warning text-white">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <h1>
-            <i class="fas fa-cog"></i>Medical Admin Dashboard</h1>
+            <i class="fas fa-users"></i>Medical Admin Dashboard</h1>
         </div>
       </div>
     </div>
@@ -108,8 +108,8 @@
                   <th style="width: 55px; font-weight:normal;">#</th>
                   <th style="width: 132px; font-weight:normal;">Title</th>
                   <th style="width: 132px; font-weight:normal;">Date</th>
-                  <th style="width: 132px; font-weight:normal;">Edit</th>
-                  <th style="width: 132px; font-weight:normal;">Delete</th>
+                  <th style="width: 132px; font-weight:normal;"></th>
+                  <th style="width: 132px; font-weight:normal;"></th>
                 </tr>
               </thead>
 
@@ -126,11 +126,11 @@
                     <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
                     <td style="width: 132px; font-weight:normal;">{{data.announcement_title}}</td>
                     <td style="width: 132px; font-weight:normal;">{{data.timestamp}}</td>
-                    <td style="width: 132px; font-weight:normal;"><a href="{% url 'medical_admin:medical_announcement_edit' data.pk %}" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Edit
+                    <td style="width: 132px; font-weight:normal;"><a href="{% url 'medical_admin:medical_announcement_edit' data.pk %}" class="btn btn-success">
+                      &ensp;&ensp;&ensp;&ensp;<i class="fas fa-edit"></i> &ensp;Edit&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                     </a></td>
-                    <td style="width: 132px; font-weight:normal;"><a href="{% url 'medical_admin:medical_announcement_delete' data.pk %}" class="btn btn-secondary">
-                      <i class="fas fa-angle-double-right"></i> Delete
+                    <td style="width: 132px; font-weight:normal;"><a class="btn btn-danger btn-block" href="{% url 'medical_admin:medical_announcement_delete' data.pk %}">
+                      <i class="fas fa-trash"></i> Delete
                     </a></td>
                   </tr>
                   {% endfor %}
@@ -148,101 +148,132 @@
       {% csrf_token %}
       <table id="searchTable" class="table table-striped" style="visibility:hidden">
       </table>
+      <hr />
     </form>
 
     </div>
   </div>
-      <!-- <div class="col-md-9" style="width:800px; margin:0 auto;">
-      <div class="card" style=" border: 0px;align:left;">
-        <div class="card-header" style="width: 104%;">
-          <h4><center>Mess</center></h4>
-        </div>
-        <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
-          <tr style="width: 100%; padding: 0px;  border: 0px;">
-            <td style="width: 100%; padding: 0px;">
-              <table style="width: 130%; padding: 0px;  border: 0px;">
-                <thead class="thead-dark" style="width: 100%; padding: 0px;">
-                  <tr style="width: 100%; padding: 0px;">
-                    <th style="width: 55px; font-weight:normal;">#</th>
-                    <th style="width: 132px; font-weight:normal;">Title</th>
-                    <th style="width: 132px; font-weight:normal;">Date</th>
-                    <th style="width: 132px; font-weight:normal;">Details</th>
-                  </tr>
-                </thead>
-
-              </table>
-            </td>
-          </tr>
-          <tr style="width: 100%; padding: 0px;">
-            <td style="width: 100%; padding: 0px;">
-              <div style="overflow-y: scroll; width: 130%; height: 200px">
-                {% if mess_announcements %}
-                <table style="width: 100%; padding: 0px;">
-                    {% for data in mess_announcements %}
-                    <tr>
-                      <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
-                      <td style="width: 132px; font-weight:normal;">{{data.announcement_title}}</td>
-                      <td style="width: 132px; font-weight:normal;">{{data.timestamp}}</td>
-                      <td style="width: 132px; font-weight:normal;"><a href="{% url 'dashboard:announcement_detail' 2 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
-                        <i class="fas fa-angle-double-right"></i> Details
-                      </a></td>
-                    </tr>
-                    {% endfor %}
-                  </table>
-                  {% endif %}
-              </div>
-            </td>
-          </tr>
-        </table>
-  </div>
-</div> -->
-  <!-- <div class="col-md-9" style="width:800px; margin:0 auto;">
-  <div class="card" style=" border: 0px;align:left;">
-    <div class="card-header" style="width: 104%;">
-      <h4><center>Medical</center></h4>
-    </div>
-    <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
-      <tr style="width: 100%; padding: 0px;  border: 0px;">
-        <td style="width: 100%; padding: 0px;">
-          <table style="width: 130%; padding: 0px;  border: 0px;">
-            <thead class="thead-dark" style="width: 100%; padding: 0px;">
-              <tr style="width: 100%; padding: 0px;">
-                <th style="width: 55px; font-weight:normal;">#</th>
-                <th style="width: 132px; font-weight:normal;">Title</th>
-                <th style="width: 132px; font-weight:normal;">Date</th>
-                <th style="width: 132px; font-weight:normal;">Details</th>
-              </tr>
-            </thead>
-
-          </table>
-        </td>
-      </tr>
-      <tr style="width: 100%; padding: 0px;">
-        <td style="width: 100%; padding: 0px;">
-          <div style="overflow-y: scroll; width: 130%; height: 200px">
-            {% if medical_announcements %}
-            <table style="width: 100%; padding: 0px;">
-                {% for data in medical_announcements %}
-                <tr>
-                  <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
-                  <td style="width: 132px; font-weight:normal;">{{data.announcement_title}}</td>
-                  <td style="width: 132px; font-weight:normal;">{{data.timestamp}}</td>
-                  <td style="width: 132px; font-weight:normal;"><a href="{% url 'dashboard:announcement_detail' 3 data.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a></td>
-                </tr>
-                {% endfor %}
-              </table>
-              {% endif %}
-          </div>
-        </td>
-      </tr>
-    </table>
-</div>
-</div> -->
 </div>
   </section>
+<!--Approve or reject-->
 
+<section id="posts">
+    <div class="row">
+  <div class="col-md-9" style="width:800px; margin:0 auto;">
+    <div class="card-header" style="width: 104%;">
+      <h4><center>Leave Requests</center></h4>
+    </div>
+    <div class="card" style=" border: 0px;align:left;">
+
+      <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+        <tr style="width: 100%; padding: 0px;  border: 0px;">
+          <td style="width: 100%; padding: 0px;">
+            <table style="width: 130%; padding: 0px;  border: 0px;">
+              <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                <tr style="width: 100%; padding: 0px;">
+                  <th style="width: 55px; font-weight:normal;">#</th>
+                  <th style="width: 132px; font-weight:normal;">Name</th>
+                  <th style="width: 132px; font-weight:normal;">From</th>
+                  <th style="width: 132px; font-weight:normal;">To</th>
+                  <th style="width: 132px; font-weight:normal;">Details</th>
+                </tr>
+              </thead>
+
+            </table>
+          </td>
+        </tr>
+        <tr style="width: 100%; padding: 0px;">
+          <td style="width: 100%; padding: 0px;">
+            <div style="overflow-y: scroll; width: 130%; height: 200px">
+              {% if medical_leave %}
+              <table style="width: 100%; padding: 0px;">
+                  {% for data in medical_leave %}
+                  <tr>
+                    <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.student.user.username}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.leave_from}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.leave_to}}</td>
+                    <td style="width: 132px; font-weight:normal;"><a href="{% url 'medical_admin:medical_leave_details' data.pk %}" class="btn btn-info">
+                      <i class="fas fa-angle-double-right"></i> Details
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+          </td>
+        </tr>
+      </table>
+
+
+<hr />
+    </div>
+  </div>
+</div>
+
+</section>
+
+
+<section id="posts">
+    <div class="row">
+  <div class="col-md-9" style="width:800px; margin:0 auto;">
+    <div class="card-header" style="width: 104%;">
+      <h4><center>Pending Appointments</center></h4>
+    </div>
+    <div class="card" style=" border: 0px;align:left;">
+
+      <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+        <tr style="width: 100%; padding: 0px;  border: 0px;">
+          <td style="width: 100%; padding: 0px;">
+            <table style="width: 130%; padding: 0px;  border: 0px;">
+              <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                <tr style="width: 100%; padding: 0px;">
+                  <th style="width: 55px; font-weight:normal;">#</th>
+                  <th style="width: 132px; font-weight:normal;">Student Name</th>
+                  <th style="width: 132px; font-weight:normal;">Doctor Name</th>
+                  <th style="width: 132px; font-weight:normal;">Time</th>
+                  <th style="width: 132px; font-weight:normal;">Problem</th>
+                  <th style="width: 132px; font-weight:normal;">Age</th>
+                  <th style="width: 132px; font-weight:normal;">Gender</th>
+                  <th style="width: 132px; font-weight:normal;"></th>
+                </tr>
+              </thead>
+
+            </table>
+          </td>
+        </tr>
+        <tr style="width: 100%; padding: 0px;">
+          <td style="width: 100%; padding: 0px;">
+            <div style="overflow-y: scroll; width: 130%; height: 200px">
+              {% if medical_appointments %}
+              <table style="width: 100%; padding: 0px;">
+                  {% for data in medical_appointments %}
+                  <tr>
+                    <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.student.user.username}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.doctor.doctor_name}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.appointment_time}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.problem}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.age}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.gender}}</td>
+                    <td style="width: 132px; font-weight:normal;"><a href="#" class="btn btn-success">
+                      <i class="fas fa-check"></i> Mark as Done
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+          </td>
+        </tr>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+</section>
   <!-- FOOTER -->
   <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
     <div class="container">
