@@ -45,9 +45,9 @@ class Student(models.Model):
     is_medical_admin = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
     timestamp = models.DateTimeField(default = timezone.now())
-    created_at = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)
-    modified_at = models.DateField(blank=True, null=True)
+    modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
     delete = models.BooleanField(default = 0)
     def __str__(self):
