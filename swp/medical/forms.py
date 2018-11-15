@@ -11,9 +11,7 @@ class MedicalLeaveForm(forms.ModelForm):
         fields = ['leave_from','leave_to','hometown','reason']
 
 class AppointmentForm(forms.ModelForm):
-    age=forms.IntegerField(label='age',max_value=90,min_value=10,widget=forms.NumberInput(attrs={"class":"form-control"}))
-    gender=forms.ChoiceField(label='gender',choices=((1,'Male'),(2,'Female'),(3,'Others')),widget=forms.Select(attrs={"class":"form-control"}))
     problem=forms.CharField(label='problem',widget=forms.Textarea(attrs={"class":"form-control","rows":"4","cols":"50"}))
     class Meta:
         model = MedicalAppointment
-        fields = ['age','gender','problem']
+        fields = ['problem']

@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ManualOrderForm
-from  accounts.models import Student
+from django.http import HttpResponse
+from api_integration.models import Student
 from .models import Items, OrderList, OrderHistory
 import datetime
 import time
+from django.template.loader import render_to_string
 
 @login_required
 def orders_index(request):
     items = list(Items.objects.all())
+    print(request.user)
     if items:
 
         order_history = OrderHistory.objects.all()
@@ -43,7 +46,13 @@ def manual_order(request):
     if request.method == 'POST':
         manual_order = ManualOrderForm(request.POST)
         if manual_order.is_valid():
-            manual_order.save()
+            order = manual_order.save(commit = False)
+            order.timestamp=datetime.datetime.now()
+            order.created_at = datetime.datetime.now().date()
+            order.created_by = request.user.username
+            order.modified_at = datetime.datetime.now().date()
+            order.modified_by = request.user.username
+            order.save()
             return render(request, 'orders/manual_placed.html', {
                 'order_name': request.POST.get('order_name'),
                 'order_type': request.POST.get('order_type')
@@ -88,20 +97,59 @@ def store_in_items_list(student, items_purchased, items_post, creator):
                 obj1 = OrderList.objects.create(student=student, item=items_purchased[j], quantity=int(items_post[i]))
                 obj1.created_at=obj.timestamp
                 obj1.created_by=creator.username
+                obj1.modified_at=obj.timestamp
+                obj1.modified_by=creator.username
                 obj1.save()
             j += 1
 
 def delete_order(request, pk):
     obj = OrderList.objects.get(pk=pk)
-    obj2 = Items.objects.get(item_name=obj.item.item_name)
-    obj2.quantity += obj.quantity
-    obj2.save()
-    print(obj.item.item_name)
-    if obj:
-        obj1 = OrderHistory.objects.create(student=obj.student, item=obj.item, quantity=obj.quantity, timestamp=obj.timestamp)
-        obj1.save()
-        obj.delete()
-    return redirect('orders:orders_index')
+    current_date = datetime.datetime.now().date()
+    ordered_date = obj.created_at
+    delta_days = current_date.day - ordered_date.day
+
+    if current_date.year == ordered_date.year and current_date.month == ordered_date.month and abs(delta_days) <= 10:
+        print(delta_days)
+        obj2 = Items.objects.get(item_name=obj.item.item_name)
+        obj2.quantity += obj.Quantity
+        obj2.modified_at = datetime.datetime.now().date()
+        obj2.modified_by=request.user.username
+        obj2.save()
+        # print(obj.item.item_name)
+        if obj:
+            obj1 = OrderHistory.objects.create(student=obj.student, item=obj.item, quantity=obj.quantity, timestamp=obj.timestamp)
+            obj1.modified_at = datetime.datetime.now().date()
+            obj1.modified_by = request.user.username
+            obj1.save()
+            obj.delete()
+        return redirect('orders:orders_index')
+    else:
+        return redirect('orders:orders_index')
+
+@login_required
+def getOrdersHistory(request):
+    # if request.method=='POST':
+    #     datepicker=request.POST['date']
+    #     timepicker=request.POST['time']
+    #     specialisation=request.POST['specialisation']
+    #     csrf_token=get_token(request)
+    #     mydatetime=getDateTime(datepicker,timepicker)
+    #     docs=[]
+    #     doctors=Doctors.objects.filter(specialisation=specialisation,date=getDate(datepicker))
+    #     #doctors=Doctors.objects.all()
+    #     for doc in doctors:
+    #         if(mydatetime>=getDateTime(str(doc.date),str(doc.available_from)) and mydatetime<=getDateTime(str(doc.date),str(doc.available_till))):
+    #             docs.append(doc)
+    #     return HttpResponse(render_to_string('medical/searchResults.html',context={'csrf_token':csrf_token,'doctors':docs,'len':len(docs),'date':datepicker,'time':timepicker}))
+    # return HttpResponse(status=500)
+    if request.method == 'GET':
+        orders_history = OrderHistory.objects.all()
+        user_orders_history = list(filter(lambda x: x.student.user == request.user, orders_history))
+        user_orders_history.sort(key = lambda a: a.timestamp, reverse = True)
+        return HttpResponse(render_to_string('orders/userOrdersHistory.html',context={
+        'user_orders_history': user_orders_history,
+        'len':len(user_orders_history)
+        }))
 
 @login_required
 def place_order(request):
@@ -111,7 +159,7 @@ def place_order(request):
         books = list(filter(lambda x: x.item_type == "Book", items))
         stationary = list(filter(lambda x: x.item_type == "Stationary", items))
         others = list(filter(lambda x: x.item_type == "Others", items))
-        print(request.POST)
+        # print(request.POST)
         books_post = request.POST.getlist('books')
         stationary_post = request.POST.getlist('stationary')
         others_post = request.POST.getlist('others')
@@ -128,7 +176,7 @@ def place_order(request):
             others_cost = dot([a.cost for a in others], list(map(int, others_post)))
 
         total_cost = books_cost + stationary_cost + others_cost
-        print(stationary_post)
+        # print(stationary_post)
         if books:
             books_purchased = [books[i] for i in range(len(books)) if books_post[i]!='0']
         if stationary:
@@ -154,20 +202,20 @@ def place_order(request):
             store_in_items_list(student, others_purchased, others_post, request.user)
             changeQuantity(others_purchased, others_post, not_order, ordered_items)
 
-        print('hi')
-        print(ordered_items)
-        print(not_order)
-        print('bye')
+        # print('hi')
+        # print(ordered_items)
+        # print(not_order)
+        # print('bye')
         if len(not_order) == 0 :
             return redirect('orders:orders_index')
         else:
             total_cost = 0
             for orders in ordered_items:
                 total_cost += orders.quantity*orders.cost
-            print(total_cost)
-            print('hi')
-            print(not_order)
-            print(ordered_items)
+            # print(total_cost)
+            # print('hi')
+            # print(not_order)
+            # print(ordered_items)
             return render(request, 'orders/not_order.html', {
             'ordered_items': ordered_items,
             'not_ordered': not_order,

@@ -244,20 +244,17 @@
                 </tr>
               </thead>
               <tbody>
+                {% for appointment in appointments %}
                 <tr>
-                  <td>Doctor 1</td>
-                  <td>11/10 11:00</td>
-                  <td><a href="#" class="btn btn-danger btn-block">
+                  <td>{{ appointment.doctor.doctor_name }}</td>
+                  <td>{{ appointment.appointment_time }}</td>
+                  <td>
+                    <input type="hidden" value="{{ appointment.id }}" />
+                    <button class="deletebtn btn btn-danger btn-block">
                    Cancel
-                  </a></td>
+                  </button></td>
                 </tr>
-                <tr>
-                  <td>Doctor 2</td>
-                  <td>11/10 14:00</td>
-                  <td><a href="#" class="btn btn-danger btn-block">
-                   Cancel
-                  </a></td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
         </div>
@@ -453,6 +450,24 @@
    }
  });
 });
+
+$(".deletebtn").click(
+  function(){
+    var mid=$(this).parent().find('input').val();
+    var parent=$(this).parent().parent();
+    $.ajax({
+      type:'POST',
+      url:'{% url "medical:deleteAppointment" %}',
+      data:{
+        id:mid,
+        csrfmiddlewaretoken:'{{ csrf_token }}'
+      },
+      success:function(){
+        parent.css('display','none');
+      }
+    });
+  }
+);
     </script>
 </body>
 

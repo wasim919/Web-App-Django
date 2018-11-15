@@ -2,13 +2,13 @@ import os
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import HostelAnnouncements, MessAnnouncements, MedicalAnnouncements, ImportantContacts
-from accounts.models import Student
+from api_integration.models import Student
 from django.contrib.auth.models import User
 from .forms import EditUserNameForm, EditBioAvatarForm
 from django.http import JsonResponse
 from django.views import View
 from .forms import PhotoForm
-from accounts.models import Student
+from api_integration.models import Student
 
 
 
