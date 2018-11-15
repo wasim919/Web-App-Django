@@ -5,9 +5,9 @@ class HostelAnnouncements(models.Model):
     announcement_title = models.CharField(max_length=30, blank=True, null=True)
     announcement = models.CharField(max_length=100, blank=True, null=True)
     timestamp = models.DateTimeField(default = timezone.now())
-    created_at = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)
-    modified_at = models.DateField(blank=True, null=True)
+    modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
@@ -21,9 +21,9 @@ class MessAnnouncements(models.Model):
     announcement_title = models.CharField(max_length=30, blank=True, null=True)
     announcement = models.CharField(max_length=100, blank=True, null=True)
     timestamp = models.DateTimeField(default = timezone.now())
-    created_at = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)
-    modified_at = models.DateField(blank=True, null=True)
+    modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
@@ -37,9 +37,9 @@ class MedicalAnnouncements(models.Model):
     announcement_title = models.CharField(max_length=30, blank=True, null=True)
     announcement = models.CharField(max_length=100, blank=True, null=True)
     timestamp = models.DateTimeField(default = timezone.now())
-    created_at = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
     created_by = models.CharField(max_length=45, blank=True, null=True)
-    modified_at = models.DateField(blank=True, null=True)
+    modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
     delete = models.BooleanField(default = 0)
 
