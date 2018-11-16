@@ -9,7 +9,7 @@ class HostelAnnouncements(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-
+    isDeleted = models.BooleanField(default = 0)
     def __str__(self):
         return str(self.announcement_title)
 
@@ -25,7 +25,7 @@ class MessAnnouncements(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-
+    isDeleted = models.BooleanField(default = 0)
     def __str__(self):
         return str(self.announcement_title)
 
@@ -42,7 +42,7 @@ class MedicalAnnouncements(models.Model):
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
     delete = models.BooleanField(default = 0)
-
+    isDeleted = models.BooleanField(default = 0)
     def __str__(self):
         return str(self.announcement_title)
 
@@ -54,7 +54,7 @@ class ImportantContacts(models.Model):
     name = models.CharField(max_length = 30, blank = False)
     mobile = models.CharField(max_length = 13, blank = False)
     email = models.EmailField(max_length = 70, blank = False)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return str(self.name)

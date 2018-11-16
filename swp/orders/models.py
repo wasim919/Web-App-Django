@@ -10,14 +10,14 @@ class Items(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return "{} {}".format(self.item_type, self.item_name)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class ManualOrder(models.Model):
     order_name = models.CharField(max_length=45, blank=False, null=False)
@@ -27,14 +27,14 @@ class ManualOrder(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return "{} {}".format(self.order_type, self.order_name)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class OrderList(models.Model):
     student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
@@ -45,14 +45,14 @@ class OrderList(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return "{}".format(self.student.user.username)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class OrderHistory(models.Model):
     student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
@@ -63,11 +63,11 @@ class OrderHistory(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return "{} {} {}".format(self.student.user.username, self.item.item_type, self.item.item_name)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
