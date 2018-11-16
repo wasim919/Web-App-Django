@@ -17,14 +17,14 @@ class HostelLeave(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return '%s %s %s %s' % (self.student.user.username, self.leave_from, self.leave_to, self.reason)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class ComplaintRegister(models.Model):
     idcomplaint_register = models.AutoField(primary_key=True)
@@ -38,14 +38,14 @@ class ComplaintRegister(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
     	return '%s %s %s %s' %(self.student.user.username,self.room_no,self.complaint,self.timestamp)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class Courrier(models.Model):
     idcourrier = models.AutoField(primary_key=True)
@@ -59,14 +59,14 @@ class Courrier(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
     	return '%s %s %s' %(self.student.user.username,self.idcourrier,self.expected_arrival_time)
     
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class SelfHelpGroup(models.Model):
     issue = models.CharField(max_length=100,blank=True,null=True)
@@ -76,11 +76,11 @@ class SelfHelpGroup(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
 
     def __str__(self):
         return '%s %s' %(self.issue,self.student.user.username)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())

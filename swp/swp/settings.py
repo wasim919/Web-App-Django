@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'medical',
     'hostel',
     'mess',
+	'mess_admin',
     'hostel_admin',
     'medical_admin',
     'api_integration',
