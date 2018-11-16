@@ -15,14 +15,14 @@ class MessLeave(models.Model):
 	created_by = models.CharField(max_length=45, blank=True, null=True)
 	modified_at = models.DateTimeField(blank=True, null=True)
 	modified_by = models.CharField(max_length=45, blank=True, null=True)
-	delete = models.BooleanField(default = 0)
+	isDeleted = models.BooleanField(default = 0)
 
 	def __str__(self):
 		return '%s %s %s %s' % (self.student.user.username, self.leave_from, self.leave_to, self.reason)
 
 	@property
-	def isDeleted(self):
-		return bool(self.delete())
+	def isDelete(self):
+		return bool(self.isDeleted())
 
 class MessRefund(models.Model):
 	# mess_leave = models.ForeignKey(MessLeave, models.DO_NOTHING, blank = True, null = True)
@@ -36,28 +36,28 @@ class MessRefund(models.Model):
 	created_by = models.CharField(max_length=45, blank=True, null=True)
 	modified_at = models.DateTimeField(blank=True, null=True)
 	modified_by = models.CharField(max_length=45, blank=True, null=True)
-	delete = models.BooleanField(default = 0)
+	isDeleted = models.BooleanField(default = 0)
 
 	def __str__(self):
 		return "{}".format(self.student.student_first_name)
 
 	@property
-	def isDeleted(self):
-		return bool(self.delete())
+	def isDelete(self):
+		return bool(self.isDeleted())
 
 class MessItems(models.Model):
 	item_name = models.CharField(max_length=45, blank=False, null=False, unique = True)
 	cost = models.FloatField(blank=False, null=False)
 	quantity = models.IntegerField()
 	timestamp = models.DateTimeField(blank=True, null=True)
-	delete = models.BooleanField(default = 0)
+	isDeleted = models.BooleanField(default = 0)
 
 	def __str__(self):
 		return "{}".format(self.item_name)
 
 	@property
-	def isDeleted(self):
-		return bool(self.delete())
+	def isDelete(self):
+		return bool(self.isDeleted())
 
 class OrderHistoryMess(models.Model):
 	student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
@@ -68,14 +68,14 @@ class OrderHistoryMess(models.Model):
 	created_by = models.CharField(max_length=45, blank=True, null=True)
 	modified_at = models.DateTimeField(blank=True, null=True)
 	modified_by = models.CharField(max_length=45, blank=True, null=True)
-	delete = models.BooleanField(default = 0)
+	isDeleted = models.BooleanField(default = 0)
 
 	def __str__(self):
 		return "{} {}".format(self.student.user.username, self.item.item_name)
 
 	@property
-	def isDeleted(self):
-		return bool(self.delete())
+	def isDelete(self):
+		return bool(self.isDeleted())
 
 
 class OrderListMess(models.Model):
@@ -87,14 +87,14 @@ class OrderListMess(models.Model):
 	created_by = models.CharField(max_length=45, blank=True, null=True)
 	modified_at = models.DateTimeField(blank=True, null=True)
 	modified_by = models.CharField(max_length=45, blank=True, null=True)
-	delete = models.BooleanField(default = 0)
+	isDeleted = models.BooleanField(default = 0)
 
 	def __str__(self):
 		return "{}".format(self.student.user.username)
 
 	@property
-	def isDeleted(self):
-		return bool(self.delete())
+	def isDelete(self):
+		return bool(self.isDeleted())
 
 
 class MessFeedback(models.Model):
@@ -107,11 +107,11 @@ class MessFeedback(models.Model):
 	created_by = models.CharField(max_length=45, blank=True, null=True)
 	modified_at = models.DateTimeField(blank=True, null=True)
 	modified_by = models.CharField(max_length=45, blank=True, null=True)
-	delete = models.BooleanField(default = 0)
+	isDeleted = models.BooleanField(default = 0)
 
 	def __str__(self):
 		return "{} {}".format(self.student.user.username, self.feedback)
 
 	@property
-	def isDeleted(self):
-		return bool(self.delete())
+	def isDelete(self):
+		return bool(self.isDeleted())
