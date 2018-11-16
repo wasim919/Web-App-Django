@@ -49,10 +49,10 @@ class Student(models.Model):
     created_by = models.CharField(max_length=45, blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=45, blank=True, null=True)
-    delete = models.BooleanField(default = 0)
+    isDeleted = models.BooleanField(default = 0)
     def __str__(self):
         return(str(self.student_first_name))
 
     @property
-    def isDeleted(self):
+    def isDelete(self):
         return bool(self.delete())
