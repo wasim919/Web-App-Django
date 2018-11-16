@@ -304,7 +304,7 @@ def feedback_form(request):
 @login_required
 def submit_feedback(request):
 	if request.method == 'POST':
-		form = feedback_form(request.POST)
+		form = MessFeedbackForm(request.POST)
 		feedback_form = form.save(commit=False)
 		refund_form.student = Student.objects.get(user = request.user)
 		feedback_form.feedback = request.POST['feedback']
