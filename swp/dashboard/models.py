@@ -74,7 +74,7 @@ class Messages(models.Model):
     student=models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
     isDeleted = models.BooleanField(default = 0)
     def __str__(self):
-        return str(self.name)
+        return str(self.message)
 
     @property
     def isDelete(self):
