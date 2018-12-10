@@ -22,7 +22,7 @@ from api_integration.models import Student
 def get_admin_status(request):
 	st = 0
 	dr = Student.objects.filter(student_first_name = str(request.user))
-        if(len(dr) == 0):
+	if(len(dr) == 0):
             return 0
 	print(dr, "ASDAS")
 	if(dr[0].is_hostel_admin == True):
@@ -157,7 +157,7 @@ def manual_orders(request):
           return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
           'manual_orders': manual_orders,
           'len': length,
-		  'admin_status': get_admin_status(request)	
+		  'admin_status': get_admin_status(request)
           }))
       return render(request,'index.html')
 

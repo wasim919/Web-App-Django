@@ -16,7 +16,7 @@ from api_integration.models import Student
 def get_admin_status(request):
 	st = 0
 	dr = Student.objects.filter(student_first_name = str(request.user))
-        if(len(dr) == 0):
+	if(len(dr) == 0):
             return 0
 	print(dr, "ASDAS")
 	if(dr[0].is_hostel_admin == True):
@@ -26,9 +26,6 @@ def get_admin_status(request):
 	elif(dr[0].is_medical_admin == True):
 		st = 3
 	return st
-
-
-
 
 @login_required
 def dashboard_index(request):
