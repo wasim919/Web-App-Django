@@ -1,7 +1,7 @@
 import os
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import HostelAnnouncements, MessAnnouncements, MedicalAnnouncements, ImportantContacts
+from .models import *
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from .forms import EditUserNameForm, EditBioAvatarForm
@@ -16,7 +16,7 @@ from api_integration.models import Student
 def get_admin_status(request):
 	st = 0
 	dr = Student.objects.filter(student_first_name = str(request.user))
-        if(len(dr) == 0):
+	if(len(dr) == 0):
             return 0
 	print(dr, "ASDAS")
 	if(dr[0].is_hostel_admin == True):
@@ -26,9 +26,6 @@ def get_admin_status(request):
 	elif(dr[0].is_medical_admin == True):
 		st = 3
 	return st
-
-
-
 
 @login_required
 def dashboard_index(request):
@@ -97,10 +94,23 @@ def edit_profile(request):
     else:
         student = get_object_or_404(Student, user = request.user)
         form = EditUserNameForm(instance=request.user)
+        try:
+            messages = Messages.objects.all().filter(student = student)
+        except Messages.DoesNotExist:
+            messages = None
+        print(messages)
+        if messages is not None:
+            return render(request, 'dashboard/edit_profile.html', {
+                'form': form,
+                'student': student,
+                'bio': student.bio,
+                'messages': messages
+            })
         return render(request, 'dashboard/edit_profile.html', {
             'form': form,
             'student': student,
             'bio': student.bio,
+            'messages': [],
             'admin_status': get_admin_status(request)
         })
 
