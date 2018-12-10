@@ -66,7 +66,7 @@ def mess_refund_reject(request, pk):
 
 def mess_leave_accept(request, pk):
     if(check_isMessAdmin(request)):
-        rt = MessRefund.objects.filter(pk = pk)
+        rt = MessLeave.objects.filter(pk = pk)
         yt = Messages(message = ("Your mess leave request made on Date " + str(rt[0].timestamp) + " was accepted"), student = rt[0].student)
         yt.created_at = datetime.datetime.now().date()
         yt.modified_at = datetime.datetime.now().date()
@@ -78,7 +78,7 @@ def mess_leave_accept(request, pk):
 
 def mess_leave_reject(request, pk):
     if(check_isMessAdmin(request)):
-        rt = MessRefund.objects.filter(pk = pk)
+        rt = MessLeave.objects.filter(pk = pk)
         yt = Messages(message = ("Your mess leave request made on Date " + str(rt[0].timestamp)  + " was rejected"), student = rt[0].student)
         yt.created_at = datetime.datetime.now().date()
         yt.modified_at = datetime.datetime.now().date()
