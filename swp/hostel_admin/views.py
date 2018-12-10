@@ -1,15 +1,19 @@
 from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
 from dashboard.models import HostelAnnouncements
 from .forms import HostelAnnouncementForm, AddAnnouncementForm
 from django.http import HttpResponse
 import datetime
 import time
+from api_integration.models import Student
 from django.template.loader import render_to_string
 from orders.models import ManualOrder
 from .forms import AddItemForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from hostel.models import HostelLeave, ComplaintRegister
+import pytz
 
 def check_isHostelAdmin(request):
     return Student.objects.get(user=request.user).is_hostel_admin
@@ -123,13 +127,14 @@ def save_edit_changes(request, id):
 @login_required
 def manual_orders(request):
     if(check_isHostelAdmin(request)):
-        manual_orders = ManualOrder.objects.all()
-        length = len(manual_orders)
-        return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
-        'manual_orders': manual_orders,
-        'len': length,
-        }))
-    return render(request,'index.html')
+      if request.method == 'GET':
+          manual_orders = ManualOrder.objects.all()
+          length = len(manual_orders)
+          return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
+          'manual_orders': manual_orders,
+          'len': length,
+          }))
+      return render(request,'index.html')
 
 @login_required
 def add_item(request):
@@ -155,4 +160,65 @@ def add_item(request):
             return HttpResponse(render_to_string('hostel_admin/item_form.html',context={
             'form': item_form,
             }))
-    return render(request,'index.html')
+            return render(request,'index.html')
+          
+def hostel_leaves(request):
+    if request.method == 'GET':
+        hostel_leaves = HostelLeave.objects.all().filter(isDeleted = False)
+        print(hostel_leaves)
+        length = len(hostel_leaves)
+        return HttpResponse(render_to_string('hostel_admin/hostel_leave.html',context={
+        'hostel_leaves': hostel_leaves,
+        'len': length,
+        }))
+
+def hostel_leave_accept(request, id):
+    error_message=""
+    subject="Hostel Leave Accepted"
+    student = Student.objects.get(user = request.user)
+    # to_email='iiitsmedical@gmail.com'   #hardcoded to avoid any hacks
+    to_email = student.student_email
+    body="Your Hostel Leave has been accepted."
+    message=render_to_string('hostel_admin/message.html',{'from':'iiitshostel@gmail.com','body':body})
+    email=EmailMessage(subject,message,to=[to_email])
+    email.send()
+    leave = HostelLeave.objects.get(pk = id)
+    leave.isDeleted = True
+    leave.save()
+    return redirect('hostel_admin:hostel_admin_dashboard')
+
+def hostel_leave_reject(request, id):
+    error_message=""
+    subject="Hostel Leave Rejected"
+    student = Student.objects.get(user = request.user)
+    # to_email='iiitsmedical@gmail.com'   #hardcoded to avoid any hacks
+    to_email = student.student_email
+    body="Your Hostel Leave can not be accepted."
+    message=render_to_string('hostel_admin/message.html',{'from':'iiitshostel@gmail.com','body':body})
+    email=EmailMessage(subject,message,to=[to_email])
+    email.send()
+    leave = HostelLeave.objects.get(pk = id)
+    leave.isDeleted = True
+    leave.save()
+    return redirect('hostel_admin:hostel_admin_dashboard')
+
+def hostel_complaints(request):
+    complaints = ComplaintRegister.objects.all()
+    print(complaints)
+    length = len(complaints)
+    return HttpResponse(render_to_string('hostel_admin/complaints.html',context={
+    'complaints': complaints,
+    'len': length,
+    }))
+
+def complaint_details(request, id):
+    try:
+        complaint = ComplaintRegister.objects.get(pk=id)
+    except ComplaintRegister.DoesNotExist:
+        complaint = None
+    if complaint is not None:
+        return render(request, 'hostel_admin/detail.html', {
+        'complaint': complaint
+        })
+    else:
+        return redirect('hostel_admin:hostel_admin_dashboard')

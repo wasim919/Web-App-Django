@@ -305,6 +305,12 @@ def feedback_form(request):
 def submit_feedback(request):
 	if request.method == 'POST':
 		form = MessFeedbackForm(request.POST)
+		feedback_form = form.save(commit=False)
+		refund_form.student = Student.objects.get(user = request.user)
+		feedback_form.feedback = request.POST['feedback']
+		feedback_form.timestamp = datetime.datetime.now()
+		feedback_form.created_at = datetime.datetime.now().date()
+		feedback_form.modified_at = datetime.datetime.now().date()
 		if form.is_valid():
 			feedback_form = form.save(commit=False)
 			refund_form.student = Student.objects.get(user = request.user)
@@ -312,7 +318,6 @@ def submit_feedback(request):
 			feedback_form.timestamp = datetime.datetime.now()
 			feedback_form.created_at = datetime.datetime.now().date()
 			feedback_form.modified_at = datetime.datetime.now().date()
-
 			feedback_form.created_by = Student.objects.get(user = request.user)
 			feedback_form.modified_by = Student.objects.get(user = request.user)
 			feedback_form.save()
