@@ -55,7 +55,7 @@
             <a href="{% url 'medical_admin:medical_admin_dashboard' %}" class="nav-link">Medical admin dashboard</a>
             </li>
       {% endif %}
-      
+
         </ul>
 
         <ul class="navbar-nav ml-auto">
@@ -272,7 +272,7 @@
                     <td style="width: 132px; font-weight:normal;">{{data.problem}}</td>
                     <td style="width: 132px; font-weight:normal;">{{data.age}}</td>
                     <td style="width: 132px; font-weight:normal;">{{data.gender}}</td>
-                    <td style="width: 132px; font-weight:normal;"><a href="#" class="btn btn-success">
+                    <td style="width: 132px; font-weight:normal;"><a href="{% url 'medical_admin:pending_appointments' data.pk %}" class="btn btn-success">
                       <i class="fas fa-check"></i> Mark as Done
                     </a></td>
                   </tr>
