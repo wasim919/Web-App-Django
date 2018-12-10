@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^medical_leave_details/(?P<id>\d+)/$', views.medical_leave_details, name = 'medical_leave_details'),
     url(r'^approve_leave/(?P<id>\d+)/$', views.approve_leave, name = 'approve_leave'),
     url(r'^reject_leave/(?P<id>\d+)/$', views.reject_leave, name = 'reject_leave'),
+    url(r'^pending_appointments/(?P<id>\d+)/$', views.pending_appointments, name = 'pending_appointments'),
 ]
