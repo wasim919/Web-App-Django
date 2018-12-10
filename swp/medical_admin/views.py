@@ -18,6 +18,12 @@ def medical_admin_index(request):
     if(check_isMedicalAdmin(request)):
         return render(request, 'medical_admin/index.html')
     return render(request,'index.html')
+def get_months_num(s):
+    c=0
+    for i in s:
+        if(int(i.created_at.date().month)==int(datetime.datetime.now().date().month)):
+            c+=1
+    return c
 
 @login_required
 def medical_admin_dashboard(request):
@@ -26,6 +32,7 @@ def medical_admin_dashboard(request):
         medical_leave = MedicalLeave.objects.all()
         medical_announcements.sort(key = lambda a: a.timestamp, reverse = True)
         medical_appointments = MedicalAppointment.objects.all()
+        appointments_this_month=get_months_num(medical_leave)
         return render(request, 'medical_admin/medical_admin_dashboard.html', {
         'medical_announcements': medical_announcements,'medical_leave':medical_leave,
         'medical_appointments':medical_appointments,
