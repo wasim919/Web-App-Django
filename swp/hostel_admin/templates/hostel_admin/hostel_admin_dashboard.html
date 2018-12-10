@@ -55,7 +55,7 @@
             <a href="{% url 'medical_admin:medical_admin_dashboard' %}" class="nav-link">Medical admin dashboard</a>
             </li>
       {% endif %}
-      
+
         </ul>
 
         <ul class="navbar-nav ml-auto">
@@ -303,6 +303,40 @@
 </div>
 </div> -->
 </div>
+  </section>
+
+  <section id="posts">
+      <div class="row">
+    <div class="col-md-5" style="width:800px; margin:0 auto;">
+      <div class="card" style=" border: 0px;align:left;">
+
+        <table style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+          <tr style="width: 100%; padding: 0px;  border: 0px;">
+            <td style="width: 100%; padding: 0px;">
+              <div class="card text-center bg-primary text-white mb-3">
+                <div class="card-body">
+                  <h3>Hostel Leave Requests This Month</h3>
+                  <h4 class="display-4">
+                    <i class="fas fa-pencil-alt"></i> {{ hostel_leaves_this_month }}
+                  </h4>
+                </div>
+              </div>
+            </td>
+            <td style="width: 100%; padding: 0px;">
+              <div class="card text-center bg-success text-white mb-3">
+                <div class="card-body">
+                  <h3>Hostel Complaints This Month</h3>
+                  <h4 class="display-4">
+                    <i class="fas fa-pencil-alt"></i> {{ complaints_this_month }}
+                  </h4>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
   </section>
 
   <!-- FOOTER -->
