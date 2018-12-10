@@ -116,6 +116,14 @@
             <div class="card-header">
               <h4>Edit Profile</h4>
             </div>
+            <div class="card-header">
+              {% if messages %}
+              <h4>Notifications: </h4>
+              {% for message in messages %}
+              {{message.message}}<br>
+              {% endfor %}
+              {% endif %}
+            </div>
             <div class="card-body">
               <form action="{% url 'dashboard:profile' %}" method="post" id="post-form">
                 {% csrf_token %}
