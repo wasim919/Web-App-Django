@@ -191,3 +191,21 @@ def reject_leave(request,id):
             pass
         return redirect('medical_admin:medical_admin_dashboard')
     return render(request,'index.html')
+@login_required
+def pending_appointments(request,id):
+    if(check_isMedicalAdmin(request)):
+        try:
+            medical_appointment=MedicalAppointment.objects.get(pk=id)
+            me = Messages(message="Your medical appointment with "+str(medical_appointment.doctor.doctor_name)+" at "+str(medical_appointment.appointment_time)+" has been confirmed ",student=medical_appointment.student)
+            me.created_at=datetime.datetime.now().date()
+            me.modified_at = datetime.datetime.now().date()
+            me.created_by=request.user.username
+            me.modified_by=request.user.username
+            me.save()
+            medical_appointment.isDeleted=1
+            medical_appointment.save()
+            return redirect('medical_admin:medical_admin_dashboard')
+        except:
+            pass
+        return redirect('medical_admin:medical_admin_dashboard')
+    return render(request,'index.html')
