@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'^item_delete/(?P<id>\d+)', views.item_delete, name = 'item_delete'),
 	url(r'^leave_delete/(?P<id>\d+)', views.leave_delete, name = 'leave_delete'),
 	url(r'^refund_delete/(?P<id>\d+)', views.refund_delete, name = 'refund_delete'),
+	url(r'^feedback_delete/(?P<id>\d+)', views.feedback_delete, name = 'feedback_delete'),
 	url(r'^order_delete/(?P<id>\d+)', views.order_delete, name = 'order_delete'),
 	url(r'^add_announcement/', views.add_announcement, name='add_announcement'),
 	url(r'^add_item/', views.add_item, name='add_item'),

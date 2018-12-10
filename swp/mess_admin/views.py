@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from dashboard.models import MessAnnouncements
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
-from mess.models import MessLeave, MessRefund, OrderListMess, MessItems
+from mess.models import MessLeave, MessRefund, OrderListMess, MessItems, MessFeedback
 #from .forms import MessAnnouncementForm, AddAnnouncementForm
 from django.http import HttpResponse
 import datetime
@@ -43,43 +43,10 @@ def mess_admin_index(request):
 def mess_refund_accept(request, pk):
     if(check_isMessAdmin(request)):
         rt = MessRefund.objects.filter(pk = pk)
-        yt = Messages(message = ("Your mess refund request made on Date " + str(rt[0].timestamp) + " of rupees " +  str(rt[0].refund_amount) + " was accepted"), student = rt[0].student)
-        yt.created_at = datetime.datetime.now().date()
-        yt.modified_at = datetime.datetime.now().date()
-        yt.modified_by = request.user
-        yt.created_by = request.user
-        yt.save()
-        return redirect('mess_admin:mess_admin_dashboard')
-    return render(request,'index.html')
-
-def mess_refund_reject(request, pk):
-    if(check_isMessAdmin(request)):
-        rt = MessRefund.objects.filter(pk = pk)
-        yt = Messages(message = ("Your mess refund request made on Date " + str(rt[0].timestamp) + " of rupees " +  str(rt[0].refund_amount) + " was rejected"), student = rt[0].student)
-        yt.created_at = datetime.datetime.now().date()
-        yt.modified_at = datetime.datetime.now().date()
-        yt.modified_by = request.user
-        yt.created_by = request.user
-        yt.save()
-        return redirect('mess_admin:mess_admin_dashboard')
-    return render(request,'index.html')
-
-def mess_leave_accept(request, pk):
-    if(check_isMessAdmin(request)):
-        rt = MessLeave.objects.filter(pk = pk)
-        yt = Messages(message = ("Your mess leave request made on Date " + str(rt[0].timestamp) + " was accepted"), student = rt[0].student)
-        yt.created_at = datetime.datetime.now().date()
-        yt.modified_at = datetime.datetime.now().date()
-        yt.modified_by = request.user
-        yt.created_by = request.user
-        yt.save()
-        return redirect('mess_admin:mess_admin_dashboard')
-    return render(request,'index.html')
-
-def mess_leave_reject(request, pk):
-    if(check_isMessAdmin(request)):
-        rt = MessLeave.objects.filter(pk = pk)
-        yt = Messages(message = ("Your mess leave request made on Date " + str(rt[0].timestamp)  + " was rejected"), student = rt[0].student)
+        temp = rt[0]
+        temp.isDeleted = True
+        temp.save()
+        yt = Messages(message = ("Your mess refund request made on Date " + str(temp.timestamp) + " of rupees " +  str(temp.refund_amount) + " was accepted"), student = temp.student)
         yt.created_at = datetime.datetime.now().date()
         yt.modified_at = datetime.datetime.now().date()
         yt.modified_by = request.user
@@ -88,19 +55,73 @@ def mess_leave_reject(request, pk):
         return redirect('mess_admin:mess_admin_dashboard')
     return render(request,'index.html')
 @login_required
+def mess_refund_reject(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessRefund.objects.filter(pk = pk)
+        temp = rt[0]
+        temp.isDeleted = True
+        temp.save()
+        yt = Messages(message = ("Your mess refund request made on Date " + str(temp.timestamp) + " of rupees " +  str(temp.refund_amount) + " was rejected"), student = temp.student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+@login_required
+def mess_leave_accept(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessLeave.objects.filter(pk = pk)
+        temp = rt[0]
+        temp.isDeleted = True
+        print(temp.reason)
+        temp.save()
+        rp = MessLeave.objects.filter(pk = pk)
+        print(rp[0].isDeleted)
+        yt = Messages(message = ("Your mess leave request made on Date " + str(temp.timestamp) + " was accepted"), student = temp.student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+@login_required
+def mess_leave_reject(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessLeave.objects.filter(pk = pk)
+        temp = rt[0]
+        temp.isDeleted = True
+        temp.save()
+        yt = Messages(message = ("Your mess leave request made on Date " + str(temp.timestamp)  + " was rejected"), student = temp.student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+@login_required
 def mess_admin_dashboard(request):
     if(check_isMessAdmin(request)):
-        mess_announcements = list(MessAnnouncements.objects.all())
+        mess_announcements = list(MessAnnouncements.objects.filter(isDeleted = False))
         mess_announcements.sort(key = lambda a: a.timestamp, reverse = True)
-        mess_leave = list(MessLeave.objects.all())
+        mess_leave = list(MessLeave.objects.filter(isDeleted = False))
         mess_leave.sort(key = lambda a: a.timestamp, reverse = True)
-        mess_refund = list(MessRefund.objects.all())
+        mess_refund = list(MessRefund.objects.filter(isDeleted = False))
         mess_refund.sort(key = lambda a: a.timestamp, reverse = True)
-        mess_items = list(MessItems.objects.all())
+        mess_items = list(MessItems.objects.filter(isDeleted = False))
         mess_items.sort(key = lambda a: a.timestamp, reverse = True)
-        mess_order = list(OrderListMess.objects.all())
+        mess_order = list(OrderListMess.objects.filter(isDeleted = False))
         mess_order.sort(key = lambda a: a.timestamp, reverse = True)
+        mess_feedback = list(MessFeedback.objects.filter(isDeleted = False))
+        mess_feedback.sort(key = lambda a: a.timestamp, reverse = True)
         return render(request, 'mess_admin/mess_admin_dashboard.html', {'mess_announcements': mess_announcements,'mess_leave':mess_leave, 'mess_refund': mess_refund, 'mess_order': mess_order, 'mess_items': mess_items,'admin_status': get_admin_status(request),
+        'mess_feedback': mess_feedback,
         'mr': len(mess_order),
         'ml': len(mess_leave),
         'mo': len(mess_order)
@@ -146,7 +167,8 @@ def leave_delete(request, id):
 def refund_delete(request, id):
     if(check_isMessAdmin(request)):
         refund = MessRefund.objects.get(pk=id)
-        refund.delete()
+        refund.isDeleted = True
+        refund.save()
         return redirect('mess_admin:mess_admin_dashboard')
     return render(request,'index.html')
 
@@ -154,7 +176,8 @@ def refund_delete(request, id):
 def item_delete(request, id):
     if(check_isMessAdmin(request)):
         item = MessItems.objects.get(pk = id)
-        item.delete()
+        item.isDeleted = True
+        item.save()
         return redirect('mess_admin:mess_admin_dashboard')
     return render(request,'index.html')
 
@@ -162,7 +185,17 @@ def item_delete(request, id):
 def order_delete(request, id):
     if(check_isMessAdmin(request)):
         order = OrderListMess.objects.get(pk = id)
-        order.delete()
+        order.isDeleted = True
+        order.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+@login_required
+def feedback_delete(request, id):
+    if(check_isMessAdmin(request)):
+        feedback = MessFeedback.objects.get(pk = id)
+        feedback.isDeleted = True
+        feedback.save()
         return redirect('mess_admin:mess_admin_dashboard')
     return render(request,'index.html')
 
