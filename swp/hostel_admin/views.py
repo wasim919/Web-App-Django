@@ -8,11 +8,12 @@ import time
 from api_integration.models import Student
 from django.template.loader import render_to_string
 from orders.models import ManualOrder
-from .forms import AddItemForm
+from .forms import AddItemForm, AddCourrierForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from hostel.models import HostelLeave, ComplaintRegister
+from dashboard.models import Messages
 import pytz
 from api_integration.models import Student
 
@@ -45,7 +46,7 @@ def hostel_admin_index(request):
 @login_required
 def hostel_admin_dashboard(request):
     if(check_isHostelAdmin(request)):
-        hostel_announcements = list(HostelAnnouncements.objects.all())
+        hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted = False))
         hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
@@ -66,7 +67,7 @@ def announcement_delete(request, id):
     if(check_isHostelAdmin(request)):
         print(id)
         announcement = HostelAnnouncements.objects.get(pk=id)
-        announcement.delete()
+        announcement.isDeleted = True
         hostel_announcements = HostelAnnouncements.objects.all()
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
         'hostel_announcements': hostel_announcements,
@@ -186,7 +187,7 @@ def add_item(request):
 			'admin_status': get_admin_status(request)
             }))
             return render(request,'index.html')
-          
+
 def hostel_leaves(request):
     if request.method == 'GET':
         hostel_leaves = HostelLeave.objects.all().filter(isDeleted = False)
@@ -205,11 +206,20 @@ def hostel_leave_accept(request, id):
     to_email = student.student_email
     body="Your Hostel Leave has been accepted."
     message=render_to_string('hostel_admin/message.html',{'from':'iiitshostel@gmail.com','body':body})
+    print(message)
     email=EmailMessage(subject,message,to=[to_email])
     email.send()
     leave = HostelLeave.objects.get(pk = id)
     leave.isDeleted = True
     leave.save()
+    message = Messages.objects.create(student = student,
+    message = message,
+    created_at = datetime.datetime.now().date(),
+    modified_at = datetime.datetime.now().date(),
+    modified_by = request.user.username,
+    created_by = request.user.username)
+    message.save()
+
     return redirect('hostel_admin:hostel_admin_dashboard')
 
 def hostel_leave_reject(request, id):
@@ -225,6 +235,15 @@ def hostel_leave_reject(request, id):
     leave = HostelLeave.objects.get(pk = id)
     leave.isDeleted = True
     leave.save()
+    message = Messages.objects.create()
+    message.student = student
+    message.message = message
+    message.created_at = datetime.datetime.now().date()
+    message.modified_at = datetime.datetime.now().date()
+    message.modified_by = request.user.username
+    message.created_by = request.user.username
+    message.isDeleted = 0
+    message.save()
     return redirect('hostel_admin:hostel_admin_dashboard')
 
 def hostel_complaints(request):
@@ -249,3 +268,12 @@ def complaint_details(request, id):
         })
     else:
         return redirect('hostel_admin:hostel_admin_dashboard')
+
+def add_courier(request):
+    form = AddCourrierForm()
+    return HttpResponse(render_to_string('hostel_admin/courrier_form.html',context={
+    'courrier_form': form
+    }))
+
+def add_student_courrier(request):
+    pass

@@ -36,14 +36,14 @@ def get_admin_status(request):
 
 @login_required
 def medical_dashboard(request):
-    announcements=MedicalAnnouncements.objects.all()
+    announcements=MedicalAnnouncements.objects.filter(isDeleted=0)
     scrollL_announce=len(announcements)
     if scrollL_announce <= 3:
         scrollL_announce = '140px'
     else:
         scrollL_announce = str(3 * 70)+ 'px'
     student=Student.objects.get(user=request.user)
-    appointments=MedicalAppointment.objects.filter(student=student)
+    appointments=MedicalAppointment.objects.filter(student=student,isDeleted=0)
     filtered_appointments=[]
     for appointment in appointments:
         if(appointment.appointment_time>datetime.datetime.now().replace(tzinfo=pytz.UTC)):
@@ -194,7 +194,9 @@ def deleteAppointment(request):
         #appointment id
         try:
             app_id=request.POST['id']
-            MedicalAppointment.objects.get(id=app_id).delete()
+            m=MedicalAppointment.objects.get(id=app_id)
+            m.isDeleted=1
+            m.save()
             return HttpResponse(status=200)
         except:
             return HttpResponse(status=500)

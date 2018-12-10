@@ -201,6 +201,17 @@
   <table id="searchTable4" class="table table-striped" style="visibility:hidden">
   </table>
 <!-- </form> -->
+<input type="Submit" value="Add Courrier" class="btn btn-primary btn-block" id="mybutton5">
+  <div class="card-header" style="width: 104%;">
+    <h4><center>Add Courrier</center></h4>
+  </div>
+<form class="add_announcement" action="{% url 'hostel_admin:add_student_courrier' %}" method="post">
+  {% csrf_token %}
+  <table id="searchTable5" class="table table-striped" style="visibility:hidden">
+  </table>
+</form>
+<!-- <form class="hostel_leave" action="{% url 'hostel_admin:hostel_leaves' %}" method="post">
+{% csrf_token %} -->
     </div>
   </div>
       <!-- <div class="col-md-9" style="width:800px; margin:0 auto;">
@@ -424,6 +435,27 @@
         $("#searchTable4").css('visibility','visible');
         $("#mybutton4").css('visibility','hidden');
         $("#searchTable4").html(data);
+     });
+    }
+  });
+  });
+
+  $('#mybutton5').click(function(){
+    // e.preventDefault();
+    // var date=$('#datepicker').val();
+    // var time=$('#timepicker').val();
+    // var specialisation=$('#specialisation :selected').text();
+    // console.log(specialisation);
+    $.ajax({
+      type:'GET',
+      url:'{% url "hostel_admin:add_courier" %}',
+      dataType: 'html',
+    success:function(data){
+      $(document).ready(function(){
+        console.log("it worked");
+        $("#searchTable5").css('visibility','visible');
+        $("#mybutton5").css('visibility','hidden');
+        $("#searchTable5").html(data);
      });
     }
   });

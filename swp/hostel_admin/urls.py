@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^hostel_leave_accept/(?P<id>\d+)/$', views.hostel_leave_accept, name = 'hostel_leave_accept'),
     url(r'^hostel_leave_reject/(?P<id>\d+)/$', views.hostel_leave_reject, name = 'hostel_leave_reject'),
     url(r'^add_item/$', views.add_item, name = 'add_item'),
+    url(r'^add_courier/$', views.add_courier, name = 'add_courier'),
+    url(r'^add_student_courrier/$', views.add_student_courrier, name = 'add_student_courrier'),
 ]
