@@ -49,10 +49,10 @@ class ComplaintRegister(models.Model):
 
 class Courrier(models.Model):
     idcourrier = models.AutoField(primary_key=True)
-    courrier_ref_no = models.CharField(max_length=45, blank=True, null=True)
-    delivery_agent = models.CharField(max_length=45, blank=True, null=True)
-    student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
-    courrier_company = models.CharField(max_length=45, blank=True, null=True)
+    courrier_ref_no = models.CharField(max_length=45, blank=True, null=True) #
+    delivery_agent = models.CharField(max_length=45, blank=True, null=True) #
+    student = models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True) #
+    courrier_company = models.CharField(max_length=45, blank=True, null=True) #
     expected_arrival_time = models.DateTimeField(blank=True, null=True)
     timestamp = models.DateTimeField(default = timezone.now())
     created_at = models.DateTimeField(blank=True, null=True)
@@ -63,7 +63,7 @@ class Courrier(models.Model):
 
     def __str__(self):
     	return '%s %s %s' %(self.student.user.username,self.idcourrier,self.expected_arrival_time)
-    
+
     @property
     def isDelete(self):
         return bool(self.isDeleted())

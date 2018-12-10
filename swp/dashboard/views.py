@@ -33,13 +33,13 @@ def get_admin_status(request):
 @login_required
 def dashboard_index(request):
     # hostel_announcements = get_list_or_404(HostelAnnouncements, )
-    hostel_announcements = list(HostelAnnouncements.objects.all())
+    hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted=0))
     hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
-    mess_announcements = list(MessAnnouncements.objects.all())
+    mess_announcements = list(MessAnnouncements.objects.all().filter(isDeleted=0))
     mess_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
-    medical_announcements = list(MedicalAnnouncements.objects.all())
+    medical_announcements = list(MedicalAnnouncements.objects.all().filter(isDeleted=0))
     medical_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
     return render(request, 'dashboard/index.html', {
@@ -121,7 +121,7 @@ def edit_profile(request):
 
 @login_required
 def contacts(request):
-    imp_contacts = list(ImportantContacts.objects.all())
+    imp_contacts = list(ImportantContacts.objects.all().filter(isDeleted=0))
     return render(request, 'dashboard/important_contacts.html', {
         'imp_contacts': imp_contacts,
         'admin_status': get_admin_status(request)
