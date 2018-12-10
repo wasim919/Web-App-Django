@@ -13,8 +13,9 @@ from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from api_integration.models import Student
+from dashboard.models import Messages
 
-
+@login_required
 def get_admin_status(request):
 	st = 0
 	dr = Student.objects.filter(student_first_name = str(request.user))
@@ -36,6 +37,55 @@ def check_isMessAdmin(request):
 def mess_admin_index(request):
     if(check_isMessAdmin(request)):
         return render(request, 'mess_admin/index.html')
+    return render(request,'index.html')
+
+@login_required
+def mess_refund_accept(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessRefund.objects.filter(pk = pk)
+        yt = Messages(message = ("Your mess refund request made on Date " + str(rt[0].timestamp) + " of rupees " +  str(rt[0].refund_amount) + " was accepted"), student = rt[0].student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+def mess_refund_reject(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessRefund.objects.filter(pk = pk)
+        yt = Messages(message = ("Your mess refund request made on Date " + str(rt[0].timestamp) + " of rupees " +  str(rt[0].refund_amount) + " was rejected"), student = rt[0].student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+def mess_leave_accept(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessRefund.objects.filter(pk = pk)
+        yt = Messages(message = ("Your mess leave request made on Date " + str(rt[0].timestamp) + " was accepted"), student = rt[0].student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
+    return render(request,'index.html')
+
+def mess_leave_reject(request, pk):
+    if(check_isMessAdmin(request)):
+        rt = MessRefund.objects.filter(pk = pk)
+        yt = Messages(message = ("Your mess leave request made on Date " + str(rt[0].timestamp)  + " was rejected"), student = rt[0].student)
+        yt.created_at = datetime.datetime.now().date()
+        yt.modified_at = datetime.datetime.now().date()
+        yt.modified_by = request.user
+        yt.created_by = request.user
+        yt.save()
+        return redirect('mess_admin:mess_admin_dashboard')
     return render(request,'index.html')
 @login_required
 def mess_admin_dashboard(request):
@@ -60,13 +110,13 @@ def mess_admin_dashboard(request):
 def mess_leave_show(request, pk):
     if(check_isMessAdmin(request)):
         leave = get_object_or_404(MessLeave, pk = pk)
-        return render(request, 'mess_admin/leaves.html', {'leave': leave, 'admin_status': get_admin_status(request)})
+        return render(request, 'mess_admin/leaves.html', {'pk': pk, 'leave': leave, 'admin_status': get_admin_status(request)})
     return render(request,'index.html')
 @login_required
 def mess_refund_show(request, pk):
     if(check_isMessAdmin(request)):
         refund = get_object_or_404(MessRefund, pk = pk)
-        return render(request, 'mess_admin/refunds.html', {'refund': refund, 'admin_status': get_admin_status(request)})
+        return render(request, 'mess_admin/refunds.html', {'pk': pk, 'refund': refund, 'admin_status': get_admin_status(request)})
     return render(request,'index.html')
 
 
