@@ -1,0 +1,48 @@
+<tr style="width: 100%; padding: 0px;">
+  <td style="width: 100%; padding: 0px;">
+    <table style="width: 100%; padding: 0px;">
+      <thead class="thead-dark" style="width: 100%; padding: 0px;">
+        <tr style="width: 100%; padding: 0px;">
+          <th style="width: 55px; font-weight:normal;">#</th>
+          <th style="width: 55px; font-weight:normal;">Student Name</th>
+          <th style="width: 55px; font-weight:normal;">Room No</th>
+          <th style="width: 55px; font-weight:normal;">Created At</th>
+          <th style="width: 55px; font-weight:normal;">Details</th>
+        </tr>
+      </thead>
+    </table>
+  </td>
+</tr>
+{% if len != 0 %}
+<tr style="width: 100%; padding: 0px;">
+  <td style="width: 100%; padding: 0px;">
+    <div style="overflow-y: scroll; width: 100%; height: 300px;">
+      <table style="width: 100%; padding: 0px;">
+        {% if complaints %}
+          {% for complaint in complaints %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ complaint.student.student_first_name }}</td>
+            <td>{{ complaint.room_no }}</td>
+            <td>{{ complaint.created_at }}</td>
+            <td style="width: 132px; font-weight:normal;"><a href="{% url 'hostel_admin:complaint_details' complaint.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+              <i class="fas fa-angle-double-right"></i> Details
+            </a></td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+      </table>
+    </div>
+  </td>
+</tr>
+{% else %}
+<tr>
+  <td>
+    No Complaints Yet...
+    </td>
+    <td>
+      </td>
+      <td>
+        </td>
+      </tr>
+{% endif %}

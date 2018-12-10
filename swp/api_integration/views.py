@@ -65,7 +65,7 @@ def callback(request,token):
         student_cur_yearofstudy = student_cur_yearofstudy, student_cur_sem = student_cur_sem,
         student_academic_status = student_academic_status, created_at=datetime.datetime.now().replace(tzinfo=pytz.UTC).date(),
         created_by = student_first_name, modified_at = datetime.datetime.now().replace(tzinfo=pytz.UTC).date(),
-        modified_by = student_first_name)
+        modified_by = student_first_name,isDeleted=0)
         student = Student.objects.get(user = user)
         print(student)
     else:
