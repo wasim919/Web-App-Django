@@ -8,13 +8,31 @@ import time
 from api_integration.models import Student
 from django.template.loader import render_to_string
 from orders.models import ManualOrder
-from .forms import AddItemForm
+from .forms import AddItemForm, AddCourrierForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from hostel.models import HostelLeave, ComplaintRegister
 from dashboard.models import Messages
 import pytz
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 
 def check_isHostelAdmin(request):
     return Student.objects.get(user=request.user).is_hostel_admin
@@ -28,11 +46,12 @@ def hostel_admin_index(request):
 @login_required
 def hostel_admin_dashboard(request):
     if(check_isHostelAdmin(request)):
-        hostel_announcements = list(HostelAnnouncements.objects.all())
+        hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted = False))
         hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
         'hostel_announcements': hostel_announcements,
+		'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 
@@ -48,10 +67,11 @@ def announcement_delete(request, id):
     if(check_isHostelAdmin(request)):
         print(id)
         announcement = HostelAnnouncements.objects.get(pk=id)
-        announcement.delete()
+        announcement.isDeleted = True
         hostel_announcements = HostelAnnouncements.objects.all()
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
         'hostel_announcements': hostel_announcements,
+		'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 @login_required
@@ -61,11 +81,13 @@ def announcement_edit(request, id):
         hostel_announcement_form = AddAnnouncementForm(initial = {
         'announcement_title': hostel_announcement.announcement_title,
         'announcement': hostel_announcement.announcement,
+		'admin_status': get_admin_status(request)
         })
         print(hostel_announcement_form)
         return render(request, 'hostel_admin/edit_announcements.html', {
         'form': hostel_announcement_form,
         'id': id,
+		'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 
@@ -76,6 +98,7 @@ def add_announcement(request):
             add_announcement_form = AddAnnouncementForm()
             return HttpResponse(render_to_string('hostel_admin/add.html',context={
             'add_announcement_form': add_announcement_form,
+			'admin_status': get_admin_status(request)
             }))
     return render(request,'index.html')
 
@@ -134,6 +157,7 @@ def manual_orders(request):
           return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
           'manual_orders': manual_orders,
           'len': length,
+		  'admin_status': get_admin_status(request)	
           }))
       return render(request,'index.html')
 
@@ -160,6 +184,7 @@ def add_item(request):
             item_form = AddItemForm()
             return HttpResponse(render_to_string('hostel_admin/item_form.html',context={
             'form': item_form,
+			'admin_status': get_admin_status(request)
             }))
             return render(request,'index.html')
 
@@ -187,13 +212,13 @@ def hostel_leave_accept(request, id):
     leave = HostelLeave.objects.get(pk = id)
     leave.isDeleted = True
     leave.save()
-    message = Messages.objects.create()
-    message.student = student
-    message.message = message
-    message.created_at = datetime.datetime.now().date()
-    message.modified_at = datetime.datetime.now().date()
-    message.modified_by = request.user.username
-    message.created_by = request.user.username
+    message = Messages.objects.create(student = student,
+    message = message,
+    created_at = datetime.datetime.now().date(),
+    modified_at = datetime.datetime.now().date(),
+    modified_by = request.user.username,
+    created_by = request.user.username)
+    message.save()
 
     return redirect('hostel_admin:hostel_admin_dashboard')
 
@@ -217,7 +242,7 @@ def hostel_leave_reject(request, id):
     message.modified_at = datetime.datetime.now().date()
     message.modified_by = request.user.username
     message.created_by = request.user.username
-    message.isDelete = 0
+    message.isDeleted = 0
     message.save()
     return redirect('hostel_admin:hostel_admin_dashboard')
 
@@ -228,6 +253,7 @@ def hostel_complaints(request):
     return HttpResponse(render_to_string('hostel_admin/complaints.html',context={
     'complaints': complaints,
     'len': length,
+	'admin_status': get_admin_status(request)
     }))
 
 def complaint_details(request, id):
@@ -237,7 +263,17 @@ def complaint_details(request, id):
         complaint = None
     if complaint is not None:
         return render(request, 'hostel_admin/detail.html', {
-        'complaint': complaint
+        'complaint': complaint,
+		'admin_status': get_admin_status(request)
         })
     else:
         return redirect('hostel_admin:hostel_admin_dashboard')
+
+def add_courier(request):
+    form = AddCourrierForm()
+    return HttpResponse(render_to_string('hostel_admin/courrier_form.html',context={
+    'courrier_form': form
+    }))
+
+def add_student_courrier(request):
+    pass

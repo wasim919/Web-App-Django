@@ -27,7 +27,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav">
           <li class="nav-item px-2">
-            <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link">Dashboard</a>
+            <a href="{% url 'dashboard:dashboard_index' %}" class="nav-link active">Dashboard</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'hostel:hostel_dashboard' %}" class="nav-link">Hostel</a>
@@ -36,11 +36,27 @@
             <a href="{% url 'mess:mess_dashboard' %}" class="nav-link">Mess</a>
           </li>
           <li class="nav-item px-2">
-            <a href="{% url 'medical:medical_dashboard' %}" class="nav-link active">Medical</a>
+            <a href="{% url 'medical:medical_dashboard' %}" class="nav-link">Medical</a>
           </li>
           <li class="nav-item px-2">
             <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
           </li>
+      {% if admin_status == 1 %}
+        <li class="nav-item px-2">
+            <a href="{% url 'hostel_admin:hostel_admin_dashboard' %}" class="nav-link">Hostel admin dashboard</a>
+            </li>
+      {% endif %}
+      {% if admin_status == 2 %}
+        <li class="nav-item px-2">
+            <a href="{% url 'mess_admin:mess_admin_dashboard' %}" class="nav-link">Mess admin dashboard</a>
+            </li>
+      {% endif %}
+      {% if admin_status == 3 %}
+        <li class="nav-item px-2">
+            <a href="{% url 'medical_admin:medical_admin_dashboard' %}" class="nav-link">Medical admin dashboard</a>
+            </li>
+      {% endif %}
+      
         </ul>
 
         <ul class="navbar-nav ml-auto">
