@@ -12,14 +12,14 @@ import datetime
 
 @login_required
 def hostel_dashboard(request):
-	h_announce = HostelAnnouncements.objects.all()
+	h_announce = HostelAnnouncements.objects.all().filter(isDeleted=0)
 	scrollL_announce = len(h_announce)
 	if scrollL_announce <= 3:
 		scrollL_announce = '140px'
 	else:
 		scrollL_announce = str(3 * 70)+ 'px'
 
-	self_help = SelfHelpGroup.objects.all()
+	self_help = SelfHelpGroup.objects.all().filter(isDeleted=0)
 	scrollL_self = len(self_help)
 
 	if scrollL_self <= 3:
@@ -27,7 +27,7 @@ def hostel_dashboard(request):
 	else:
 		scrollL_self = str(3 * 70)+ 'px'
 
-	courier_data = Courrier.objects.all()
+	courier_data = Courrier.objects.all().filter(isDeleted=0)
 	#.filter(student=Student.objects.get(user = request.user))
 	courier_data = list(filter(lambda x: x.student.user == request.user, courier_data))
 	scrollL_courier = len(courier_data)

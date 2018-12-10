@@ -13,6 +13,7 @@ from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from hostel.models import HostelLeave, ComplaintRegister
+from dashboard.models import Messages
 import pytz
 
 def check_isHostelAdmin(request):
@@ -161,7 +162,7 @@ def add_item(request):
             'form': item_form,
             }))
             return render(request,'index.html')
-          
+
 def hostel_leaves(request):
     if request.method == 'GET':
         hostel_leaves = HostelLeave.objects.all().filter(isDeleted = False)
@@ -180,11 +181,20 @@ def hostel_leave_accept(request, id):
     to_email = student.student_email
     body="Your Hostel Leave has been accepted."
     message=render_to_string('hostel_admin/message.html',{'from':'iiitshostel@gmail.com','body':body})
+    print(message)
     email=EmailMessage(subject,message,to=[to_email])
     email.send()
     leave = HostelLeave.objects.get(pk = id)
     leave.isDeleted = True
     leave.save()
+    message = Messages.objects.create()
+    message.student = student
+    message.message = message
+    message.created_at = datetime.datetime.now().date()
+    message.modified_at = datetime.datetime.now().date()
+    message.modified_by = request.user.username
+    message.created_by = request.user.username
+
     return redirect('hostel_admin:hostel_admin_dashboard')
 
 def hostel_leave_reject(request, id):
@@ -200,6 +210,15 @@ def hostel_leave_reject(request, id):
     leave = HostelLeave.objects.get(pk = id)
     leave.isDeleted = True
     leave.save()
+    message = Messages.objects.create()
+    message.student = student
+    message.message = message
+    message.created_at = datetime.datetime.now().date()
+    message.modified_at = datetime.datetime.now().date()
+    message.modified_by = request.user.username
+    message.created_by = request.user.username
+    message.isDelete = 0
+    message.save()
     return redirect('hostel_admin:hostel_admin_dashboard')
 
 def hostel_complaints(request):
