@@ -301,7 +301,7 @@ def add_student_courrier(request):
         if(student_roll in rollvalue):
             student = Student.objects.get(roll = student_roll)
         else:
-            return render(request,'hostel_admin/courrier_form.html',{'error_message':'Enter a valid roll number','admin_status': get_admin_status(request)})
+            return redirect('hostel_admin:hostel_admin_dashboard')
 
         courrier = Courrier.objects.create(student = student)   
         courrier.courrier_ref_no = request.POST.get('courrier_ref_no')
