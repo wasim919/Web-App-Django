@@ -9,6 +9,24 @@ from django.http import JsonResponse
 from django.views import View
 from .forms import PhotoForm
 from api_integration.models import Student
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 
 
 
@@ -27,7 +45,8 @@ def dashboard_index(request):
     return render(request, 'dashboard/index.html', {
     'hostel_announcements': hostel_announcements,
     'mess_announcements': mess_announcements,
-    'medical_announcements': medical_announcements
+    'medical_announcements': medical_announcements,
+    'admin_status': get_admin_status(request)
     })
 
 @login_required
@@ -35,17 +54,20 @@ def announcement_detail(request, flag, pk):
     if flag == '1':
         announcement = get_object_or_404(HostelAnnouncements, pk = pk)
         return render(request, 'dashboard/announcement.html', {
-        'announcement': announcement
+        'announcement': announcement,
+        'admin_status': get_admin_status(request)
         })
     elif flag == '2':
         announcement = get_object_or_404(MessAnnouncements, pk = pk)
         return render(request, 'dashboard/announcement.html', {
-        'announcement': announcement
+        'announcement': announcement,
+        'admin_status': get_admin_status(request)
         })
     elif flag == '3':
         announcement = get_object_or_404(MedicalAnnouncements, pk = pk)
         return render(request, 'dashboard/announcement.html', {
-        'announcement': announcement
+        'announcement': announcement,
+        'admin_status': get_admin_status(request)
         })
 
 @login_required
@@ -79,6 +101,7 @@ def edit_profile(request):
             'form': form,
             'student': student,
             'bio': student.bio,
+            'admin_status': get_admin_status(request)
         })
 
 # @login_required
@@ -100,5 +123,6 @@ def edit_profile(request):
 def contacts(request):
     imp_contacts = list(ImportantContacts.objects.all())
     return render(request, 'dashboard/important_contacts.html', {
-        'imp_contacts': imp_contacts
+        'imp_contacts': imp_contacts,
+        'admin_status': get_admin_status(request)
     })

@@ -14,6 +14,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from hostel.models import HostelLeave, ComplaintRegister
 import pytz
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 
 def check_isHostelAdmin(request):
     return Student.objects.get(user=request.user).is_hostel_admin
@@ -32,6 +50,7 @@ def hostel_admin_dashboard(request):
 
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
         'hostel_announcements': hostel_announcements,
+		'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 
@@ -51,6 +70,7 @@ def announcement_delete(request, id):
         hostel_announcements = HostelAnnouncements.objects.all()
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
         'hostel_announcements': hostel_announcements,
+		'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 @login_required
@@ -60,11 +80,13 @@ def announcement_edit(request, id):
         hostel_announcement_form = AddAnnouncementForm(initial = {
         'announcement_title': hostel_announcement.announcement_title,
         'announcement': hostel_announcement.announcement,
+		'admin_status': get_admin_status(request)
         })
         print(hostel_announcement_form)
         return render(request, 'hostel_admin/edit_announcements.html', {
         'form': hostel_announcement_form,
         'id': id,
+		'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 
@@ -75,6 +97,7 @@ def add_announcement(request):
             add_announcement_form = AddAnnouncementForm()
             return HttpResponse(render_to_string('hostel_admin/add.html',context={
             'add_announcement_form': add_announcement_form,
+			'admin_status': get_admin_status(request)
             }))
     return render(request,'index.html')
 
@@ -133,6 +156,7 @@ def manual_orders(request):
           return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
           'manual_orders': manual_orders,
           'len': length,
+		  'admin_status': get_admin_status(request)	
           }))
       return render(request,'index.html')
 
@@ -159,6 +183,7 @@ def add_item(request):
             item_form = AddItemForm()
             return HttpResponse(render_to_string('hostel_admin/item_form.html',context={
             'form': item_form,
+			'admin_status': get_admin_status(request)
             }))
             return render(request,'index.html')
           
@@ -209,6 +234,7 @@ def hostel_complaints(request):
     return HttpResponse(render_to_string('hostel_admin/complaints.html',context={
     'complaints': complaints,
     'len': length,
+	'admin_status': get_admin_status(request)
     }))
 
 def complaint_details(request, id):
@@ -218,7 +244,8 @@ def complaint_details(request, id):
         complaint = None
     if complaint is not None:
         return render(request, 'hostel_admin/detail.html', {
-        'complaint': complaint
+        'complaint': complaint,
+		'admin_status': get_admin_status(request)
         })
     else:
         return redirect('hostel_admin:hostel_admin_dashboard')
