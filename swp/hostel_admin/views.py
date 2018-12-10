@@ -8,7 +8,7 @@ import time
 from api_integration.models import Student
 from django.template.loader import render_to_string
 from orders.models import ManualOrder
-from .forms import AddItemForm
+from .forms import AddItemForm, AddCourrierForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -241,3 +241,12 @@ def complaint_details(request, id):
         })
     else:
         return redirect('hostel_admin:hostel_admin_dashboard')
+
+def add_courier(request):
+    form = AddCourrierForm()
+    return HttpResponse(render_to_string('hostel_admin/courrier_form.html',context={
+    'courrier_form': form
+    }))
+
+def add_student_courrier(request):
+    pass
