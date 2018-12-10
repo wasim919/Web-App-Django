@@ -8,6 +8,23 @@ from django.contrib.auth.decorators import login_required
 from api_integration.models import Student
 import datetime
 import time
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
 
 # Create your views here.
 
@@ -42,11 +59,13 @@ def mess_dashboard(request):
 		'user_order_history': user_order_history,
 		'total_cost': total_cost,
 		'mess_announcements': mess_announcements,
+		'admin_status': get_admin_status(request)
 		})
 	else:
 		return render(request, 'mess/home.html', {
 		'items': mess_items,
 		'mess_announcements': mess_announcements,
+		'admin_status': get_admin_status(request)
 		})
 # @login_required
 # def mess_dashboard(request):
@@ -164,7 +183,8 @@ def place_order(request):
 			return render(request, 'mess/not_order.html', {
 			'ordered_items': ordered_items,
 			'not_ordered': not_order,
-			'total_cost': total_cost
+			'total_cost': total_cost,
+			'admin_status': get_admin_status(request)
 			})
 
 @login_required
@@ -187,20 +207,20 @@ def mess_leave(request):
 
 			if(leave_form.leave_from >=  leave_form.leave_to):
 				error_message = "Please enter valid From and TO dates"
-				return render(request,'mess/leave.html',{'form':form,'error_message':error_message})
+				return render(request,'mess/leave.html',{'form':form,'error_message':error_message, 'admin_status': get_admin_status(request)})
 			leave_form.save()
-			return render(request, 'mess/leave-ack.html')
+			return render(request, 'mess/leave-ack.html', {'admin_status': get_admin_status(request)})
 		else:
 			error_message = "Please enter data in YYYY-MM-DD format"
-			return render(request,'mess/leave.html',{'form':form,'error_message':error_message})
+			return render(request,'mess/leave.html',{'form':form,'error_message':error_message, 'admin_status': get_admin_status(request)})
 
 	form =  MessLeaveForm()
-	return render(request,'mess/leave.html',{'form':form,'error_message':''})
+	return render(request,'mess/leave.html',{'form':form,'error_message':'', 'admin_status': get_admin_status(request)})
 
 @login_required
 def leave_form(request):
 	form = MessLeaveForm()
-	return render(request,'mess/leave.html',{'form':form})
+	return render(request,'mess/leave.html',{'form':form, 'admin_status': get_admin_status(request)})
 
 @login_required
 def mess_refund(request):
@@ -269,36 +289,39 @@ def mess_refund(request):
 						print(days)
 						ref_amount = int(days) * 98
 						return render(request, 'mess/refund-ack.html', {
-						'refund_amount': ref_amount
+						'refund_amount': ref_amount,
+						'admin_status': get_admin_status(request)
 						})
 					elif days == 0:
 						mess_obj = MessRefund.objects.get(student = student)
 						ref_amount = mess_obj.refund_amount
 						return render(request, 'mess/refund-ack.html', {
 						'refund_amount': ref_amount,
-						'already_refunded': 'We have already refunded'
+						'already_refunded': 'We have already refunded',
+						'admin_status': get_admin_status(request)
 						})
 				else:
 					return render(request, 'mess/refund.html', {
 					'message': 'You have not applied for mess leave',
-					'form': form
+					'form': form,
+					'admin_status': get_admin_status(request)
 					})
 		else:
 			error_message = "Please enter Valid data"
-			return render(request,'mess/refund.html',{'form':form,'error_message':error_message})
+			return render(request,'mess/refund.html',{'form':form,'error_message':error_message,'admin_status': get_admin_status(request)})
 	form =  MessRefundForm()
-	return render(request,'mess/refund.html',{'form':form,'error_message':''})
+	return render(request,'mess/refund.html',{'form':form,'error_message':'','admin_status': get_admin_status(request)})
 
 @login_required
 def refund_form(request):
 	form = MessRefundForm()
-	return render(request,'mess/refund.html', {'form': form})
+	return render(request,'mess/refund.html', {'form': form,'admin_status': get_admin_status(request)})
 
 
 @login_required
 def feedback_form(request):
 	form = MessFeedbackForm()
-	return render(request, 'mess/feedback.html',{'form':form})
+	return render(request, 'mess/feedback.html',{'form':form,'admin_status': get_admin_status(request)})
 
 
 @login_required
@@ -321,13 +344,13 @@ def submit_feedback(request):
 			feedback_form.created_by = Student.objects.get(user = request.user)
 			feedback_form.modified_by = Student.objects.get(user = request.user)
 			feedback_form.save()
-			return render(request, 'mess/feedback-ack.html')
+			return render(request, 'mess/feedback-ack.html',{'admin_status': get_admin_status(request)})
 		else:
 			form =  MessRefundForm()
-			return render(request,'mess/feedback.html')
+			return render(request,'mess/feedback.html',{'admin_status': get_admin_status(request)})
 
 	form =  MessRefundForm()
-	return render(request,'mess/feedback.html')
+	return render(request,'mess/feedback.html',{'admin_status': get_admin_status(request)})
 
 @login_required
 def applyMessRefund(request):
@@ -343,7 +366,7 @@ def applyMessRefund(request):
 		refund_form.created_by = Student.objects.get(user = request.user)
 		refund_form.modified_by = Student.objects.get(user = request.user)
 		refund_form.save()
-		return render(request, 'mess/refund-ack.html')
+		return render(request, 'mess/refund-ack.html',{'admin_status': get_admin_status(request)})
 
 	form =  MessRefundForm()
-	return render(request,'mess/refund.html',{'form':form,'error_message':''})
+	return render(request,'mess/refund.html',{'form':form,'error_message':'','admin_status': get_admin_status(request)})

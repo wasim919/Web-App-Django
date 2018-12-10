@@ -7,6 +7,24 @@ from .models import Items, OrderList, OrderHistory
 import datetime
 import time
 from django.template.loader import render_to_string
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 
 @login_required
 def orders_index(request):
@@ -35,10 +53,12 @@ def orders_index(request):
             'user_orders': user_orders,
             'user_order_history': user_order_history,
             'total_cost': total_cost,
+            'admin_status': get_admin_status(request)
         })
     else:
         return render(request, 'orders/orders_index.html', {
             'items': items,
+            'admin_status': get_admin_status(request)
         })
 
 @login_required
@@ -55,16 +75,19 @@ def manual_order(request):
             order.save()
             return render(request, 'orders/manual_placed.html', {
                 'order_name': request.POST.get('order_name'),
-                'order_type': request.POST.get('order_type')
+                'order_type': request.POST.get('order_type'),
+                'admin_status': get_admin_status(request)
             })
         else:
             return render(request, 'orders/manual_order.html', {
-            'form': manual_order
+            'form': manual_order,
+            'admin_status': get_admin_status(request)
             })
     else:
         manual_order = ManualOrderForm()
         return render(request, 'orders/manual_order.html', {
-        'form': manual_order
+        'form': manual_order,
+        'admin_status': get_admin_status(request)
         })
 
 def dot(K, L):
@@ -148,7 +171,8 @@ def getOrdersHistory(request):
         user_orders_history.sort(key = lambda a: a.timestamp, reverse = True)
         return HttpResponse(render_to_string('orders/userOrdersHistory.html',context={
         'user_orders_history': user_orders_history,
-        'len':len(user_orders_history)
+        'len':len(user_orders_history),
+        'admin_status': get_admin_status(request)
         }))
 
 @login_required
@@ -219,5 +243,6 @@ def place_order(request):
             return render(request, 'orders/not_order.html', {
             'ordered_items': ordered_items,
             'not_ordered': not_order,
-            'total_cost': total_cost
+            'total_cost': total_cost,
+            'admin_status': get_admin_status(request)
             })

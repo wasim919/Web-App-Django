@@ -7,6 +7,24 @@ from dashboard.models import HostelAnnouncements
 from django.contrib.auth.decorators import login_required
 from api_integration.models import Student
 import datetime
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 
 # Create your views here.
 
@@ -36,18 +54,18 @@ def hostel_dashboard(request):
 	else:
 		scrollL_courier = str(3 * 70)+ 'px'
 	context = {'h_announce':h_announce , 'self_help':self_help , 'courier_data':courier_data,
-	'scrollL_announce':scrollL_announce,'scrollL_self':scrollL_self,'scrollL_courier':scrollL_courier}
+	'scrollL_announce':scrollL_announce,'scrollL_self':scrollL_self,'scrollL_courier':scrollL_courier,'admin_status': get_admin_status(request)}
 	return render(request,'hostel/hostel_dashboard.html',context)
 
 @login_required
 def leave_form(request):
 	form = HostelLeaveForm()
-	return render(request,'hostel/leave.html',{'form':form})
+	return render(request,'hostel/leave.html',{'form':form,'admin_status': get_admin_status(request)})
 
 @login_required
 def complaint_form(request):
 	form = HostelComplaintForm()
-	return render(request,'hostel/complaint.html',{'form':form})
+	return render(request,'hostel/complaint.html',{'form':form,'admin_status': get_admin_status(request)})
 
 '''@login_required
 def complaint_ack(request):
@@ -82,10 +100,10 @@ def addComplaint(request):
 			complaint_form.modified_at = datetime.datetime.now().date()
 			complaint_form.modified_by = Student.objects.get(user = request.user)
 			complaint_form.save()
-			return render(request,'hostel/complaint-ack.html')
+			return render(request,'hostel/complaint-ack.html',{'admin_status': get_admin_status(request)})
 	else:
 		form =  HostelComplaintForm()
-		return render(request,'hostel/complaint.html',{'form':form,'error_message':''})
+		return render(request,'hostel/complaint.html',{'form':form,'error_message':'','admin_status': get_admin_status(request)})
 
 
 
@@ -116,10 +134,10 @@ def applyHostelLeave(request):
 				error_message = "Please enter valid From and TO dates"
 				return render(request,'hostel/leave.html',{'form':form,'error_message':error_message})
 			leave_form.save()
-			return render(request, 'hostel/leave-ack.html')
+			return render(request, 'hostel/leave-ack.html',{'admin_status': get_admin_status(request)})
 		else:
 			error_message = "Please enter data in YYYY-MM-DD format"
-			return render(request,'hostel/leave.html',{'form':form,'error_message':error_message})
+			return render(request,'hostel/leave.html',{'form':form,'error_message':error_message,'admin_status': get_admin_status(request)})
 
 	form =  HostelLeaveForm()
-	return render(request,'hostel/leave.html',{'form':form,'error_message':''})
+	return render(request,'hostel/leave.html',{'form':form,'error_message':'','admin_status': get_admin_status(request)})
