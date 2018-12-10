@@ -110,7 +110,7 @@ def edit_profile(request):
             'form': form,
             'student': student,
             'bio': student.bio,
-            'messages': []
+            'messages': [],
             'admin_status': get_admin_status(request)
         })
 
