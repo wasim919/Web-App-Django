@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import login_required
 from api_integration.models import Student
 
 
-@login_required
 def get_admin_status(request):
 	st = 0
 	dr = Student.objects.filter(student_first_name = str(request.user))
@@ -51,7 +50,10 @@ def mess_admin_dashboard(request):
         mess_items.sort(key = lambda a: a.timestamp, reverse = True)
         mess_order = list(OrderListMess.objects.all())
         mess_order.sort(key = lambda a: a.timestamp, reverse = True)
-        return render(request, 'mess_admin/mess_admin_dashboard.html', {'mess_announcements': mess_announcements,'mess_leave':mess_leave, 'mess_refund': mess_refund, 'mess_order': mess_order, 'mess_items': mess_items,'admin_status': get_admin_status(request)
+        return render(request, 'mess_admin/mess_admin_dashboard.html', {'mess_announcements': mess_announcements,'mess_leave':mess_leave, 'mess_refund': mess_refund, 'mess_order': mess_order, 'mess_items': mess_items,'admin_status': get_admin_status(request),
+        'mr': len(mess_order),
+        'ml': len(mess_leave),
+        'mo': len(mess_order)
         })
     return render(request,'index.html')
 @login_required
