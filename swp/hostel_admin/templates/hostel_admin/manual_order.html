@@ -1,0 +1,45 @@
+<tr style="width: 100%; padding: 0px;">
+  <td style="width: 100%; padding: 0px;">
+    <table style="width: 100%; padding: 0px;">
+      <thead class="thead-dark" style="width: 100%; padding: 0px;">
+        <tr style="width: 100%; padding: 0px;">
+          <th style="width: 55px; font-weight:normal;">#</th>
+          <th style="width: 55px; font-weight:normal;">Order Type</th>
+          <th style="width: 55px; font-weight:normal;">Order Name</th>
+          <th style="width: 55px; font-weight:normal;">Timestamp</th>
+        </tr>
+      </thead>
+    </table>
+  </td>
+</tr>
+{% if len != 0 %}
+<tr style="width: 100%; padding: 0px;">
+  <td style="width: 100%; padding: 0px;">
+    <div style="overflow-y: scroll; width: 100%; height: 300px;">
+      <table style="width: 100%; padding: 0px;">
+        {% if manual_orders %}
+          {% for orders in manual_orders %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ orders.order_type }}</td>
+            <td>{{ orders.order_name }}</td>
+            <td>{{ orders.timestamp }}</td>
+            <td></td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+      </table>
+    </div>
+  </td>
+</tr>
+{% else %}
+<tr>
+  <td>
+    No Manual Orders Requested
+    </td>
+    <td>
+      </td>
+      <td>
+        </td>
+      </tr>
+{% endif %}
