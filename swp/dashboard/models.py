@@ -62,3 +62,17 @@ class ImportantContacts(models.Model):
     @property
     def isDeleted(self):
         return bool(self.delete())
+
+class Messages(models.Model):
+    message=models.TextField()
+    created_at = models.DateTimeField(blank=True, null=True)
+    created_by = models.CharField(max_length=45, blank=True, null=True)
+    modified_at = models.DateTimeField(blank=True, null=True)
+    modified_by = models.CharField(max_length=45, blank=True, null=True)
+    student=models.ForeignKey('api_integration.Student', models.DO_NOTHING, blank=True, null=True)
+    isDeleted = models.BooleanField(default = 0)
+    def __str__(self):
+        return str(self.name)
+    @property
+    def isDeleted(self):
+        return bool(self.delete())
