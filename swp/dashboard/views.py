@@ -1,7 +1,7 @@
 import os
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import HostelAnnouncements, MessAnnouncements, MedicalAnnouncements, ImportantContacts
+from .models import *
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from .forms import EditUserNameForm, EditBioAvatarForm
@@ -75,10 +75,23 @@ def edit_profile(request):
     else:
         student = get_object_or_404(Student, user = request.user)
         form = EditUserNameForm(instance=request.user)
+        try:
+            messages = Messages.objects.all().filter(student = student)
+        except Messages.DoesNotExist:
+            messages = None
+        print(messages)
+        if messages is not None:
+            return render(request, 'dashboard/edit_profile.html', {
+                'form': form,
+                'student': student,
+                'bio': student.bio,
+                'messages': messages
+            })
         return render(request, 'dashboard/edit_profile.html', {
             'form': form,
             'student': student,
             'bio': student.bio,
+            'messages': []
         })
 
 # @login_required

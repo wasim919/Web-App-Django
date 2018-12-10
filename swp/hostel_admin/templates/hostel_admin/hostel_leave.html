@@ -4,11 +4,11 @@
       <thead class="thead-dark" style="width: 100%; padding: 0px;">
         <tr style="width: 100%; padding: 0px;">
           <th style="width: 55px; font-weight:normal;">#</th>
-          <th style="width: 55px; font-weight:normal;">Student Name</th>
-          <th style="width: 55px; font-weight:normal;">Leave From</th>
-          <th style="width: 55px; font-weight:normal;">Leave To</th>
-          <th style="width: 55px; font-weight:normal;">Accept</th>
-          <th style="width: 55px; font-weight:normal;">Reject</th>
+          <th style="width: 132px; font-weight:normal;">Student Name</th>
+          <th style="width: 132px; font-weight:normal;">Leave From</th>
+          <th style="width: 132px; font-weight:normal;">Leave To</th>
+          <th style="width: 132px; font-weight:normal;">Accept</th>
+          <th style="width: 132px; font-weight:normal;">Reject</th>
         </tr>
       </thead>
     </table>
@@ -22,17 +22,17 @@
         {% if hostel_leaves %}
           {% for leaves in hostel_leaves %}
           <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ leaves.student.student_first_name }}</td>
-            <td>{{ leaves.leave_from }}</td>
-            <td>{{ leaves.leave_to }}</td>
+            <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+            <td style="width: 132px; font-weight:normal;">{{ leaves.student.student_first_name }}</td>
+            <td style="width: 132px; font-weight:normal;">{{ leaves.leave_from }}</td>
+            <td style="width: 132px; font-weight:normal;">{{ leaves.leave_to }}</td>
             <td style="width: 132px; font-weight:normal;"><a href="{% url 'hostel_admin:hostel_leave_accept' leaves.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
               <i class="fas fa-angle-double-right"></i> Accept
             </a></td>
             <td style="width: 132px; font-weight:normal;"><a href="{% url 'hostel_admin:hostel_leave_reject' leaves.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
               <i class="fas fa-angle-double-right"></i> Reject
             </a></td>
-            <td></td>
+            <!-- <td style="width: 40px; font-weight:normal;"></td> -->
           </tr>
           {% endfor %}
           {% endif %}
