@@ -15,6 +15,25 @@ from hostel.models import HostelLeave
 #required for datetime comparisons
 import pytz
 # Create your views here.
+
+from api_integration.models import Student
+
+
+@login_required
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 @login_required
 def medical_dashboard(request):
     announcements=MedicalAnnouncements.objects.filter(isDeleted=0)
@@ -29,14 +48,14 @@ def medical_dashboard(request):
     for appointment in appointments:
         if(appointment.appointment_time>datetime.datetime.now().replace(tzinfo=pytz.UTC)):
             filtered_appointments.append(appointment)
-    return render(request,'medical/medical_dashboard.html',{"appointments":filtered_appointments,"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce})
+    return render(request,'medical/medical_dashboard.html',{"appointments":filtered_appointments,"announcements":announcements,"doctors":[],'scrollL_announce':scrollL_announce,'admin_status': get_admin_status(request)})
 @login_required
 def medical_message(request):
-    return render(request,'medical/medical_message.html')
+    return render(request,'medical/medical_message.html',{'admin_status': get_admin_status(request)})
 @login_required
 def medical_leave(request):
     form=MedicalLeaveForm()
-    return render(request,'medical/medical_leave.html',{'form':form})
+    return render(request,'medical/medical_leave.html',{'form':form, 'admin_status': get_admin_status(request)})
 @login_required
 def sendMessage(request):
     error_message=""
@@ -56,7 +75,7 @@ def sendMessage(request):
         email=EmailMessage(subject,message,to=[to_email])
         email.send()
         return render(request,'medical/success.html')
-    return render(request,'medical/medical_message.html',{"error_message":error_message})
+    return render(request,'medical/medical_message.html',{"error_message":error_message, 'admin_status': get_admin_status(request)})
 def getDate(s):
     s=s.split('-')
     year=int(s[0])
@@ -93,7 +112,8 @@ def applyLeave(request):
                 error_message="Please enter valid From and To dates"
                 return render(request, 'medical/medical_leave.html', {
                 'form': form,
-                'error_message':error_message
+                'error_message':error_message,
+                'admin_status': get_admin_status(request)
                 })
             leave_form.save()
             return render(request, 'medical/success.html')
@@ -101,12 +121,14 @@ def applyLeave(request):
             error_message="Please enter date in YYYY-MM-DD format"
             return render(request, 'medical/medical_leave.html', {
             'form': form,
-            'error_message':error_message
+            'error_message':error_message,
+            'admin_status': get_admin_status(request)
             })
     form = MedicalLeaveForm()
     return render(request, 'medical/medical_leave.html', {
     'form': form,
-    'error_message':''
+    'error_message':'',
+    'admin_status': get_admin_status(request)
     })
 def getDateTime(d,t):
     d=d.split('-')
@@ -126,7 +148,7 @@ def searchDoctors(request):
         for doc in doctors:
             if(mydatetime>=getDateTime(str(doc.date),str(doc.available_from)) and mydatetime<=getDateTime(str(doc.date),str(doc.available_till))):
                 docs.append(doc)
-        return HttpResponse(render_to_string('medical/searchResults.html',context={'csrf_token':csrf_token,'doctors':docs,'len':len(docs),'date':datepicker,'time':timepicker}))
+        return HttpResponse(render_to_string('medical/searchResults.html',context={'csrf_token':csrf_token,'doctors':docs,'len':len(docs),'date':datepicker,'time':timepicker,'admin_status': get_admin_status(request)}))
     return HttpResponse(status=500)
 @login_required
 def bookAppointment(request):
@@ -157,13 +179,13 @@ def makeAppointment(request):
             appointment_form.created_at=datetime.datetime.now().date()
             appointment_form.created_by=request.user.username
             appointment_form.save()
-            return render(request, 'medical/success.html')
+            return render(request, 'medical/success.html',{'admin_status': get_admin_status(request)})
         else:
             doc_id=request.POST['docid']
             adate=request.POST['adate']
             atime=request.POST['atime']
             error_message="Please enter valid values"
-            return render(request,'medical/appointment.html',context={'docid':doc_id,'adate':date,'atime':time,'form':form,'error_message':error_message})
+            return render(request,'medical/appointment.html',context={'docid':doc_id,'adate':date,'atime':time,'form':form,'error_message':error_message,'admin_status': get_admin_status(request)})
     return redirect('medical_dashboard')
 
 @login_required

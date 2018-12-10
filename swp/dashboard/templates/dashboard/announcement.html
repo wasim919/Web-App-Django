@@ -52,6 +52,21 @@
           <li class="nav-item px-2">
             <a href="{% url 'orders:orders_index' %}" class="nav-link">Order</a>
           </li>
+          {% if admin_status == 1 %}
+        <li class="nav-item px-2">
+            <a href="{% url 'hostel_admin:hostel_admin_dashboard' %}" class="nav-link">Hostel admin dashboard</a>
+            </li>
+      {% endif %}
+      {% if admin_status == 2 %}
+        <li class="nav-item px-2">
+            <a href="{% url 'mess_admin:mess_admin_dashboard' %}" class="nav-link">Mess admin dashboard</a>
+            </li>
+      {% endif %}
+      {% if admin_status == 3 %}
+        <li class="nav-item px-2">
+            <a href="{% url 'medical_admin:medical_admin_dashboard' %}" class="nav-link">Medical admin dashboard</a>
+            </li>
+      {% endif %}
         </ul>
 
         <ul class="navbar-nav ml-auto">
