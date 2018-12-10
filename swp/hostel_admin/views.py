@@ -3,8 +3,6 @@ from django.core.mail import EmailMessage
 from dashboard.models import HostelAnnouncements
 from .forms import HostelAnnouncementForm, AddAnnouncementForm
 from django.http import HttpResponse
-import datetime
-import time
 from api_integration.models import Student
 from django.template.loader import render_to_string
 from orders.models import ManualOrder
@@ -15,8 +13,10 @@ from django.contrib.auth.decorators import login_required
 from hostel.models import HostelLeave, ComplaintRegister
 from dashboard.models import Messages
 import pytz
+from hostel.models import *
 from api_integration.models import Student
-
+import datetime
+import time
 
 @login_required
 def get_admin_status(request):
@@ -33,6 +33,12 @@ def get_admin_status(request):
 		st = 3
 	return st
 
+def get_months_num(s):
+    c=0
+    for i in s:
+        if(int(i.created_at.date().month)==int(datetime.datetime.now().date().month)):
+            c+=1
+    return c
 
 def check_isHostelAdmin(request):
     return Student.objects.get(user=request.user).is_hostel_admin
@@ -45,15 +51,21 @@ def hostel_admin_index(request):
 
 @login_required
 def hostel_admin_dashboard(request):
-    if(check_isHostelAdmin(request)):
-        hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted = False))
-        hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
+	if(check_isHostelAdmin(request)):
+		hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted = False))
+		hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
+		hostel_leave = HostelLeave.objects.filter(isDeleted=0)
+		complaints = ComplaintRegister.objects.filter(isDeleted=0)
+		hostel_leaves_this_month = get_months_num(hostel_leave)
+		complaints_this_month = get_months_num(complaints)
 
-        return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
-        'hostel_announcements': hostel_announcements,
-		'admin_status': get_admin_status(request)
-        })
-    return render(request,'index.html')
+		return render(request, 'hostel_admin/hostel_admin_dashboard.html',{
+		'hostel_announcements': hostel_announcements,
+		'admin_status': get_admin_status(request),
+		'hostel_leaves_this_month': hostel_leaves_this_month,
+		'complaints_this_month': complaints_this_month
+		})
+	return render(request,'index.html')
 
 # announcement_title=forms.CharField(label='announcement_title',widget=forms.TextInput(attrs={"class":"form-control"}))
 # announcement=forms.CharField(label='announcement',widget=forms.TextInput(attrs={"class":"form-control"}))
