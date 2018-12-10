@@ -1,0 +1,53 @@
+<tr style="width: 100%; padding: 0px;">
+  <td style="width: 100%; padding: 0px;">
+    <table style="width: 100%; padding: 0px;">
+      <thead class="thead-dark" style="width: 100%; padding: 0px;">
+        <tr style="width: 100%; padding: 0px;">
+          <th style="width: 55px; font-weight:normal;">#</th>
+          <th style="width: 55px; font-weight:normal;">Student Name</th>
+          <th style="width: 55px; font-weight:normal;">Leave From</th>
+          <th style="width: 55px; font-weight:normal;">Leave To</th>
+          <th style="width: 55px; font-weight:normal;">Accept</th>
+          <th style="width: 55px; font-weight:normal;">Reject</th>
+        </tr>
+      </thead>
+    </table>
+  </td>
+</tr>
+{% if len != 0 %}
+<tr style="width: 100%; padding: 0px;">
+  <td style="width: 100%; padding: 0px;">
+    <div style="overflow-y: scroll; width: 100%; height: 300px;">
+      <table style="width: 100%; padding: 0px;">
+        {% if hostel_leaves %}
+          {% for leaves in hostel_leaves %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ leaves.student.student_first_name }}</td>
+            <td>{{ leaves.leave_from }}</td>
+            <td>{{ leaves.leave_to }}</td>
+            <td style="width: 132px; font-weight:normal;"><a href="{% url 'hostel_admin:hostel_leave_accept' leaves.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+              <i class="fas fa-angle-double-right"></i> Accept
+            </a></td>
+            <td style="width: 132px; font-weight:normal;"><a href="{% url 'hostel_admin:hostel_leave_reject' leaves.pk %}" class="btn btn-secondary" target="{{ forloop.counter }}">
+              <i class="fas fa-angle-double-right"></i> Reject
+            </a></td>
+            <td></td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+      </table>
+    </div>
+  </td>
+</tr>
+{% else %}
+<tr>
+  <td>
+    No Hostel Leaves Yet...
+    </td>
+    <td>
+      </td>
+      <td>
+        </td>
+      </tr>
+{% endif %}
