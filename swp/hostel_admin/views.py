@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from dashboard.models import HostelAnnouncements
-from .forms import HostelAnnouncementForm, AddAnnouncementForm
+from .forms import HostelAnnouncementForm, AddAnnouncementForm, AddCourrierForm, AddItemForm
 from django.http import HttpResponse
 from api_integration.models import Student
 from django.template.loader import render_to_string
@@ -10,7 +10,7 @@ from .forms import AddItemForm, AddCourrierForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from hostel.models import HostelLeave, ComplaintRegister
+from hostel.models import HostelLeave, ComplaintRegister, Courrier
 from dashboard.models import Messages
 import pytz
 from hostel.models import *
@@ -20,18 +20,18 @@ import time
 
 @login_required
 def get_admin_status(request):
-	st = 0
-	dr = Student.objects.filter(student_first_name = str(request.user))
-	if(len(dr) == 0):
-            return 0
-	print(dr, "ASDAS")
-	if(dr[0].is_hostel_admin == True):
-		st = 1
-	elif(dr[0].is_mess_admin == True):
-		st = 2
-	elif(dr[0].is_medical_admin == True):
-		st = 3
-	return st
+    st = 0
+    dr = Student.objects.filter(student_first_name = str(request.user))
+    if(len(dr) == 0):
+        return 0
+    print(dr, "ASDAS")
+    if(dr[0].is_hostel_admin == True):
+        st = 1
+    elif(dr[0].is_mess_admin == True):
+        st = 2
+    elif(dr[0].is_medical_admin == True):
+        st = 3
+    return st
 
 def get_months_num(s):
     c=0
@@ -51,21 +51,21 @@ def hostel_admin_index(request):
 
 @login_required
 def hostel_admin_dashboard(request):
-	if(check_isHostelAdmin(request)):
-		hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted = False))
-		hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
-		hostel_leave = HostelLeave.objects.filter(isDeleted=0)
-		complaints = ComplaintRegister.objects.filter(isDeleted=0)
-		hostel_leaves_this_month = get_months_num(hostel_leave)
-		complaints_this_month = get_months_num(complaints)
+    if(check_isHostelAdmin(request)):
+        hostel_announcements = list(HostelAnnouncements.objects.all().filter(isDeleted = False))
+        hostel_announcements.sort(key = lambda a: a.timestamp, reverse = True)
 
-		return render(request, 'hostel_admin/hostel_admin_dashboard.html',{
-		'hostel_announcements': hostel_announcements,
-		'admin_status': get_admin_status(request),
-		'hostel_leaves_this_month': hostel_leaves_this_month,
-		'complaints_this_month': complaints_this_month
-		})
-	return render(request,'index.html')
+        hostel_leave = HostelLeave.objects.filter(isDeleted=0)
+        complaints = ComplaintRegister.objects.filter(isDeleted=0)
+        hostel_leaves_this_month = get_months_num(hostel_leave)
+        complaints_this_month = get_months_num(complaints)
+
+        return render(request, 'hostel_admin/hostel_admin_dashboard.html',{
+        'hostel_announcements': hostel_announcements,
+        'admin_status': get_admin_status(request),
+        'hostel_leaves_this_month': hostel_leaves_this_month,
+        'complaints_this_month': complaints_this_month})
+    return render(request,'index.html')
 
 # announcement_title=forms.CharField(label='announcement_title',widget=forms.TextInput(attrs={"class":"form-control"}))
 # announcement=forms.CharField(label='announcement',widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -83,7 +83,7 @@ def announcement_delete(request, id):
         hostel_announcements = HostelAnnouncements.objects.all()
         return render(request, 'hostel_admin/hostel_admin_dashboard.html', {
         'hostel_announcements': hostel_announcements,
-		'admin_status': get_admin_status(request)
+        'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 @login_required
@@ -93,13 +93,13 @@ def announcement_edit(request, id):
         hostel_announcement_form = AddAnnouncementForm(initial = {
         'announcement_title': hostel_announcement.announcement_title,
         'announcement': hostel_announcement.announcement,
-		'admin_status': get_admin_status(request)
+        'admin_status': get_admin_status(request)
         })
         print(hostel_announcement_form)
         return render(request, 'hostel_admin/edit_announcements.html', {
         'form': hostel_announcement_form,
         'id': id,
-		'admin_status': get_admin_status(request)
+        'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 
@@ -110,7 +110,7 @@ def add_announcement(request):
             add_announcement_form = AddAnnouncementForm()
             return HttpResponse(render_to_string('hostel_admin/add.html',context={
             'add_announcement_form': add_announcement_form,
-			'admin_status': get_admin_status(request)
+            'admin_status': get_admin_status(request)
             }))
     return render(request,'index.html')
 
@@ -162,6 +162,7 @@ def save_edit_changes(request, id):
 
 @login_required
 def manual_orders(request):
+
     if(check_isHostelAdmin(request)):
       if request.method == 'GET':
           manual_orders = ManualOrder.objects.all()
@@ -169,7 +170,7 @@ def manual_orders(request):
           return HttpResponse(render_to_string('hostel_admin/manual_order.html',context={
           'manual_orders': manual_orders,
           'len': length,
-		  'admin_status': get_admin_status(request)
+          'admin_status': get_admin_status(request)
           }))
       return render(request,'index.html')
 
@@ -196,7 +197,7 @@ def add_item(request):
             item_form = AddItemForm()
             return HttpResponse(render_to_string('hostel_admin/item_form.html',context={
             'form': item_form,
-			'admin_status': get_admin_status(request)
+            'admin_status': get_admin_status(request)
             }))
             return render(request,'index.html')
 
@@ -265,7 +266,7 @@ def hostel_complaints(request):
     return HttpResponse(render_to_string('hostel_admin/complaints.html',context={
     'complaints': complaints,
     'len': length,
-	'admin_status': get_admin_status(request)
+    'admin_status': get_admin_status(request)
     }))
 
 def complaint_details(request, id):
@@ -276,7 +277,7 @@ def complaint_details(request, id):
     if complaint is not None:
         return render(request, 'hostel_admin/detail.html', {
         'complaint': complaint,
-		'admin_status': get_admin_status(request)
+        'admin_status': get_admin_status(request)
         })
     else:
         return redirect('hostel_admin:hostel_admin_dashboard')
@@ -288,4 +289,32 @@ def add_courier(request):
     }))
 
 def add_student_courrier(request):
-    pass
+    if request.method == 'POST':
+        print(request.POST)
+        student_roll = request.POST.get('student_roll')
+        allStudent = Student.objects.all()
+        rollvalue = dict()
+        for i in range(len(allStudent)):
+            if(allStudent[i].roll not in rollvalue):
+                rollvalue[allStudent[i].roll] = True
+
+        if(student_roll in rollvalue):
+            student = Student.objects.get(roll = student_roll)
+        else:
+            return render(request,'hostel_admin/courrier_form.html',{'error_message':'Enter a valid roll number','admin_status': get_admin_status(request)})
+
+        courrier = Courrier.objects.create(student = student)   
+        courrier.courrier_ref_no = request.POST.get('courrier_ref_no')
+        courrier.delivery_agent = request.POST.get('delivery_agent')
+        courrier.courrier_company = request.POST.get('courrier_company')
+        courrier.timestamp = datetime.datetime.now()
+        courrier.expected_arrival_time = datetime.datetime.now()
+        courrier.created_at = datetime.datetime.now().date()
+        courrier.created_by = request.user.username
+        courrier.modified_at = datetime.datetime.now().date()
+        courrier.modified_by = request.user.username
+        courrier.save()
+        return redirect('hostel_admin:hostel_admin_dashboard')
+    else:
+        return redirect('hostel_admin:hostel_admin_dashboard')
+
