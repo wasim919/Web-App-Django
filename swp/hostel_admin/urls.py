@@ -12,5 +12,10 @@ urlpatterns = [
     url(r'^add_announcement_url/$', views.add_announcement_url, name = 'add_announcement_url'),
     url(r'^save_edit_changes/(?P<id>\d+)/$', views.save_edit_changes, name = 'save_edit_changes'),
     url(r'^manual_orders/$', views.manual_orders, name = 'manual_orders'),
+    url(r'^complaint_details/(?P<id>\d+)/$', views.complaint_details, name = 'complaint_details'),
+    url(r'^hostel_leaves/$', views.hostel_leaves, name = 'hostel_leaves'),
+    url(r'^hostel_complaints/$', views.hostel_complaints, name = 'complaints'),
+    url(r'^hostel_leave_accept/(?P<id>\d+)/$', views.hostel_leave_accept, name = 'hostel_leave_accept'),
+    url(r'^hostel_leave_reject/(?P<id>\d+)/$', views.hostel_leave_reject, name = 'hostel_leave_reject'),
     url(r'^add_item/$', views.add_item, name = 'add_item'),
 ]

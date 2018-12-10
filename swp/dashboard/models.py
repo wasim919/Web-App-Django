@@ -14,8 +14,9 @@ class HostelAnnouncements(models.Model):
         return str(self.announcement_title)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class MessAnnouncements(models.Model):
     announcement_title = models.CharField(max_length=30, blank=True, null=True)
@@ -30,8 +31,8 @@ class MessAnnouncements(models.Model):
         return str(self.announcement_title)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class MedicalAnnouncements(models.Model):
     announcement_title = models.CharField(max_length=30, blank=True, null=True)
@@ -47,8 +48,8 @@ class MedicalAnnouncements(models.Model):
         return str(self.announcement_title)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
 
 class ImportantContacts(models.Model):
     name = models.CharField(max_length = 30, blank = False)
@@ -60,8 +61,9 @@ class ImportantContacts(models.Model):
         return str(self.name)
 
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
+   
 
 class Messages(models.Model):
     message=models.TextField()
@@ -73,6 +75,7 @@ class Messages(models.Model):
     isDeleted = models.BooleanField(default = 0)
     def __str__(self):
         return str(self.name)
+
     @property
-    def isDeleted(self):
-        return bool(self.delete())
+    def isDelete(self):
+        return bool(self.isDeleted())
