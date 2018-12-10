@@ -28,14 +28,16 @@ def get_months_num(s):
 @login_required
 def medical_admin_dashboard(request):
     if(check_isMedicalAdmin(request)):
-        medical_announcements = list(MedicalAnnouncements.objects.all())
-        medical_leave = MedicalLeave.objects.all()
+        medical_announcements = list(MedicalAnnouncements.objects.filter(isDeleted=0))
+        medical_leave = MedicalLeave.objects.filter(isDeleted=0)
         medical_announcements.sort(key = lambda a: a.timestamp, reverse = True)
-        medical_appointments = MedicalAppointment.objects.all()
-        appointments_this_month=get_months_num(medical_leave)
+        medical_appointments = MedicalAppointment.objects.filter(isDeleted=0)
+        leaves_this_month=get_months_num(medical_leave)
+        appointments_this_month=get_months_num(medical_appointments)
         return render(request, 'medical_admin/medical_admin_dashboard.html', {
         'medical_announcements': medical_announcements,'medical_leave':medical_leave,
-        'medical_appointments':medical_appointments,
+        'medical_appointments':medical_appointments,'leaves_this_month':leaves_this_month,
+        'appointments_this_month':appointments_this_month
         })
     return render(request,'index.html')
 @login_required
@@ -43,8 +45,9 @@ def medical_announcement_delete(request, id):
     if(check_isMedicalAdmin(request)):
         print(id)
         announcement = MedicalAnnouncements.objects.get(pk=id)
-        announcement.delete()
-        medical_announcements = MedicalAnnouncements.objects.all()
+        announcement.isDeleted=1
+        announcement.save()
+        medical_announcements = MedicalAnnouncements.objects.filter(isDeleted=0)
 
         return render(request, 'medical_admin/medical_admin_dashboard.html', {
         'medical_announcements': medical_announcements,
