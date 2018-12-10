@@ -4,9 +4,9 @@
       <thead class="thead-dark" style="width: 100%; padding: 0px;">
         <tr style="width: 100%; padding: 0px;">
           <th style="width: 55px; font-weight:normal;">#</th>
-          <th style="width: 55px; font-weight:normal;">Order Type</th>
-          <th style="width: 55px; font-weight:normal;">Order Name</th>
-          <th style="width: 55px; font-weight:normal;">Timestamp</th>
+          <th style="width: 132px; font-weight:normal;">Order Type</th>
+          <th style="width: 132px; font-weight:normal;">Order Name</th>
+          <th style="width: 132px; font-weight:normal;">Timestamp</th>
         </tr>
       </thead>
     </table>
@@ -20,11 +20,11 @@
         {% if manual_orders %}
           {% for orders in manual_orders %}
           <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ orders.order_type }}</td>
-            <td>{{ orders.order_name }}</td>
-            <td>{{ orders.timestamp }}</td>
-            <td></td>
+            <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+            <td style="width: 132px; font-weight:normal;">{{ orders.order_type }}</td>
+            <td style="width: 132px; font-weight:normal;">{{ orders.order_name }}</td>
+            <td style="width: 132px; font-weight:normal;">{{ orders.timestamp }}</td>
+            <!-- <td></td> -->
           </tr>
           {% endfor %}
           {% endif %}
