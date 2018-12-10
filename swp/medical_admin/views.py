@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from dashboard.models import MedicalAnnouncements
+from dashboard.models import MedicalAnnouncements,Messages
 from .forms import MedicalAnnouncementForm, AddAnnouncementForm
 from django.http import HttpResponse
 import datetime
@@ -127,6 +127,43 @@ def medical_leave_details(request,id):
         try:
             medical_leave=MedicalLeave.objects.get(pk=id)
             return render(request,'medical_admin/leave_details.html',context={'medical_leave':medical_leave})
+        except:
+            pass
+        return redirect('medical_admin:medical_admin_dashboard')
+    return render(request,'index.html')
+@login_required
+def approve_leave(request,id):
+    if(check_isMedicalAdmin(request)):
+        try:
+            medical_leave=MedicalLeave.objects.get(pk=id)
+            me = Messages(message="Your medical leave has got approved. Leave From"+str(medical_leave.leave_from)+" Leave to: "+str(medical_leave.leave_to)+" Reason: "+str(medical_leave.reason),student=medical_leave.student)
+            me.created_at=datetime.datetime.now().date()
+            me.modified_at = datetime.datetime.now().date()
+            me.created_by=request.user.username
+            me.modified_by=request.user.username
+            me.save()
+            medical_leave.isDeleted=1
+            medical_leave.save()
+            return redirect('medical_admin:medical_admin_dashboard')
+        except:
+            pass
+        return redirect('medical_admin:medical_admin_dashboard')
+    return render(request,'index.html')
+
+@login_required
+def reject_leave(request,id):
+    if(check_isMedicalAdmin(request)):
+        try:
+            medical_leave=MedicalLeave.objects.get(pk=id)
+            me = Messages(message="Your medical leave has got rejected. Leave From"+str(medical_leave.leave_from)+" Leave to: "+str(medical_leave.leave_to)+" Reason: "+str(medical_leave.reason),student=medical_leave.student)
+            me.created_at=datetime.datetime.now().date()
+            me.modified_at = datetime.datetime.now().date()
+            me.created_by=request.user.username
+            me.modified_by=request.user.username
+            me.save()
+            medical_leave.isDeleted=1
+            medical_leave.save()
+            return redirect('medical_admin:medical_admin_dashboard')
         except:
             pass
         return redirect('medical_admin:medical_admin_dashboard')

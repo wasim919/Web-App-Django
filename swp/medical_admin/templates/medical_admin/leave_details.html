@@ -136,12 +136,12 @@
       <table>
         <tr>
           <td>
-            <a href="#" class="btn btn-success btn-block">
+            <a href="{% url 'medical_admin:approve_leave' medical_leave.pk %}" class="btn btn-success btn-block">
               <i class="fas fa-check"></i> Approve</a>
           </td>
 
           <td>
-        <a href="#" class="btn btn-danger btn-block">
+        <a href="{% url 'medical_admin:reject_leave' medical_leave.pk %}" class="btn btn-danger btn-block">
         &ensp;&ensp;&ensp;<i class="fas fa-times"></i> Reject</a>
         </td>
 
