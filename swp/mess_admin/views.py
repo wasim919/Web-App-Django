@@ -12,6 +12,23 @@ from .forms import AddItemForm, AddAnnouncementForm, MessAnnouncementForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from api_integration.models import Student
+
+
+def get_admin_status(request):
+	st = 0
+	dr = Student.objects.filter(student_first_name = str(request.user))
+        if(len(dr) == 0):
+            return 0
+	print(dr, "ASDAS")
+	if(dr[0].is_hostel_admin == True):
+		st = 1
+	elif(dr[0].is_mess_admin == True):
+		st = 2
+	elif(dr[0].is_medical_admin == True):
+		st = 3
+	return st
+
 
 def check_isMessAdmin(request):
     return Student.objects.get(user=request.user).is_mess_admin
@@ -33,20 +50,23 @@ def mess_admin_dashboard(request):
         mess_items.sort(key = lambda a: a.timestamp, reverse = True)
         mess_order = list(OrderListMess.objects.all())
         mess_order.sort(key = lambda a: a.timestamp, reverse = True)
-        return render(request, 'mess_admin/mess_admin_dashboard.html', {'mess_announcements': mess_announcements,'mess_leave':mess_leave, 'mess_refund': mess_refund, 'mess_order': mess_order, 'mess_items': mess_items
+        return render(request, 'mess_admin/mess_admin_dashboard.html', {'mess_announcements': mess_announcements,'mess_leave':mess_leave, 'mess_refund': mess_refund, 'mess_order': mess_order, 'mess_items': mess_items,'admin_status': get_admin_status(request),
+        'mr': len(mess_order),
+        'ml': len(mess_leave),
+        'mo': len(mess_order)
         })
     return render(request,'index.html')
 @login_required
 def mess_leave_show(request, pk):
     if(check_isMessAdmin(request)):
         leave = get_object_or_404(MessLeave, pk = pk)
-        return render(request, 'mess_admin/leaves.html', {'leave': leave})
+        return render(request, 'mess_admin/leaves.html', {'leave': leave, 'admin_status': get_admin_status(request)})
     return render(request,'index.html')
 @login_required
 def mess_refund_show(request, pk):
     if(check_isMessAdmin(request)):
         refund = get_object_or_404(MessRefund, pk = pk)
-        return render(request, 'mess_admin/refunds.html', {'refund': refund})
+        return render(request, 'mess_admin/refunds.html', {'refund': refund, 'admin_status': get_admin_status(request)})
     return render(request,'index.html')
 
 
@@ -103,11 +123,13 @@ def announcement_edit(request, id):
         Mess_announcement_form = AddAnnouncementForm(initial = {
         'announcement_title': Mess_announcement.announcement_title,
         'announcement': Mess_announcement.announcement,
+        'admin_status': get_admin_status(request)
         })
         print(Mess_announcement_form)
         return render(request, 'mess_admin/edit_announcements.html', {
         'form': Mess_announcement_form,
         'id': id,
+        'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 @login_required
@@ -117,12 +139,14 @@ def item_edit(request, id):
         Mess_item_form = AddItemForm(initial = {
         'item_name': Mess_item.item_name,
         'quantity': Mess_item.quantity,
-        'cost': Mess_item.cost
+        'cost': Mess_item.cost,
+        'admin_status': get_admin_status(request)
         })
         #print(Mess_announcement_form)
         return render(request, 'mess_admin/edit_items.html', {
         'form': Mess_item_form,
         'id': id,
+        'admin_status': get_admin_status(request)
         })
     return render(request,'index.html')
 @login_required
@@ -132,6 +156,7 @@ def add_announcement(request):
             add_announcement_form = AddAnnouncementForm()
             return HttpResponse(render_to_string('mess_admin/add.html',context={
             'add_announcement_form': add_announcement_form,
+            'admin_status': get_admin_status(request)
             }))
     return render(request,'index.html')
 @login_required
@@ -139,7 +164,7 @@ def add_item(request):
     if(check_isMessAdmin(request)):
         if request.method == 'GET':
             add_item_form = AddItemForm()
-            return HttpResponse(render_to_string('mess_admin/addI.html',context={'add_item_form': add_item_form,}))
+            return HttpResponse(render_to_string('mess_admin/addI.html',context={'add_item_form': add_item_form, 'admin_status': get_admin_status(request)}))
     return render(request,'index.html')
 @login_required
 def add_announcement_url(request):
