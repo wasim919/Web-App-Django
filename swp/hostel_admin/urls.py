@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^add_item/$', views.add_item, name = 'add_item'),
     url(r'^add_courier/$', views.add_courier, name = 'add_courier'),
     url(r'^add_student_courrier/$', views.add_student_courrier, name = 'add_student_courrier'),
+    url(r'^add_selfhelp/$', views.add_selfhelp, name = 'add_selfhelp'),
+    url(r'^add_selfhelp_view/$', views.add_selfhelp_view, name = 'add_selfhelp_view'),
 ]
