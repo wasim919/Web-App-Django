@@ -391,6 +391,49 @@
       </table>
     </div>
 
+    <div class="card-header" style="width: 104%; margin-top: 20px">
+      <h4><center>Mess Feedback</center></h4>
+       <table class="table table-striped" style="align:left; width: 80%; padding: 0px;  border: 0px; margin-left: -20px; margin-top: 20px ">
+        <tr style="width: 100%; padding: 0px;  border: 0px;">
+          <td style="width: 100%; padding: 0px;">
+            <table style="width: 130%; padding: 0px;  border: 0px;">
+              <thead class="thead-dark" style="width: 100%; padding: 0px;">
+                <tr style="width: 100%; padding: 0px;">
+                  <th style="width: 55px; font-weight:normal;">#</th>
+                  <th style="width: 132px; font-weight:normal;">Student</th>
+                  <th style="width: 132px; font-weight:normal;">Feedback</th>
+                  <th style="width: 132px; font-weight:normal;">Room No</th>
+                  <th style="width: 132px; font-weight:normal;">Delete</th>
+                </tr>
+              </thead>
+
+            </table>
+          </td>
+        </tr>
+        <tr style="width: 100%; padding: 0px;">
+          <td style="width: 100%; padding: 0px;">
+            <div style="overflow-y: scroll; width: 130%; height: 200px">
+              {% if mess_feedback %}
+              <table style="width: 100%; padding: 0px;">
+                  {% for data in mess_feedback %}
+                  <tr>
+                    <td style="width: 55px; font-weight:normal;">{{ forloop.counter }}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.student.student_first_name}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.feedback}}</td>
+                    <td style="width: 132px; font-weight:normal;">{{data.room_no}}</td>
+                    <td style="width: 132px; font-weight:normal;"><a href="{% url 'mess_admin:feedback_delete' data.pk %}" class="btn btn-secondary">
+                      <i class="fas fa-angle-double-right"></i> Delete
+                    </a></td>
+                  </tr>
+                  {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
 
   <!-- <form class="add_announcement" action="{% url 'hostel_admin:add_announcement_url' %}" method="post"> -->
     <!-- {% csrf_token %} -->

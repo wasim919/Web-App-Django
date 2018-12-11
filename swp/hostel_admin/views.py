@@ -10,7 +10,7 @@ from .forms import AddItemForm, AddCourrierForm
 from api_integration.models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from hostel.models import HostelLeave, ComplaintRegister, Courrier
+from hostel.models import HostelLeave, ComplaintRegister, Courrier, SelfHelpGroup
 from dashboard.models import Messages
 import pytz
 from hostel.models import *
@@ -283,9 +283,8 @@ def complaint_details(request, id):
         return redirect('hostel_admin:hostel_admin_dashboard')
 
 def add_courier(request):
-    form = AddCourrierForm()
+    #form = AddCourrierForm()
     return HttpResponse(render_to_string('hostel_admin/courrier_form.html',context={
-    'courrier_form': form
     }))
 
 def add_student_courrier(request):
@@ -301,7 +300,7 @@ def add_student_courrier(request):
         if(student_roll in rollvalue):
             student = Student.objects.get(roll = student_roll)
         else:
-            return render(request,'hostel_admin/courrier_form.html',{'error_message':'Enter a valid roll number','admin_status': get_admin_status(request)})
+            return redirect('hostel_admin:hostel_admin_dashboard')
 
         courrier = Courrier.objects.create(student = student)   
         courrier.courrier_ref_no = request.POST.get('courrier_ref_no')
@@ -309,6 +308,39 @@ def add_student_courrier(request):
         courrier.courrier_company = request.POST.get('courrier_company')
         courrier.timestamp = datetime.datetime.now()
         courrier.expected_arrival_time = datetime.datetime.now()
+        courrier.created_at = datetime.datetime.now().date()
+        courrier.created_by = request.user.username
+        courrier.modified_at = datetime.datetime.now().date()
+        courrier.modified_by = request.user.username
+        courrier.save()
+        return redirect('hostel_admin:hostel_admin_dashboard')
+    else:
+        return redirect('hostel_admin:hostel_admin_dashboard')
+
+def add_selfhelp(request):
+    #form = AddCourrierForm()
+    return HttpResponse(render_to_string('hostel_admin/add_self_form.html',context={
+    }))
+
+
+def add_selfhelp_view(request):
+    if request.method == 'POST':
+        print(request.POST)
+        student_roll = request.POST.get('student_roll')
+        allStudent = Student.objects.all()
+        rollvalue = dict()
+        for i in range(len(allStudent)):
+            if(allStudent[i].roll not in rollvalue):
+                rollvalue[allStudent[i].roll] = True
+
+        if(student_roll in rollvalue):
+            student = Student.objects.get(roll = student_roll)
+        else:
+            return redirect('hostel_admin:hostel_admin_dashboard')
+
+        courrier = SelfHelpGroup.objects.create(student = student)   
+        courrier.issue = request.POST.get('issue')
+        courrier.timestamp = datetime.datetime.now()
         courrier.created_at = datetime.datetime.now().date()
         courrier.created_by = request.user.username
         courrier.modified_at = datetime.datetime.now().date()
