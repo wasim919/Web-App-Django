@@ -88,6 +88,29 @@
       </div>
     </div>
   </nav>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+    <div class="container">
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav">
+          <li class="nav-item px-2">
+            <a href="{% url 'mess:refund_form' %}" class="nav-link">Mess Refund</a>
+          </li>
+          <li class="nav-item px-2">
+            <a href="{% url 'mess:mess_dashboard' %}" class="nav-link">Dashboard</a>
+          </li>
+          <li class="nav-item px-2">
+            <a href="{% url 'mess:leave_form' %}" class="nav-link">Mess Leave</a>
+          </li>
+          <li class="nav-item px-2">
+            <a href="{% url 'mess:feedback_form' %}" class="nav-link">Feedback</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <!-- HEADER -->
   <header id="main-header" class="py-2 bg-primary text-white">
@@ -111,9 +134,9 @@
     <center><div class="container">
       <div class="row">
         <div class="col-md-9">
-          <a href="{% url 'mess:mess_dashboard' %}" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
+          <!--<a href="{% url 'mess:mess_dashboard' %}" class="btn btn-light btn-block" style="width: 300px; margin-left: -530px; margin-bottom: 20px">
             <i class="fas fa-arrow-left"></i> Back To Mess Dashboard
-          </a>
+          </a>-->
           <div class="card" style = "margin-bottom:200px">
             <h2> Your request has been made.<br> Mess admins will contact you soon.</h2>
           </div>

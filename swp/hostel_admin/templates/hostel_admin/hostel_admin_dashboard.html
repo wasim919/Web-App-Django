@@ -210,6 +210,15 @@
   <table id="searchTable5" class="table table-striped" style="visibility:hidden">
   </table>
 </form>
+<input type="Submit" value="Add Self help Group" class="btn btn-primary btn-block" id="mybutton6">
+  <div class="card-header" style="width: 104%;">
+    <h4><center>Add Self help Group</center></h4>
+  </div>
+<form class="add_selfhelp" action="{% url 'hostel_admin:add_selfhelp_view' %}" method="post">
+  {% csrf_token %}
+  <table id="searchTable6" class="table table-striped" style="visibility:hidden">
+  </table>
+</form>
 <!-- <form class="hostel_leave" action="{% url 'hostel_admin:hostel_leaves' %}" method="post">
 {% csrf_token %} -->
     </div>
@@ -310,7 +319,7 @@
     <div class="col-md-5" style="width:800px; margin:0 auto;">
       <div class="card" style=" border: 0px;align:left;">
 
-        <table style="align:left; width: 80%; padding: 0px;  border: 0px; ">
+        <table style="align:right; width: 80%; padding: 0px;  border: 0px; ">
           <tr style="width: 100%; padding: 0px;  border: 0px;">
             <td style="width: 100%; padding: 0px;">
               <div class="card text-center bg-primary text-white mb-3">
@@ -490,6 +499,27 @@
         $("#searchTable5").css('visibility','visible');
         $("#mybutton5").css('visibility','hidden');
         $("#searchTable5").html(data);
+     });
+    }
+  });
+  });
+
+  $('#mybutton6').click(function(){
+    // e.preventDefault();
+    // var date=$('#datepicker').val();
+    // var time=$('#timepicker').val();
+    // var specialisation=$('#specialisation :selected').text();
+    // console.log(specialisation);
+    $.ajax({
+      type:'GET',
+      url:'{% url "hostel_admin:add_selfhelp" %}',
+      dataType: 'html',
+    success:function(data){
+      $(document).ready(function(){
+        console.log("it worked");
+        $("#searchTable6").css('visibility','visible');
+        $("#mybutton6").css('visibility','hidden');
+        $("#searchTable6").html(data);
      });
     }
   });
