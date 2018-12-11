@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from api_integration.models import Student
 import datetime
 from api_integration.models import Student
-
+import os
 
 @login_required
 def get_admin_status(request):
@@ -87,7 +87,14 @@ def addComplaint(request):
 			complaint_form = form.save(commit=False)
 			complaint_form.student = Student.objects.get(user = request.user)
 			subject = request.POST['subject']
-			complaint_form.complaint = subject + request.POST['complaint']
+			comp = subject +' '+request.POST['complaint']
+			checkVal = vulgarCheck(comp)
+			print(checkVal)
+			if(checkVal==0):
+				complaint_form.complaint = comp
+			elif(checkVal==1):
+				return render(request,'hostel/vulgar-ack.html',{'admin_status': get_admin_status(request)})
+
 			if len(request.FILES) > 0:
 				complaint_form.comp_img = request.FILES['image']
 			else:
@@ -141,3 +148,31 @@ def applyHostelLeave(request):
 
 	form =  HostelLeaveForm()
 	return render(request,'hostel/leave.html',{'form':form,'error_message':'','admin_status': get_admin_status(request)})
+
+def vulgarCheck(s):
+	vul = dict()
+	with open(os.getcwd()+"/vulgar.txt",'r') as file:
+		text = file.readlines()
+		for i in range(len(text)):
+			text[i]=text[i].strip()
+			if(text[i] not in vul):
+				vul[text[i]] = 1
+
+	s = s.split(' ')
+	for j in range(len(s)):
+		if(s[j] in vul):
+			return 1
+
+		if(j>0):
+			if((s[j-1]+' '+s[j]) in vul):
+				return 1
+
+		if(j>1):
+			if((s[j-2]+' '+s[j-1]+' '+s[j]) in vul):
+				return 1
+
+		if(j>2):
+			if((s[j-3]+' '+s[j-2]+' '+s[j-1]+' '+s[j]) in vul):
+				return 1
+
+	return 0
