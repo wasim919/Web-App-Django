@@ -145,6 +145,13 @@
         </div>
 
       </div>
+      <div class = "row">
+      <div class = "col-md-4" style="margin-left: 50px; margin-top: 20px">
+        <a href = "{% url 'mess_admin:mess_leave_accept' pk %}"> <button class = "btn btn-primary"> ACCEPT</button>"</a>
+      </div>
+      <div class = "col-md-4" style="margin-top: 20px">
+        <a href = "{% url 'mess_admin:mess_leave_reject' pk %}"> <button class = "btn btn-primary"> REJECT</button>"</a>
+      </div>
     </div>
   </center>
   </section>
