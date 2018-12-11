@@ -122,7 +122,7 @@ def mess_admin_dashboard(request):
         mess_feedback.sort(key = lambda a: a.timestamp, reverse = True)
         return render(request, 'mess_admin/mess_admin_dashboard.html', {'mess_announcements': mess_announcements,'mess_leave':mess_leave, 'mess_refund': mess_refund, 'mess_order': mess_order, 'mess_items': mess_items,'admin_status': get_admin_status(request),
         'mess_feedback': mess_feedback,
-        'mr': len(mess_order),
+        'mr': len(mess_refund),
         'ml': len(mess_leave),
         'mo': len(mess_order)
         })
